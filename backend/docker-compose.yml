@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  # ──────────────────── PostgreSQL 16 + pgvector ────────────────────
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: pkm_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pkm_db
+      POSTGRES_USER: pkm_user
+      POSTGRES_PASSWORD: pkm_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pkm_user -d pkm_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────── Redis (for caching/queues) ────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: pkm_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  uploads_data:
+    driver: local
