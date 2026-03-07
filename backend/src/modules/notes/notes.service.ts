@@ -1,37 +1,63 @@
 import { AppError } from "../../utils/AppError";
-import { notesRepository } from "./notes.repository";
-import { CreateNoteInput, UpdateNoteInput } from "./notes.schema";
+import { notesRepository, type NoteWithTags } from "./notes.repository";
+import {
+  CreateNoteInput,
+  ListNotesQueryInput,
+  UpdateNoteInput,
+} from "./notes.schema";
 
-const toNoteDto = (note: {
-  id: string;
-  userId: string;
-  title: string;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date;
-}) => ({
+const normalizeTags = (tags: string[] | undefined): string[] => {
+  if (!tags) {
+    return [];
+  }
+
+  return [...new Set(tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean))];
+};
+
+const toNoteDto = (note: NoteWithTags) => ({
   id: note.id,
   userId: note.userId,
   title: note.title,
   content: note.content,
+  tags: note.tags,
   createdAt: note.createdAt.toISOString(),
   updatedAt: note.updatedAt.toISOString(),
 });
 
 export class NotesService {
   async create(userId: string, input: CreateNoteInput) {
-    const note = await notesRepository.create({
-      userId,
-      title: input.title,
-      content: input.content,
-    });
+    const note = await notesRepository.create(
+      {
+        userId,
+        title: input.title,
+        content: input.content,
+      },
+      normalizeTags(input.tags),
+    );
 
     return toNoteDto(note);
   }
 
-  async list(userId: string) {
-    const noteList = await notesRepository.listByUser(userId);
-    return noteList.map((note) => toNoteDto(note));
+  async list(userId: string, query: ListNotesQueryInput) {
+    const filters = {
+      page: query.page,
+      limit: query.limit,
+      search: query.search?.trim() || undefined,
+      tags: normalizeTags(query.tags),
+    };
+
+    const { data, total } = await notesRepository.listByUser(userId, filters);
+    const totalPages = total === 0 ? 0 : Math.ceil(total / filters.limit);
+
+    return {
+      data: data.map((note) => toNoteDto(note)),
+      pagination: {
+        page: filters.page,
+        limit: filters.limit,
+        total,
+        totalPages,
+      },
+    };
   }
 
   async getById(userId: string, id: string) {
@@ -44,11 +70,16 @@ export class NotesService {
   }
 
   async update(userId: string, id: string, input: UpdateNoteInput) {
-    if (Object.keys(input).length === 0) {
-      throw new AppError("At least one field is required", 400);
-    }
+    const note = await notesRepository.updateByIdForUser(
+      id,
+      userId,
+      {
+        title: input.title,
+        content: input.content,
+      },
+      input.tags !== undefined ? normalizeTags(input.tags) : undefined,
+    );
 
-    const note = await notesRepository.updateByIdForUser(id, userId, input);
     if (!note) {
       throw new AppError("Note not found", 404);
     }

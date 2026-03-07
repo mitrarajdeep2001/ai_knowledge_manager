@@ -14,7 +14,7 @@ export interface AuthResponse {
   user: AuthUser
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -63,6 +63,10 @@ export const notesAPI = {
     api.post(`/notes/${id}/summarize`, null, { params: { style } }),
   generateTags: (id: string) => api.post(`/notes/${id}/generate-tags`),
   reembed: (id: string) => api.post(`/notes/${id}/reembed`),
+}
+
+export const tagsAPI = {
+  list: () => api.get<{ tags: string[] }>('/tags'),
 }
 
 export const documentsAPI = {

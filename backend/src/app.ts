@@ -4,6 +4,7 @@ import helmet from "@fastify/helmet";
 import { jwtPlugin } from "./plugins/jwt";
 import { authRoutes } from "./modules/auth/auth.route";
 import { notesRoutes } from "./modules/notes/notes.route";
+import { tagsRoutes } from "./modules/tags/tags.route";
 import { AppError } from "./utils/AppError";
 import { ZodError } from "zod";
 
@@ -83,6 +84,7 @@ export const buildApp = async () => {
 
   app.register(authRoutes, { prefix: "/api/auth" });
   app.register(notesRoutes, { prefix: "/api/notes" });
+  app.register(tagsRoutes, { prefix: "/api/tags" });
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof AppError) {

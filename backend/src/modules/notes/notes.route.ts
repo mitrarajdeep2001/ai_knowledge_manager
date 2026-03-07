@@ -3,8 +3,10 @@ import { z } from "zod";
 import { notesService } from "./notes.service";
 import {
   createNoteSchema,
+  listNotesQuerySchema,
   noteIdParamsSchema,
   noteResponseSchema,
+  paginatedNotesResponseSchema,
   updateNoteSchema,
 } from "./notes.schema";
 
@@ -37,15 +39,16 @@ export const notesRoutes: FastifyPluginAsyncZod = async (fastify) => {
       preValidation: [fastify.authenticate],
       schema: {
         tags: ["Notes"],
-        summary: "List notes",
+        summary: "List notes with pagination/search/filter",
         security: [{ bearerAuth: [] }],
+        querystring: listNotesQuerySchema,
         response: {
-          200: z.array(noteResponseSchema),
+          200: paginatedNotesResponseSchema,
         },
       },
     },
     async (request) => {
-      return notesService.list(request.user.id);
+      return notesService.list(request.user.id, request.query);
     },
   );
 

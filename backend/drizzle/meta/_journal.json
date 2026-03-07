@@ -15,6 +15,13 @@
       "when": 1772813536480,
       "tag": "0001_cultured_molecule_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1772874879257,
+      "tag": "0002_lucky_stature",
+      "breakpoints": true
     }
   ]
 }

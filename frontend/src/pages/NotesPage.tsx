@@ -1,7 +1,17 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Plus, Search, Loader2, FileText, Trash2, X } from 'lucide-react'
-import { notesAPI } from '../services/api'
+import {
+  Plus,
+  Search,
+  Loader2,
+  FileText,
+  Trash2,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Tag,
+} from 'lucide-react'
+import { notesAPI, tagsAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -12,42 +22,125 @@ interface Note {
   userId: string
   createdAt: string
   updatedAt: string
+  tags?: string[]
 }
+
+interface NotesPagination {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+}
+
+interface NotesListResponse {
+  data: Note[]
+  pagination: NotesPagination
+}
+
+const DEFAULT_LIMIT = 10
+
+const normalizeTags = (rawTags: string[]): string[] =>
+  [...new Set(rawTags.map((tag) => tag.trim().toLowerCase()).filter(Boolean))]
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [availableTags, setAvailableTags] = useState<string[]>([])
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [page, setPage] = useState(1)
+  const [pagination, setPagination] = useState<NotesPagination>({
+    page: 1,
+    limit: DEFAULT_LIMIT,
+    total: 0,
+    totalPages: 0,
+  })
   const [showCreate, setShowCreate] = useState(false)
   const [creating, setCreating] = useState(false)
-  const [form, setForm] = useState({ title: '', content: '' })
+  const [form, setForm] = useState({ title: '', content: '', tags: '' })
   const navigate = useNavigate()
 
-  const loadNotes = useCallback(async () => {
+  const loadAvailableTags = useCallback(async () => {
+    try {
+      const response = await tagsAPI.list()
+      const tags = Array.isArray(response.data?.tags) ? response.data.tags : []
+      setAvailableTags(tags)
+    } catch {
+      setAvailableTags([])
+    }
+  }, [])
+
+  const loadNotes = useCallback(async (targetPage: number, targetSearch: string, targetTags: string[]) => {
     setLoading(true)
     try {
-      const r = await notesAPI.list()
-      setNotes(r.data)
+      const r = await notesAPI.list({
+        page: targetPage,
+        limit: DEFAULT_LIMIT,
+        search: targetSearch || undefined,
+        tags: targetTags.length > 0 ? targetTags.join(',') : undefined,
+      })
+
+      if (Array.isArray(r.data)) {
+        setNotes(r.data)
+        setPagination({
+          page: targetPage,
+          limit: DEFAULT_LIMIT,
+          total: r.data.length,
+          totalPages: 1,
+        })
+        return
+      }
+
+      const payload = r.data as NotesListResponse
+      setNotes(Array.isArray(payload?.data) ? payload.data : [])
+      setPagination(
+        payload?.pagination ?? {
+          page: targetPage,
+          limit: DEFAULT_LIMIT,
+          total: 0,
+          totalPages: 0,
+        },
+      )
     } catch {
       toast.error('Failed to load notes')
+      setNotes([])
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    loadNotes()
-  }, [loadNotes])
+    loadAvailableTags()
+  }, [loadAvailableTags])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadNotes(page, search, selectedTags)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [loadNotes, page, search, selectedTags])
+
+  useEffect(() => {
+    setPage(1)
+  }, [search, selectedTags])
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
     setCreating(true)
+
     try {
-      const r = await notesAPI.create(form)
-      setNotes((prev) => [r.data, ...prev])
+      const tags = normalizeTags(form.tags.split(','))
+      const r = await notesAPI.create({
+        title: form.title,
+        content: form.content,
+        tags,
+      })
+
       setShowCreate(false)
-      setForm({ title: '', content: '' })
+      setForm({ title: '', content: '', tags: '' })
       toast.success('Note created')
+      await loadAvailableTags()
       navigate(`/notes/${r.data.id}`)
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Failed to create note')
@@ -63,44 +156,90 @@ export default function NotesPage() {
 
     try {
       await notesAPI.delete(id)
-      setNotes((prev) => prev.filter((n) => n.id !== id))
       toast.success('Note deleted')
+      await loadNotes(page, search, selectedTags)
+      await loadAvailableTags()
     } catch {
       toast.error('Failed to delete note')
     }
   }
 
-  const filtered = notes.filter(
-    (n) =>
-      n.title.toLowerCase().includes(search.toLowerCase()) ||
-      n.content.toLowerCase().includes(search.toLowerCase())
-  )
+  const toggleTagFilter = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((item) => item !== tag) : [...prev, tag],
+    )
+  }
+
+  const clearTagFilters = () => setSelectedTags([])
+
+  const canPrev = page > 1
+  const canNext = pagination.totalPages > 0 && page < pagination.totalPages
 
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-white">Notes</h1>
-          <p className="text-gray-500 text-sm">{notes.length} notes in your knowledge base</p>
+          <p className="text-gray-500 text-sm">
+            {pagination.total} notes in your knowledge base
+          </p>
         </div>
         <button onClick={() => setShowCreate(true)} className="btn-primary">
           <Plus className="w-4 h-4" /> New Note
         </button>
       </div>
 
-      <div className="relative mb-6">
+      <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Filter notes by title or content..."
+          placeholder="Search notes by title or content..."
           className="input pl-10"
         />
         {search && (
           <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
             <X className="w-4 h-4 text-gray-500" />
           </button>
+        )}
+      </div>
+
+      <div className="mb-6 rounded-xl border border-gray-800 bg-gray-900/40 p-3">
+        <div className="flex items-center gap-2 mb-2">
+          <Tag className="w-4 h-4 text-brand-400" />
+          <p className="text-sm text-gray-300">Filter by tags</p>
+          {selectedTags.length > 0 && (
+            <button
+              type="button"
+              onClick={clearTagFilters}
+              className="ml-auto text-xs text-brand-400 hover:text-brand-300"
+            >
+              Clear filters
+            </button>
+          )}
+        </div>
+
+        {availableTags.length === 0 ? (
+          <p className="text-xs text-gray-500">No tags available yet.</p>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {availableTags.map((tag) => {
+              const active = selectedTags.includes(tag)
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => toggleTagFilter(tag)}
+                  className={active
+                    ? 'badge bg-brand-900/50 text-brand-300 border border-brand-700'
+                    : 'badge bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'}
+                >
+                  #{tag}
+                </button>
+              )
+            })}
+          </div>
         )}
       </div>
 
@@ -130,6 +269,16 @@ export default function NotesPage() {
                 placeholder="Write your note here..."
                 required
               />
+              <div className="relative">
+                <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input
+                  type="text"
+                  value={form.tags}
+                  onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))}
+                  className="input pl-10"
+                  placeholder="Tags (comma-separated): react, fastify, drizzle"
+                />
+              </div>
               <div className="flex justify-end gap-3">
                 <button type="button" onClick={() => setShowCreate(false)} className="btn-secondary">Cancel</button>
                 <button type="submit" disabled={creating} className="btn-primary">
@@ -147,42 +296,80 @@ export default function NotesPage() {
             <div key={i} className="card p-5 h-40 animate-pulse" />
           ))}
         </div>
-      ) : filtered.length === 0 ? (
+      ) : notes.length === 0 ? (
         <div className="text-center py-20">
           <FileText className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">{search ? 'No notes match your search' : 'No notes yet'}</p>
-          {!search && (
+          <p className="text-gray-500 text-lg">{search || selectedTags.length > 0 ? 'No notes match your filters' : 'No notes yet'}</p>
+          {!search && selectedTags.length === 0 && (
             <button onClick={() => setShowCreate(true)} className="btn-primary mt-4 mx-auto">
               <Plus className="w-4 h-4" /> Create your first note
             </button>
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((note) => (
-            <Link
-              key={note.id}
-              to={`/notes/${note.id}`}
-              className="card p-5 hover:border-gray-700 transition-all group cursor-pointer flex flex-col"
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {notes.map((note) => (
+              <Link
+                key={note.id}
+                to={`/notes/${note.id}`}
+                className="card p-5 hover:border-gray-700 transition-all group cursor-pointer flex flex-col"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold text-white group-hover:text-brand-300 transition-colors line-clamp-1 flex-1">
+                    {note.title}
+                  </h3>
+                  <button
+                    onClick={(e) => handleDelete(note.id, e)}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-gray-600 hover:text-red-400"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+                <p className="text-gray-500 text-sm line-clamp-3 flex-1 mb-3">{note.content.slice(0, 200)}</p>
+                {Array.isArray(note.tags) && note.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {note.tags.slice(0, 4).map((tag) => (
+                      <span key={tag} className="badge bg-brand-900/40 text-brand-300 border border-brand-800/50">
+                        #{tag}
+                      </span>
+                    ))}
+                    {note.tags.length > 4 && (
+                      <span className="badge bg-gray-800 text-gray-400 border border-gray-700">
+                        +{note.tags.length - 4}
+                      </span>
+                    )}
+                  </div>
+                )}
+                <p className="text-xs text-gray-600">
+                  {formatDistanceToNow(new Date(note.updatedAt))} ago
+                </p>
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-end gap-2 mt-6">
+            <button
+              type="button"
+              onClick={() => setPage((p) => p - 1)}
+              disabled={!canPrev}
+              className="btn-secondary disabled:opacity-40"
             >
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold text-white group-hover:text-brand-300 transition-colors line-clamp-1 flex-1">
-                  {note.title}
-                </h3>
-                <button
-                  onClick={(e) => handleDelete(note.id, e)}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-gray-600 hover:text-red-400"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-              <p className="text-gray-500 text-sm line-clamp-3 flex-1 mb-3">{note.content.slice(0, 200)}</p>
-              <p className="text-xs text-gray-600">
-                {formatDistanceToNow(new Date(note.updatedAt))} ago
-              </p>
-            </Link>
-          ))}
-        </div>
+              <ChevronLeft className="w-4 h-4" /> Prev
+            </button>
+            <span className="text-sm text-gray-400 px-2">
+              Page {pagination.page} of {Math.max(1, pagination.totalPages)}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage((p) => p + 1)}
+              disabled={!canNext}
+              className="btn-secondary disabled:opacity-40"
+            >
+              Next <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </>
       )}
     </div>
   )
