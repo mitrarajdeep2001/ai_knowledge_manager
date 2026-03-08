@@ -47,6 +47,8 @@ export const noteResponseSchema = z.object({
   title: z.string(),
   content: z.string(),
   tags: z.array(z.string()),
+  embeddingStatus: z.string(),
+  embeddingProgress: z.number().int().min(0).max(100),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

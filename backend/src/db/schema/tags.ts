@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { users } from "./users";
 import { notes } from "./notes";
+import { documents } from "./documents";
 
 export const tags = pgTable(
   "tags",
@@ -48,7 +49,26 @@ export const noteTags = pgTable(
   }),
 );
 
+export const documentTags = pgTable(
+  "document_tags",
+  {
+    documentId: uuid("document_id")
+      .notNull()
+      .references(() => documents.id, { onDelete: "cascade" }),
+    tagId: uuid("tag_id")
+      .notNull()
+      .references(() => tags.id, { onDelete: "cascade" }),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.documentId, table.tagId] }),
+    documentIdIdx: index("document_tags_document_id_idx").on(table.documentId),
+    tagIdIdx: index("document_tags_tag_id_idx").on(table.tagId),
+  }),
+);
+
 export type Tag = typeof tags.$inferSelect;
 export type NewTag = typeof tags.$inferInsert;
 export type NoteTag = typeof noteTags.$inferSelect;
 export type NewNoteTag = typeof noteTags.$inferInsert;
+export type DocumentTag = typeof documentTags.$inferSelect;
+export type NewDocumentTag = typeof documentTags.$inferInsert;

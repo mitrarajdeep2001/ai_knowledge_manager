@@ -9,6 +9,7 @@ import {
   type SQL,
 } from "drizzle-orm";
 import { db } from "../../db/index";
+import { logger } from "../../utils/logger";
 import { NewNote, noteTags, notes, tags, type Note } from "../../db/schema";
 
 interface ListNotesFilters {
@@ -111,65 +112,102 @@ export class NotesRepository {
   }
 
   async create(data: NewNote, tagNames: string[]): Promise<NoteWithTags> {
-    return db.transaction(async (tx) => {
-      const [note] = await tx.insert(notes).values(data).returning();
-      const tagIds = await this.upsertTagsForUser(tx, data.userId, tagNames);
-      await this.replaceNoteTags(tx, note.id, tagIds);
+    try {
+      return await db.transaction(async (tx) => {
+        const [note] = await tx
+          .insert(notes)
+          .values({
+            ...data,
+            embeddingStatus: "queued",
+            embeddingProgress: 0,
+            embeddingUpdatedAt: null,
+          })
+          .returning();
 
-      return {
-        ...note,
-        tags: tagNames,
-      };
-    });
+        const tagIds = await this.upsertTagsForUser(tx, data.userId, tagNames);
+        await this.replaceNoteTags(tx, note.id, tagIds);
+
+        return {
+          ...note,
+          tags: tagNames,
+        };
+      });
+    } catch (error) {
+      logger.error("Database error while creating note", {
+        userId: data.userId,
+        module: "notes-repository",
+        err: error,
+      });
+      throw error;
+    }
   }
 
   async listByUser(userId: string, filters: ListNotesFilters): Promise<{ data: NoteWithTags[]; total: number }> {
-    const whereClause = this.buildWhereClause(userId, filters);
-    const offset = (filters.page - 1) * filters.limit;
+    try {
+      const whereClause = this.buildWhereClause(userId, filters);
+      const offset = (filters.page - 1) * filters.limit;
 
-    const [rows, totalRows] = await Promise.all([
-      db
-        .select()
-        .from(notes)
-        .where(whereClause)
-        .orderBy(desc(notes.updatedAt))
-        .limit(filters.limit)
-        .offset(offset),
-      db
-        .select({ total: sql<number>`count(*)::int` })
-        .from(notes)
-        .where(whereClause),
-    ]);
+      const [rows, totalRows] = await Promise.all([
+        db
+          .select()
+          .from(notes)
+          .where(whereClause)
+          .orderBy(desc(notes.updatedAt))
+          .limit(filters.limit)
+          .offset(offset),
+        db
+          .select({ total: sql<number>`count(*)::int` })
+          .from(notes)
+          .where(whereClause),
+      ]);
 
-    const noteIds = rows.map((note) => note.id);
-    const tagMap = await this.getTagMapForNoteIds(userId, noteIds);
+      const noteIds = rows.map((note) => note.id);
+      const tagMap = await this.getTagMapForNoteIds(userId, noteIds);
 
-    return {
-      data: rows.map((note) => ({
-        ...note,
-        tags: tagMap.get(note.id) ?? [],
-      })),
-      total: totalRows[0]?.total ?? 0,
-    };
+      return {
+        data: rows.map((note) => ({
+          ...note,
+          tags: tagMap.get(note.id) ?? [],
+        })),
+        total: totalRows[0]?.total ?? 0,
+      };
+    } catch (error) {
+      logger.error("Database error while listing notes", {
+        userId,
+        module: "notes-repository",
+        err: error,
+      });
+      throw error;
+    }
   }
 
   async findByIdForUser(id: string, userId: string): Promise<NoteWithTags | undefined> {
-    const result = await db
-      .select()
-      .from(notes)
-      .where(and(eq(notes.id, id), eq(notes.userId, userId)))
-      .limit(1);
+    try {
+      const result = await db
+        .select()
+        .from(notes)
+        .where(and(eq(notes.id, id), eq(notes.userId, userId)))
+        .limit(1);
 
-    const note = result[0];
-    if (!note) {
-      return undefined;
+      const note = result[0];
+      if (!note) {
+        return undefined;
+      }
+
+      const tagMap = await this.getTagMapForNoteIds(userId, [note.id]);
+      return {
+        ...note,
+        tags: tagMap.get(note.id) ?? [],
+      };
+    } catch (error) {
+      logger.error("Database error while loading note", {
+        noteId: id,
+        userId,
+        module: "notes-repository",
+        err: error,
+      });
+      throw error;
     }
-
-    const tagMap = await this.getTagMapForNoteIds(userId, [note.id]);
-    return {
-      ...note,
-      tags: tagMap.get(note.id) ?? [],
-    };
   }
 
   async updateByIdForUser(
@@ -178,41 +216,64 @@ export class NotesRepository {
     updates: Partial<Pick<Note, "title" | "content">>,
     tagNames?: string[],
   ): Promise<NoteWithTags | undefined> {
-    return db.transaction(async (tx) => {
-      const result = await tx
-        .update(notes)
-        .set({
-          ...updates,
-          updatedAt: new Date(),
-        })
-        .where(and(eq(notes.id, id), eq(notes.userId, userId)))
-        .returning();
+    try {
+      return await db.transaction(async (tx) => {
+        const result = await tx
+          .update(notes)
+          .set({
+            ...updates,
+            embeddingStatus: "queued",
+            embeddingProgress: 0,
+            embeddingUpdatedAt: null,
+            updatedAt: new Date(),
+          })
+          .where(and(eq(notes.id, id), eq(notes.userId, userId)))
+          .returning();
 
-      const note = result[0];
-      if (!note) {
-        return undefined;
-      }
+        const note = result[0];
+        if (!note) {
+          return undefined;
+        }
 
-      if (tagNames !== undefined) {
-        const tagIds = await this.upsertTagsForUser(tx, userId, tagNames);
-        await this.replaceNoteTags(tx, note.id, tagIds);
-      }
+        if (tagNames !== undefined) {
+          const tagIds = await this.upsertTagsForUser(tx, userId, tagNames);
+          await this.replaceNoteTags(tx, note.id, tagIds);
+        }
 
-      const tagMap = await this.getTagMapForNoteIds(userId, [note.id]);
-      return {
-        ...note,
-        tags: tagMap.get(note.id) ?? [],
-      };
-    });
+        const tagMap = await this.getTagMapForNoteIds(userId, [note.id]);
+        return {
+          ...note,
+          tags: tagMap.get(note.id) ?? [],
+        };
+      });
+    } catch (error) {
+      logger.error("Database error while updating note", {
+        noteId: id,
+        userId,
+        module: "notes-repository",
+        err: error,
+      });
+      throw error;
+    }
   }
 
   async deleteByIdForUser(id: string, userId: string): Promise<Note | undefined> {
-    const result = await db
-      .delete(notes)
-      .where(and(eq(notes.id, id), eq(notes.userId, userId)))
-      .returning();
+    try {
+      const result = await db
+        .delete(notes)
+        .where(and(eq(notes.id, id), eq(notes.userId, userId)))
+        .returning();
 
-    return result[0];
+      return result[0];
+    } catch (error) {
+      logger.error("Database error while deleting note", {
+        noteId: id,
+        userId,
+        module: "notes-repository",
+        err: error,
+      });
+      throw error;
+    }
   }
 }
 

@@ -58,6 +58,12 @@ Similarity metric:
 
 cosine distance.
 
+---
+
+Always use comments to explain the code if neccessary.
+
+---
+
 ## AI Models
 
 Embeddings must use HuggingFace models.

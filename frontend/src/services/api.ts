@@ -71,12 +71,13 @@ export const tagsAPI = {
 
 export const documentsAPI = {
   list: () => api.get('/documents'),
-  get: (id: number) => api.get(`/documents/${id}`),
+  get: (id: string) => api.get(`/documents/${id}`),
+  status: (id: string) => api.get(`/documents/${id}/status`),
   upload: (formData: FormData) =>
     api.post('/documents/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  delete: (id: number) => api.delete(`/documents/${id}`),
+  delete: (id: string) => api.delete(`/documents/${id}`),
 }
 
 export const chatAPI = {

@@ -1,29 +1,30 @@
 import bcrypt from "bcrypt";
+import { FastifyInstance } from "fastify";
 import { AppError } from "../../utils/AppError";
+import { logger } from "../../utils/logger";
 import { authRepository } from "./auth.repository";
 import { RegisterInput, LoginInput } from "./auth.schema";
-import { FastifyInstance } from "fastify";
 
 export class AuthService {
   async register(input: RegisterInput, fastify: FastifyInstance) {
-    // Check if email exists
     const existingEmail = await authRepository.findUserByEmail(input.email);
     if (existingEmail) {
       throw new AppError("Email already exists", 409);
     }
 
-    // Check if username exists
-    const existingUsername = await authRepository.findUserByUsername(
-      input.username,
-    );
+    const existingUsername = await authRepository.findUserByUsername(input.username);
     if (existingUsername) {
       throw new AppError("Username already exists", 409);
     }
 
-    // Hash password
     const passwordHash = await bcrypt.hash(input.password, 10);
 
-    // Create user
+    logger.info("User registration started", {
+      email: input.email,
+      username: input.username,
+      module: "auth-service",
+    });
+
     const user = await authRepository.createUser({
       email: input.email,
       username: input.username,
@@ -31,8 +32,13 @@ export class AuthService {
       passwordHash,
     });
 
-    // Generate token
     const token = fastify.jwt.sign({ id: user.id, email: user.email });
+
+    logger.info("User registration completed", {
+      userId: user.id,
+      email: user.email,
+      module: "auth-service",
+    });
 
     return {
       token,
@@ -46,20 +52,28 @@ export class AuthService {
   }
 
   async login(input: LoginInput, fastify: FastifyInstance) {
-    // Find user by email
+    logger.info("User login started", {
+      email: input.email,
+      module: "auth-service",
+    });
+
     const user = await authRepository.findUserByEmail(input.email);
     if (!user) {
       throw new AppError("Invalid credentials", 401);
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(input.password, user.passwordHash);
     if (!isMatch) {
       throw new AppError("Invalid credentials", 401);
     }
 
-    // Generate token
     const token = fastify.jwt.sign({ id: user.id, email: user.email });
+
+    logger.info("User login completed", {
+      userId: user.id,
+      email: user.email,
+      module: "auth-service",
+    });
 
     return {
       token,

@@ -5,6 +5,8 @@ import { jwtPlugin } from "./plugins/jwt";
 import { authRoutes } from "./modules/auth/auth.route";
 import { notesRoutes } from "./modules/notes/notes.route";
 import { tagsRoutes } from "./modules/tags/tags.route";
+import { documentsRoutes } from "./modules/documents/documents.route";
+import { multerPlugin } from "./plugins/multer";
 import { AppError } from "./utils/AppError";
 import { ZodError } from "zod";
 
@@ -16,10 +18,13 @@ import {
   ZodTypeProvider,
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
+import { pinoLogger, logger } from "./utils/logger";
+import { requestLoggerPlugin } from "./plugins/requestLogger";
 
 export const buildApp = async () => {
   const app = Fastify({
-    logger: true,
+    logger: pinoLogger,
+    disableRequestLogging: true,
   }).withTypeProvider<ZodTypeProvider>();
 
   app.setValidatorCompiler(validatorCompiler);
@@ -80,24 +85,50 @@ export const buildApp = async () => {
 
   await app.register(cors);
   await app.register(helmet);
+  await app.register(requestLoggerPlugin);
   await app.register(jwtPlugin);
+  await app.register(multerPlugin);
 
   app.register(authRoutes, { prefix: "/api/auth" });
   app.register(notesRoutes, { prefix: "/api/notes" });
   app.register(tagsRoutes, { prefix: "/api/tags" });
+  app.register(documentsRoutes, { prefix: "/api/documents" });
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof AppError) {
-      app.log.warn(error);
+      logger.warn("Handled application error", {
+        method: request.method,
+        route: request.routeOptions?.url ?? request.url,
+        statusCode: error.statusCode,
+        module: "http-error-handler",
+        err: error,
+      });
+
       return reply.code(error.statusCode).send({ message: error.message });
     }
+
     if (error instanceof ZodError) {
+      logger.warn("Validation error", {
+        method: request.method,
+        route: request.routeOptions?.url ?? request.url,
+        statusCode: 400,
+        module: "http-error-handler",
+        errors: error.errors,
+      });
+
       return reply
         .code(400)
         .send({ message: "Validation error", errors: error.errors });
     }
 
-    app.log.error(error);
+    logger.error("Unhandled API error", {
+      method: request.method,
+      route: request.routeOptions?.url ?? request.url,
+      statusCode: 500,
+      module: "http-error-handler",
+      err: error,
+    });
+
     reply.code(500).send({ message: "Internal Server Error" });
   });
 

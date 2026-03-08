@@ -1,4 +1,6 @@
 import { AppError } from "../../utils/AppError";
+import { logger } from "../../utils/logger";
+import { enqueueNoteEmbeddingJob } from "../embeddings/embeddings.queue";
 import { notesRepository, type NoteWithTags } from "./notes.repository";
 import {
   CreateNoteInput,
@@ -20,11 +22,26 @@ const toNoteDto = (note: NoteWithTags) => ({
   title: note.title,
   content: note.content,
   tags: note.tags,
+  embeddingStatus: note.embeddingStatus,
+  embeddingProgress: note.embeddingProgress,
   createdAt: note.createdAt.toISOString(),
   updatedAt: note.updatedAt.toISOString(),
 });
 
 export class NotesService {
+  private async enqueueEmbedding(noteId: string, userId: string) {
+    try {
+      await enqueueNoteEmbeddingJob({ noteId, userId });
+    } catch (error) {
+      logger.error("Failed to enqueue note embedding job", {
+        noteId,
+        userId,
+        module: "notes-service",
+        err: error,
+      });
+    }
+  }
+
   async create(userId: string, input: CreateNoteInput) {
     const note = await notesRepository.create(
       {
@@ -34,6 +51,14 @@ export class NotesService {
       },
       normalizeTags(input.tags),
     );
+
+    logger.info("Note created", {
+      noteId: note.id,
+      userId,
+      module: "notes-service",
+    });
+
+    await this.enqueueEmbedding(note.id, userId);
 
     return toNoteDto(note);
   }
@@ -84,6 +109,14 @@ export class NotesService {
       throw new AppError("Note not found", 404);
     }
 
+    logger.info("Note updated", {
+      noteId: note.id,
+      userId,
+      module: "notes-service",
+    });
+
+    await this.enqueueEmbedding(note.id, userId);
+
     return toNoteDto(note);
   }
 
@@ -92,6 +125,12 @@ export class NotesService {
     if (!note) {
       throw new AppError("Note not found", 404);
     }
+
+    logger.info("Note deleted", {
+      noteId: id,
+      userId,
+      module: "notes-service",
+    });
 
     return { success: true };
   }

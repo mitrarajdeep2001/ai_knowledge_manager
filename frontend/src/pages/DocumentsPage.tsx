@@ -1,25 +1,56 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Upload, FileText, Loader2, Trash2, File, CheckCircle, AlertCircle, Tag } from 'lucide-react'
+import { Upload, Loader2, Trash2, File, CheckCircle, AlertCircle, Tag } from 'lucide-react'
 import { documentsAPI } from '../services/api'
 import toast from 'react-hot-toast'
-import { formatDistanceToNow, format } from 'date-fns'
+import { format } from 'date-fns'
+
+type DocStatus = 'uploaded' | 'processing' | 'completed' | 'failed'
 
 interface Doc {
-  id: number
-  title: string
+  id: string
+  userId: string
   filename: string
-  file_type: string
-  file_size: number
+  filePath: string
+  mimeType: string
+  status: DocStatus
+  processedChunks: number
+  totalChunks: number
+  progress: number
   tags: string[]
-  is_processed: boolean
-  created_at: string
+  createdAt: string
 }
 
-function formatBytes(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+const getFileExtension = (filename: string) => {
+  const parts = filename.split('.')
+  return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : ''
+}
+
+const toProgress = (status: DocStatus, processedChunks: number, totalChunks: number): number => {
+  if (status === 'completed') return 100
+  if (status === 'failed' || status === 'uploaded') return 0
+  if (totalChunks <= 0) return 0
+  return Math.max(0, Math.min(100, Math.round((processedChunks / totalChunks) * 100)))
+}
+
+const mapDoc = (doc: any): Doc => {
+  const status = (doc.status ?? 'uploaded') as DocStatus
+  const processedChunks = doc.processedChunks ?? 0
+  const totalChunks = doc.totalChunks ?? 0
+
+  return {
+    id: doc.id,
+    userId: doc.userId,
+    filename: doc.filename,
+    filePath: doc.filePath,
+    mimeType: doc.mimeType,
+    status,
+    processedChunks,
+    totalChunks,
+    progress: toProgress(status, processedChunks, totalChunks),
+    tags: doc.tags ?? [],
+    createdAt: doc.createdAt,
+  }
 }
 
 export default function DocumentsPage() {
@@ -30,17 +61,66 @@ export default function DocumentsPage() {
   const [uploadTags, setUploadTags] = useState('')
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
+  const processingDocIds = useMemo(
+    () => docs.filter((doc) => doc.status === 'uploaded' || doc.status === 'processing').map((doc) => doc.id),
+    [docs],
+  )
+
   const loadDocs = useCallback(async () => {
     setLoading(true)
     try {
       const r = await documentsAPI.list()
-      setDocs(r.data)
+      const list = Array.isArray(r.data) ? r.data : (r.data?.data ?? [])
+      const mapped = Array.isArray(list) ? list.map(mapDoc) : []
+      setDocs(mapped)
     } finally {
       setLoading(false)
     }
   }, [])
 
-  useEffect(() => { loadDocs() }, [loadDocs])
+  const refreshStatuses = useCallback(async () => {
+    if (processingDocIds.length === 0) return
+
+    try {
+      const results = await Promise.all(
+        processingDocIds.map(async (id) => {
+          const response = await documentsAPI.status(id)
+          return { id, ...response.data }
+        }),
+      )
+
+      setDocs((prev) =>
+        prev.map((doc) => {
+          const state = results.find((result) => result.id === doc.id)
+          if (!state) return doc
+
+          return {
+            ...doc,
+            status: state.status as DocStatus,
+            processedChunks: state.processedChunks,
+            totalChunks: state.totalChunks,
+            progress: state.progress,
+          }
+        }),
+      )
+    } catch {
+      // Ignore transient polling errors.
+    }
+  }, [processingDocIds])
+
+  useEffect(() => {
+    loadDocs()
+  }, [loadDocs])
+
+  useEffect(() => {
+    if (processingDocIds.length === 0) return
+
+    const timer = setInterval(() => {
+      refreshStatuses()
+    }, 2000)
+
+    return () => clearInterval(timer)
+  }, [processingDocIds.length, refreshStatuses])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
@@ -57,7 +137,7 @@ export default function DocumentsPage() {
         setUploadTitle(accepted[0].name.replace(/\.[^/.]+$/, ''))
       }
     },
-    onDropRejected: () => toast.error('File rejected (max 10MB, PDF/DOCX/TXT only)'),
+    onDropRejected: () => toast.error('File rejected (max 10MB, PDF/DOCX/TXT/MD only)'),
   })
 
   const handleUpload = async () => {
@@ -68,21 +148,21 @@ export default function DocumentsPage() {
       fd.append('file', selectedFile)
       fd.append('title', uploadTitle || selectedFile.name)
       fd.append('tags', uploadTags)
-      
+
       const r = await documentsAPI.upload(fd)
-      setDocs((prev) => [r.data, ...prev])
+      setDocs((prev) => [mapDoc(r.data), ...prev])
       setSelectedFile(null)
       setUploadTitle('')
       setUploadTags('')
-      toast.success('Document uploaded & processing started!')
+      toast.success('Document uploaded and processing started')
     } catch (err: any) {
-      toast.error(err.response?.data?.detail || 'Upload failed')
+      toast.error(err.response?.data?.message || 'Upload failed')
     } finally {
       setUploading(false)
     }
   }
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('Delete this document?')) return
     try {
       await documentsAPI.delete(id)
@@ -93,9 +173,10 @@ export default function DocumentsPage() {
     }
   }
 
-  const fileTypeIcon = (type: string) => {
-    const icons: Record<string, string> = { pdf: '📄', docx: '📝', txt: '📃', md: '📋' }
-    return icons[type] || '📁'
+  const fileTypeIcon = (filename: string) => {
+    const ext = getFileExtension(filename)
+    const icons: Record<string, string> = { pdf: 'PDF', docx: 'DOC', txt: 'TXT', md: 'MD' }
+    return icons[ext] || 'FILE'
   }
 
   return (
@@ -105,21 +186,20 @@ export default function DocumentsPage() {
         <p className="text-gray-500 text-sm">Upload PDFs, Word docs, and text files to your knowledge base</p>
       </div>
 
-      {/* Upload Zone */}
       <div className="card p-6 mb-6">
         <h2 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
           <Upload className="w-4 h-4 text-brand-400" />
           Upload Document
         </h2>
-        
+
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
             isDragActive
               ? 'border-brand-500 bg-brand-900/20'
               : selectedFile
-              ? 'border-green-600 bg-green-900/10'
-              : 'border-gray-700 hover:border-gray-600 hover:bg-gray-800/50'
+                ? 'border-green-600 bg-green-900/10'
+                : 'border-gray-700 hover:border-gray-600 hover:bg-gray-800/50'
           }`}
         >
           <input {...getInputProps()} />
@@ -127,15 +207,14 @@ export default function DocumentsPage() {
             <div>
               <CheckCircle className="w-10 h-10 text-green-400 mx-auto mb-2" />
               <p className="text-green-300 font-medium">{selectedFile.name}</p>
-              <p className="text-gray-500 text-sm">{formatBytes(selectedFile.size)}</p>
             </div>
           ) : (
             <div>
               <Upload className="w-10 h-10 text-gray-600 mx-auto mb-3" />
               <p className="text-gray-400">
-                {isDragActive ? 'Drop here!' : 'Drag & drop or click to upload'}
+                {isDragActive ? 'Drop here!' : 'Drag and drop or click to upload'}
               </p>
-              <p className="text-gray-600 text-sm mt-1">PDF, DOCX, TXT, MD • Max 10MB</p>
+              <p className="text-gray-600 text-sm mt-1">PDF, DOCX, TXT, MD - Max 10MB</p>
             </div>
           )}
         </div>
@@ -154,22 +233,29 @@ export default function DocumentsPage() {
                 value={uploadTags}
                 onChange={(e) => setUploadTags(e.target.value)}
                 className="input pl-10"
-                placeholder="Tags (comma-separated, or blank for AI auto-tagging)"
+                placeholder="Tags (comma-separated)"
               />
             </div>
             <div className="flex gap-3">
               <button onClick={() => setSelectedFile(null)} className="btn-secondary">Cancel</button>
               <button onClick={handleUpload} disabled={uploading} className="btn-primary flex-1 justify-center">
-                {uploading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</> : <><Upload className="w-4 h-4" /> Upload & Process</>}
+                {uploading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Processing...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="w-4 h-4" /> Upload and Process
+                  </>
+                )}
               </button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Documents List */}
       <h2 className="text-base font-semibold text-white mb-3">Your Documents ({docs.length})</h2>
-      
+
       {loading ? (
         <div className="space-y-3">
           {[...Array(3)].map((_, i) => <div key={i} className="card h-20 animate-pulse" />)}
@@ -183,27 +269,52 @@ export default function DocumentsPage() {
         <div className="space-y-3">
           {docs.map((doc) => (
             <div key={doc.id} className="card p-4 flex items-center gap-4 hover:border-gray-700 transition-all">
-              <div className="text-2xl">{fileTypeIcon(doc.file_type)}</div>
+              <div className="text-xs font-semibold text-gray-300 px-2 py-1 border border-gray-700 rounded">
+                {fileTypeIcon(doc.filename)}
+              </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-medium text-white truncate">{doc.title}</h3>
-                  {doc.is_processed ? (
+                  <h3 className="font-medium text-white truncate">{doc.filename}</h3>
+                  {doc.status === 'completed' ? (
                     <span className="badge bg-green-900/40 text-green-300 border border-green-800/50">
                       <CheckCircle className="w-3 h-3 mr-1" /> Indexed
                     </span>
+                  ) : doc.status === 'failed' ? (
+                    <span className="badge bg-red-900/40 text-red-300 border border-red-800/50">
+                      <AlertCircle className="w-3 h-3 mr-1" /> Failed
+                    </span>
+                  ) : doc.status === 'uploaded' ? (
+                    <span className="badge bg-blue-900/40 text-blue-300 border border-blue-800/50">
+                      <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Uploaded
+                    </span>
                   ) : (
                     <span className="badge bg-yellow-900/40 text-yellow-300 border border-yellow-800/50 animate-pulse-slow">
-                      <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Processing...
+                      <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Processing
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-3 mt-1">
-                  <span className="text-xs text-gray-500">{doc.filename}</span>
-                  <span className="text-xs text-gray-600">•</span>
-                  <span className="text-xs text-gray-500">{formatBytes(doc.file_size)}</span>
-                  <span className="text-xs text-gray-600">•</span>
-                  <span className="text-xs text-gray-500">{format(new Date(doc.created_at), 'MMM d, yyyy')}</span>
+                <div className="flex items-center gap-3 mt-1 mb-2">
+                  <span className="text-xs text-gray-500">{doc.mimeType}</span>
+                  <span className="text-xs text-gray-600">-</span>
+                  <span className="text-xs text-gray-500">{doc.processedChunks}/{doc.totalChunks} chunks</span>
+                  <span className="text-xs text-gray-600">-</span>
+                  <span className="text-xs text-gray-500">{format(new Date(doc.createdAt), 'MMM d, yyyy')}</span>
                 </div>
+
+                <div className="h-2 rounded bg-gray-800 border border-gray-700 overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-300 ${
+                      doc.status === 'completed'
+                        ? 'bg-green-500'
+                        : doc.status === 'failed'
+                          ? 'bg-red-500'
+                          : 'bg-brand-500'
+                    }`}
+                    style={{ width: `${doc.progress}%` }}
+                  />
+                </div>
+                <div className="text-[11px] text-gray-500 mt-1">{doc.progress}%</div>
+
                 {doc.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {doc.tags.map((tag) => (

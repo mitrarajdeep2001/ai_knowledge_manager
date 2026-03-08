@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Plus,
   Search,
@@ -14,6 +14,8 @@ import {
 import { notesAPI, tagsAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { formatDistanceToNow } from 'date-fns'
+import ProgressBar from '../components/ProgressBar'
+import { useTaskStatus } from '../hooks/useTaskStatus'
 
 interface Note {
   id: string
@@ -23,6 +25,8 @@ interface Note {
   createdAt: string
   updatedAt: string
   tags?: string[]
+  embeddingStatus?: 'queued' | 'processing' | 'ready' | 'failed'
+  embeddingProgress?: number
 }
 
 interface NotesPagination {
@@ -42,6 +46,15 @@ const DEFAULT_LIMIT = 10
 const normalizeTags = (rawTags: string[]): string[] =>
   [...new Set(rawTags.map((tag) => tag.trim().toLowerCase()).filter(Boolean))]
 
+const getStatusMessage = (note: Note): string => {
+  const status = note.embeddingStatus || 'queued'
+
+  if (status === 'ready') return 'Embeddings ready'
+  if (status === 'failed') return 'Embedding failed'
+  if (status === 'processing') return 'Generating embeddings'
+  return 'Queued for processing'
+}
+
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([])
   const [loading, setLoading] = useState(true)
@@ -58,7 +71,10 @@ export default function NotesPage() {
   const [showCreate, setShowCreate] = useState(false)
   const [creating, setCreating] = useState(false)
   const [form, setForm] = useState({ title: '', content: '', tags: '' })
-  const navigate = useNavigate()
+
+  const hasPendingTasks = notes.some(
+    (note) => note.embeddingStatus === 'queued' || note.embeddingStatus === 'processing',
+  )
 
   const loadAvailableTags = useCallback(async () => {
     try {
@@ -70,44 +86,61 @@ export default function NotesPage() {
     }
   }, [])
 
-  const loadNotes = useCallback(async (targetPage: number, targetSearch: string, targetTags: string[]) => {
-    setLoading(true)
-    try {
-      const r = await notesAPI.list({
-        page: targetPage,
-        limit: DEFAULT_LIMIT,
-        search: targetSearch || undefined,
-        tags: targetTags.length > 0 ? targetTags.join(',') : undefined,
-      })
+  const loadNotes = useCallback(
+    async (
+      targetPage: number,
+      targetSearch: string,
+      targetTags: string[],
+      options?: { silent?: boolean },
+    ) => {
+      const silent = options?.silent ?? false
 
-      if (Array.isArray(r.data)) {
-        setNotes(r.data)
-        setPagination({
-          page: targetPage,
-          limit: DEFAULT_LIMIT,
-          total: r.data.length,
-          totalPages: 1,
-        })
-        return
+      if (!silent) {
+        setLoading(true)
       }
 
-      const payload = r.data as NotesListResponse
-      setNotes(Array.isArray(payload?.data) ? payload.data : [])
-      setPagination(
-        payload?.pagination ?? {
+      try {
+        const r = await notesAPI.list({
           page: targetPage,
           limit: DEFAULT_LIMIT,
-          total: 0,
-          totalPages: 0,
-        },
-      )
-    } catch {
-      toast.error('Failed to load notes')
-      setNotes([])
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+          search: targetSearch || undefined,
+          tags: targetTags.length > 0 ? targetTags.join(',') : undefined,
+        })
+
+        if (Array.isArray(r.data)) {
+          setNotes(r.data)
+          setPagination({
+            page: targetPage,
+            limit: DEFAULT_LIMIT,
+            total: r.data.length,
+            totalPages: 1,
+          })
+          return
+        }
+
+        const payload = r.data as NotesListResponse
+        setNotes(Array.isArray(payload?.data) ? payload.data : [])
+        setPagination(
+          payload?.pagination ?? {
+            page: targetPage,
+            limit: DEFAULT_LIMIT,
+            total: 0,
+            totalPages: 0,
+          },
+        )
+      } catch {
+        if (!silent) {
+          toast.error('Failed to load notes')
+        }
+        setNotes([])
+      } finally {
+        if (!silent) {
+          setLoading(false)
+        }
+      }
+    },
+    [],
+  )
 
   useEffect(() => {
     loadAvailableTags()
@@ -116,7 +149,7 @@ export default function NotesPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       loadNotes(page, search, selectedTags)
-    }, 300)
+    }, 350)
 
     return () => clearTimeout(timer)
   }, [loadNotes, page, search, selectedTags])
@@ -125,13 +158,22 @@ export default function NotesPage() {
     setPage(1)
   }, [search, selectedTags])
 
+  useTaskStatus({
+    enabled: hasPendingTasks,
+    pollIntervalMs: 3000,
+    throttleMs: 900,
+    refresh: async () => {
+      await loadNotes(page, search, selectedTags, { silent: true })
+    },
+  })
+
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
     setCreating(true)
 
     try {
       const tags = normalizeTags(form.tags.split(','))
-      const r = await notesAPI.create({
+      await notesAPI.create({
         title: form.title,
         content: form.content,
         tags,
@@ -139,9 +181,12 @@ export default function NotesPage() {
 
       setShowCreate(false)
       setForm({ title: '', content: '', tags: '' })
-      toast.success('Note created')
-      await loadAvailableTags()
-      navigate(`/notes/${r.data.id}`)
+      setPage(1)
+      toast.success('Note created. Embedding in progress...')
+      await Promise.all([
+        loadNotes(1, search, selectedTags),
+        loadAvailableTags(),
+      ])
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Failed to create note')
     } finally {
@@ -315,13 +360,13 @@ export default function NotesPage() {
                 to={`/notes/${note.id}`}
                 className="card p-5 hover:border-gray-700 transition-all group cursor-pointer flex flex-col"
               >
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-start justify-between mb-2 gap-2">
                   <h3 className="font-semibold text-white group-hover:text-brand-300 transition-colors line-clamp-1 flex-1">
                     {note.title}
                   </h3>
                   <button
                     onClick={(e) => handleDelete(note.id, e)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-gray-600 hover:text-red-400"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-600 hover:text-red-400"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -341,6 +386,14 @@ export default function NotesPage() {
                     )}
                   </div>
                 )}
+
+                <ProgressBar
+                  progress={note.embeddingProgress ?? 0}
+                  status={note.embeddingStatus || 'queued'}
+                  message={getStatusMessage(note)}
+                  className="mb-3"
+                />
+
                 <p className="text-xs text-gray-600">
                   {formatDistanceToNow(new Date(note.updatedAt))} ago
                 </p>
