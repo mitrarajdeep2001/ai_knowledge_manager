@@ -1,15 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
-import { CheckCircle2, AlertTriangle } from 'lucide-react'
+import { CheckCircle2, AlertTriangle, Loader2 } from 'lucide-react'
 
 interface ProgressBarProps {
   progress: number
-  status: 'queued' | 'processing' | 'ready' | 'failed'
+  status: 'queued' | 'uploaded' | 'processing' | 'ready' | 'completed' | 'failed'
   message?: string
   showPercent?: boolean
   className?: string
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(100, value))
+
+const statusBadgeClass = (status: ProgressBarProps['status']) => {
+  if (status === 'ready' || status === 'completed') {
+    return 'bg-green-900/40 text-green-300 border border-green-800/50'
+  }
+
+  if (status === 'failed') {
+    return 'bg-red-900/40 text-red-300 border border-red-800/50'
+  }
+
+  if (status === 'queued' || status === 'uploaded') {
+    return 'bg-blue-900/40 text-blue-300 border border-blue-800/50'
+  }
+
+  return 'bg-yellow-900/40 text-yellow-300 border border-yellow-800/50'
+}
+
+const statusLabelFor = (status: ProgressBarProps['status']) =>
+  status === 'ready' || status === 'completed'
+    ? 'Ready'
+    : status === 'failed'
+      ? 'Failed'
+      : status === 'uploaded'
+        ? 'Uploaded'
+        : status === 'queued'
+          ? 'Queued'
+          : 'Processing'
 
 export default function ProgressBar({
   progress,
@@ -51,29 +78,25 @@ export default function ProgressBar({
   }, [progress])
 
   const colorClass =
-    status === 'ready'
+    status === 'ready' || status === 'completed'
       ? 'bg-green-500'
       : status === 'failed'
         ? 'bg-red-500'
         : 'bg-brand-500'
 
-  const statusLabel =
-    status === 'ready'
-      ? 'Ready'
-      : status === 'failed'
-        ? 'Failed'
-        : status === 'queued'
-          ? 'Queued'
-          : 'Processing'
+  const statusLabel = statusLabelFor(status)
 
   return (
     <div className={`space-y-1 ${className}`} title={`${statusLabel}: ${Math.round(displayProgress)}%`}>
       <div className="flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1 text-gray-400">
-          {status === 'ready' && <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />}
-          {status === 'failed' && <AlertTriangle className="w-3.5 h-3.5 text-red-400" />}
-          <span>{message || statusLabel}</span>
-        </div>
+        <span className={`badge ${statusBadgeClass(status)}`}>
+          {(status === 'ready' || status === 'completed') && <CheckCircle2 className="w-3 h-3 mr-1" />}
+          {status === 'failed' && <AlertTriangle className="w-3 h-3 mr-1" />}
+          {(status === 'queued' || status === 'uploaded' || status === 'processing') && (
+            <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+          )}
+          {message || statusLabel}
+        </span>
         {showPercent && <span className="text-gray-500">{Math.round(displayProgress)}%</span>}
       </div>
 
@@ -82,7 +105,7 @@ export default function ProgressBar({
           className={`h-full rounded-full transition-[width] duration-300 ease-out ${colorClass}`}
           style={{ width: `${displayProgress}%` }}
         />
-        {(status === 'processing' || status === 'queued') && (
+        {(status === 'processing' || status === 'queued' || status === 'uploaded') && (
           <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.6s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         )}
       </div>

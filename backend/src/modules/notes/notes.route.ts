@@ -6,6 +6,7 @@ import {
   listNotesQuerySchema,
   noteIdParamsSchema,
   noteResponseSchema,
+  noteStatusResponseSchema,
   paginatedNotesResponseSchema,
   updateNoteSchema,
 } from "./notes.schema";
@@ -49,6 +50,26 @@ export const notesRoutes: FastifyPluginAsyncZod = async (fastify) => {
     },
     async (request) => {
       return notesService.list(request.user.id, request.query);
+    },
+  );
+
+  fastify.get(
+    "/:id/status",
+    {
+      preValidation: [fastify.authenticate],
+      schema: {
+        tags: ["Notes"],
+        summary: "Get note embedding status",
+        security: [{ bearerAuth: [] }],
+        params: noteIdParamsSchema,
+        response: {
+          200: noteStatusResponseSchema,
+        },
+      },
+    },
+    async (request) => {
+      const { id } = request.params;
+      return notesService.getStatus(request.user.id, id);
     },
   );
 

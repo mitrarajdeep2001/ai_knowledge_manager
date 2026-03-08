@@ -49,8 +49,19 @@ export const noteResponseSchema = z.object({
   tags: z.array(z.string()),
   embeddingStatus: z.string(),
   embeddingProgress: z.number().int().min(0).max(100),
+  processedChunks: z.number().int().min(0),
+  totalChunks: z.number().int().min(0),
+  embeddingErrorMessage: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
+});
+
+export const noteStatusResponseSchema = z.object({
+  status: z.enum(["queued", "processing", "ready", "failed"]),
+  progress: z.number().int().min(0).max(100),
+  processedChunks: z.number().int().min(0),
+  totalChunks: z.number().int().min(0),
+  errorMessage: z.string().nullable(),
 });
 
 export const paginatedNotesResponseSchema = z.object({

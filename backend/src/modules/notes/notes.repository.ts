@@ -4,13 +4,21 @@ import {
   eq,
   ilike,
   inArray,
+  notInArray,
   or,
   sql,
   type SQL,
 } from "drizzle-orm";
 import { db } from "../../db/index";
+import {
+  NewNote,
+  knowledgeChunks,
+  noteTags,
+  notes,
+  tags,
+  type Note,
+} from "../../db/schema";
 import { logger } from "../../utils/logger";
-import { NewNote, noteTags, notes, tags, type Note } from "../../db/schema";
 
 interface ListNotesFilters {
   page: number;
@@ -21,6 +29,15 @@ interface ListNotesFilters {
 
 export interface NoteWithTags extends Note {
   tags: string[];
+}
+
+export interface ChunkToStore {
+  userId: string;
+  sourceId: string;
+  content: string;
+  contentHash: string;
+  embedding: number[];
+  metadata: Record<string, unknown>;
 }
 
 export class NotesRepository {
@@ -37,9 +54,7 @@ export class NotesRepository {
         .select({ noteId: noteTags.noteId })
         .from(noteTags)
         .innerJoin(tags, eq(tags.id, noteTags.tagId))
-        .where(
-          and(eq(tags.userId, userId), inArray(tags.name, filters.tags)),
-        )
+        .where(and(eq(tags.userId, userId), inArray(tags.name, filters.tags)))
         .groupBy(noteTags.noteId)
         .having(sql`count(distinct ${tags.name}) = ${filters.tags.length}`);
 
@@ -120,6 +135,9 @@ export class NotesRepository {
             ...data,
             embeddingStatus: "queued",
             embeddingProgress: 0,
+            processedChunks: 0,
+            totalChunks: 0,
+            embeddingErrorMessage: null,
             embeddingUpdatedAt: null,
           })
           .returning();
@@ -142,7 +160,10 @@ export class NotesRepository {
     }
   }
 
-  async listByUser(userId: string, filters: ListNotesFilters): Promise<{ data: NoteWithTags[]; total: number }> {
+  async listByUser(
+    userId: string,
+    filters: ListNotesFilters,
+  ): Promise<{ data: NoteWithTags[]; total: number }> {
     try {
       const whereClause = this.buildWhereClause(userId, filters);
       const offset = (filters.page - 1) * filters.limit;
@@ -210,6 +231,16 @@ export class NotesRepository {
     }
   }
 
+  async findRawByIdForUser(id: string, userId: string): Promise<Note | undefined> {
+    const rows = await db
+      .select()
+      .from(notes)
+      .where(and(eq(notes.id, id), eq(notes.userId, userId)))
+      .limit(1);
+
+    return rows[0];
+  }
+
   async updateByIdForUser(
     id: string,
     userId: string,
@@ -224,6 +255,9 @@ export class NotesRepository {
             ...updates,
             embeddingStatus: "queued",
             embeddingProgress: 0,
+            processedChunks: 0,
+            totalChunks: 0,
+            embeddingErrorMessage: null,
             embeddingUpdatedAt: null,
             updatedAt: new Date(),
           })
@@ -255,6 +289,95 @@ export class NotesRepository {
       });
       throw error;
     }
+  }
+
+  async updateEmbeddingState(
+    noteId: string,
+    userId: string,
+    state: {
+      status: "queued" | "processing" | "ready" | "failed";
+      progress: number;
+      processedChunks?: number;
+      totalChunks?: number;
+      errorMessage?: string | null;
+      embeddedAt?: Date | null;
+    },
+  ): Promise<void> {
+    await db
+      .update(notes)
+      .set({
+        embeddingStatus: state.status,
+        embeddingProgress: state.progress,
+        processedChunks: state.processedChunks,
+        totalChunks: state.totalChunks,
+        embeddingErrorMessage: state.errorMessage,
+        embeddingUpdatedAt: state.embeddedAt,
+      })
+      .where(and(eq(notes.id, noteId), eq(notes.userId, userId)));
+  }
+
+  async getExistingChunkHashes(noteId: string): Promise<string[]> {
+    const rows = await db
+      .select({ contentHash: knowledgeChunks.contentHash })
+      .from(knowledgeChunks)
+      .where(and(eq(knowledgeChunks.sourceType, "note"), eq(knowledgeChunks.sourceId, noteId)));
+
+    return rows.map((row) => row.contentHash);
+  }
+
+  async deleteChunksNotInHashes(noteId: string, keepHashes: string[]): Promise<void> {
+    if (keepHashes.length === 0) {
+      await db
+        .delete(knowledgeChunks)
+        .where(and(eq(knowledgeChunks.sourceType, "note"), eq(knowledgeChunks.sourceId, noteId)));
+      return;
+    }
+
+    await db
+      .delete(knowledgeChunks)
+      .where(
+        and(
+          eq(knowledgeChunks.sourceType, "note"),
+          eq(knowledgeChunks.sourceId, noteId),
+          notInArray(knowledgeChunks.contentHash, keepHashes),
+        ),
+      );
+  }
+
+  async saveEmbeddedChunk(chunk: ChunkToStore): Promise<void> {
+    await db
+      .insert(knowledgeChunks)
+      .values({
+        userId: chunk.userId,
+        sourceType: "note",
+        sourceId: chunk.sourceId,
+        content: chunk.content,
+        contentHash: chunk.contentHash,
+        embedding: chunk.embedding,
+        metadata: chunk.metadata,
+      })
+      .onConflictDoNothing({
+        target: [knowledgeChunks.sourceId, knowledgeChunks.contentHash],
+      });
+  }
+
+  async countEmbeddedChunks(noteId: string): Promise<number> {
+    const rows = await db
+      .select({ total: sql<number>`count(*)::int` })
+      .from(knowledgeChunks)
+      .where(and(eq(knowledgeChunks.sourceType, "note"), eq(knowledgeChunks.sourceId, noteId)));
+
+    return rows[0]?.total ?? 0;
+  }
+
+  async findStatusByIdForUser(noteId: string, userId: string): Promise<Note | undefined> {
+    const rows = await db
+      .select()
+      .from(notes)
+      .where(and(eq(notes.id, noteId), eq(notes.userId, userId)))
+      .limit(1);
+
+    return rows[0];
   }
 
   async deleteByIdForUser(id: string, userId: string): Promise<Note | undefined> {

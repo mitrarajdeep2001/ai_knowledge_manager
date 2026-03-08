@@ -48,11 +48,7 @@ const normalizeTags = (rawTags: string[]): string[] =>
 
 const getStatusMessage = (note: Note): string => {
   const status = note.embeddingStatus || 'queued'
-
-  if (status === 'ready') return 'Embeddings ready'
-  if (status === 'failed') return 'Embedding failed'
-  if (status === 'processing') return 'Generating embeddings'
-  return 'Queued for processing'
+  return status[0].toUpperCase() + status.slice(1)
 }
 
 export default function NotesPage() {
@@ -427,3 +423,8 @@ export default function NotesPage() {
     </div>
   )
 }
+
+
+
+
+

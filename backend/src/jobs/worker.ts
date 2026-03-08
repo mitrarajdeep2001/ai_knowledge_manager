@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { Worker } from "bullmq";
-import { embeddingsService } from "../modules/embeddings/embeddings.service";
 import {
   createRedisConnection,
   type DocumentProcessingJobData,
@@ -8,6 +7,7 @@ import {
   type NoteEmbeddingJobData,
 } from "../modules/embeddings/embeddings.queue";
 import { documentsService } from "../modules/documents/documents.service";
+import { notesService } from "../modules/notes/notes.service";
 import { logger } from "../utils/logger";
 
 export const startEmbeddingsWorker = () => {
@@ -29,7 +29,8 @@ export const startEmbeddingsWorker = () => {
       });
 
       if (job.name === "note-embedding-sync") {
-        await embeddingsService.processNoteEmbeddingJob(job.data as NoteEmbeddingJobData);
+        const noteData = job.data as NoteEmbeddingJobData;
+        await notesService.processNoteEmbeddingJob(noteData.noteId, noteData.userId);
         return;
       }
 

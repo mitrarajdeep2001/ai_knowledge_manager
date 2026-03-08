@@ -1,7 +1,3 @@
-import { embeddingsRepository } from "./embeddings.repository";
-import { normalizeText } from "../../utils/normalizeText";
-import { chunkText } from "../../utils/chunkText";
-import { hashChunk } from "../../utils/hashChunk";
 import { logger } from "../../utils/logger";
 import { resolveEmbeddingBatchSize } from "../../utils/embeddingBatchSize";
 
@@ -10,11 +6,6 @@ const HF_E5_ENDPOINT =
 
 const MAX_RETRIES = 3;
 const BATCH_SIZE = resolveEmbeddingBatchSize("embeddings-service");
-
-type NoteEmbeddingJobData = {
-  noteId: string;
-  userId: string;
-};
 
 const ensureValidBatchSize = (batchSize: number, module: string): void => {
   if (!Number.isFinite(batchSize) || batchSize <= 0) {
@@ -111,6 +102,8 @@ export class EmbeddingsService {
     let attempt = 0;
     let lastError: Error | null = null;
 
+    ensureValidBatchSize(BATCH_SIZE, "embeddings-service");
+
     while (attempt < MAX_RETRIES) {
       attempt += 1;
       try {
@@ -170,125 +163,6 @@ export class EmbeddingsService {
     }
 
     throw new Error(`Embedding batch failed after ${MAX_RETRIES} attempts: ${lastError?.message}`);
-  }
-
-  async processNoteEmbeddingJob(data: NoteEmbeddingJobData): Promise<void> {
-    logger.info("Note embedding processing started", {
-      noteId: data.noteId,
-      userId: data.userId,
-      module: "note-embedding",
-    });
-
-    await embeddingsRepository.updateNoteEmbeddingState(data.noteId, {
-      status: "processing",
-      progress: 10,
-    });
-
-    try {
-      const note = await embeddingsRepository.findNoteByIdAndUser(data.noteId, data.userId);
-      if (!note) {
-        await embeddingsRepository.updateNoteEmbeddingState(data.noteId, {
-          status: "failed",
-          progress: 0,
-        });
-        logger.warn("Note embedding processing failed: note not found", {
-          noteId: data.noteId,
-          userId: data.userId,
-          module: "note-embedding",
-        });
-        return;
-      }
-
-      ensureValidBatchSize(BATCH_SIZE, "note-embedding");
-
-      const normalizedContent = normalizeText(note.content);
-      const chunks = chunkText(normalizedContent);
-
-      const chunkRecords = chunks.map((content) => ({
-        content,
-        contentHash: hashChunk(content),
-      }));
-
-      const newHashes = chunkRecords.map((chunk) => chunk.contentHash);
-      const existingHashes = await embeddingsRepository.getExistingChunkHashes(note.id);
-      const existingHashSet = new Set(existingHashes);
-
-      const chunksToEmbed = chunkRecords.filter(
-        (chunk) => !existingHashSet.has(chunk.contentHash),
-      );
-
-      await embeddingsRepository.deleteChunksNotInHashes(note.id, newHashes);
-
-      const totalExpected = chunkRecords.length;
-      let processedCount = existingHashes.length;
-
-      for (let start = 0; start < chunksToEmbed.length; start += BATCH_SIZE) {
-        const batch = chunksToEmbed.slice(start, start + BATCH_SIZE);
-        const vectors = await this.generateEmbeddings(batch.map((item) => item.content));
-
-        for (let i = 0; i < batch.length; i += 1) {
-          const chunk = batch[i];
-          const embedding = vectors[i];
-
-          await embeddingsRepository.saveChunk({
-            userId: note.userId,
-            sourceType: "note",
-            sourceId: note.id,
-            content: chunk.content,
-            contentHash: chunk.contentHash,
-            embedding,
-            metadata: {
-              title: note.title,
-              source: "note",
-              noteId: note.id,
-            },
-          });
-        }
-
-        const persistedCount = await embeddingsRepository.countChunksBySource(note.id, "note");
-        processedCount = persistedCount;
-
-        await embeddingsRepository.updateNoteEmbeddingState(note.id, {
-          status: "processing",
-          progress:
-            totalExpected === 0
-              ? 100
-              : Math.min(99, Math.round((processedCount / totalExpected) * 100)),
-        });
-      }
-
-      const finalPersisted = await embeddingsRepository.countChunksBySource(note.id, "note");
-      if (finalPersisted < totalExpected) {
-        throw new Error(
-          `Embedding persistence mismatch for note ${note.id}: expected ${totalExpected}, persisted ${finalPersisted}`,
-        );
-      }
-
-      await embeddingsRepository.updateNoteEmbeddingState(note.id, {
-        status: "ready",
-        progress: 100,
-        embeddedAt: new Date(),
-      });
-
-      logger.info("Note embedding processing completed", {
-        noteId: note.id,
-        userId: note.userId,
-        chunksEmbedded: finalPersisted,
-        module: "note-embedding",
-      });
-    } catch (error) {
-      logger.error("Failed to process note embedding job", {
-        noteId: data.noteId,
-        userId: data.userId,
-        module: "note-embedding",
-        err: error,
-      });
-      await embeddingsRepository.updateNoteEmbeddingState(data.noteId, {
-        status: "failed",
-        progress: 0,
-      });
-      throw error;
-    }
   }
 }
 

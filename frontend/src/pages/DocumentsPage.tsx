@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Upload, Loader2, Trash2, File, CheckCircle, AlertCircle, Tag } from 'lucide-react'
+import { Upload, Loader2, Trash2, File, CheckCircle, Tag } from 'lucide-react'
 import { documentsAPI } from '../services/api'
 import toast from 'react-hot-toast'
 import { format } from 'date-fns'
+import ProgressBar from '../components/ProgressBar'
 
 type DocStatus = 'uploaded' | 'processing' | 'completed' | 'failed'
 
@@ -275,23 +276,6 @@ export default function DocumentsPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="font-medium text-white truncate">{doc.filename}</h3>
-                  {doc.status === 'completed' ? (
-                    <span className="badge bg-green-900/40 text-green-300 border border-green-800/50">
-                      <CheckCircle className="w-3 h-3 mr-1" /> Indexed
-                    </span>
-                  ) : doc.status === 'failed' ? (
-                    <span className="badge bg-red-900/40 text-red-300 border border-red-800/50">
-                      <AlertCircle className="w-3 h-3 mr-1" /> Failed
-                    </span>
-                  ) : doc.status === 'uploaded' ? (
-                    <span className="badge bg-blue-900/40 text-blue-300 border border-blue-800/50">
-                      <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Uploaded
-                    </span>
-                  ) : (
-                    <span className="badge bg-yellow-900/40 text-yellow-300 border border-yellow-800/50 animate-pulse-slow">
-                      <Loader2 className="w-3 h-3 mr-1 animate-spin" /> Processing
-                    </span>
-                  )}
                 </div>
                 <div className="flex items-center gap-3 mt-1 mb-2">
                   <span className="text-xs text-gray-500">{doc.mimeType}</span>
@@ -301,19 +285,11 @@ export default function DocumentsPage() {
                   <span className="text-xs text-gray-500">{format(new Date(doc.createdAt), 'MMM d, yyyy')}</span>
                 </div>
 
-                <div className="h-2 rounded bg-gray-800 border border-gray-700 overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-300 ${
-                      doc.status === 'completed'
-                        ? 'bg-green-500'
-                        : doc.status === 'failed'
-                          ? 'bg-red-500'
-                          : 'bg-brand-500'
-                    }`}
-                    style={{ width: `${doc.progress}%` }}
-                  />
-                </div>
-                <div className="text-[11px] text-gray-500 mt-1">{doc.progress}%</div>
+                <ProgressBar
+                  progress={doc.progress}
+                  status={doc.status}
+                  className="mt-1"
+                />
 
                 {doc.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
@@ -338,3 +314,6 @@ export default function DocumentsPage() {
     </div>
   )
 }
+
+
+

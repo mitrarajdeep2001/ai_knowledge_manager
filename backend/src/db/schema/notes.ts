@@ -22,6 +22,9 @@ export const notes = pgTable(
       .notNull()
       .default("queued"),
     embeddingProgress: integer("embedding_progress").notNull().default(0),
+    processedChunks: integer("processed_chunks").notNull().default(0),
+    totalChunks: integer("total_chunks").notNull().default(0),
+    embeddingErrorMessage: text("embedding_error_message"),
     embeddingUpdatedAt: timestamp("embedding_updated_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
