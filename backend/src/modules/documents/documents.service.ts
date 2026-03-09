@@ -1,4 +1,6 @@
-import { unlink } from "node:fs/promises";
+import { createReadStream } from "node:fs";
+import { access, unlink } from "node:fs/promises";
+import { constants } from "node:fs";
 import { extname } from "node:path";
 import { AppError } from "../../utils/AppError";
 import { documentsRepository, type DocumentWithTags } from "./documents.repository";
@@ -73,7 +75,51 @@ const toDocumentDto = (document: DocumentWithTags) => ({
   createdAt: document.createdAt.toISOString(),
 });
 
+const sanitizeFilenameForHeader = (filename: string): string => {
+  return filename.replace(/[\r\n"]/g, "_");
+};
+
+const PREVIEWABLE_MIME_BY_EXTENSION: Record<string, string> = {
+  ".pdf": "application/pdf",
+  ".txt": "text/plain; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+};
+
+const resolveViewMimeType = (filename: string, mimeType: string | null | undefined): string => {
+  const normalizedMime = (mimeType ?? "").trim().toLowerCase();
+  if (normalizedMime && normalizedMime !== "application/octet-stream") {
+    return normalizedMime;
+  }
+
+  const extension = extname(filename).toLowerCase();
+  return PREVIEWABLE_MIME_BY_EXTENSION[extension] ?? "application/octet-stream";
+};
+
 export class DocumentsService {
+  private async loadAccessibleDocument(userId: string, documentId: string) {
+    const document = await documentsRepository.findRawById(documentId);
+    if (!document) {
+      throw new AppError("Document not found", 404);
+    }
+
+    if (document.userId !== userId) {
+      throw new AppError("Forbidden", 403);
+    }
+
+    try {
+      await access(document.filePath, constants.R_OK);
+    } catch {
+      throw new AppError("Document file is missing on disk", 404);
+    }
+
+    return document;
+  }
+
   private async enqueueProcessing(documentId: string, userId: string): Promise<void> {
     await documentsRepository.updateProcessingProgress(documentId, {
       status: "processing",
@@ -157,6 +203,26 @@ export class DocumentsService {
         total,
         totalPages,
       },
+    };
+  }
+
+  async getViewStream(userId: string, documentId: string) {
+    const document = await this.loadAccessibleDocument(userId, documentId);
+
+    return {
+      filename: sanitizeFilenameForHeader(document.filename),
+      mimeType: resolveViewMimeType(document.filename, document.mimeType),
+      stream: createReadStream(document.filePath),
+    };
+  }
+
+  async getDownloadStream(userId: string, documentId: string) {
+    const document = await this.loadAccessibleDocument(userId, documentId);
+
+    return {
+      filename: sanitizeFilenameForHeader(document.filename),
+      mimeType: document.mimeType,
+      stream: createReadStream(document.filePath),
     };
   }
 
@@ -426,3 +492,4 @@ export class DocumentsService {
 }
 
 export const documentsService = new DocumentsService();
+

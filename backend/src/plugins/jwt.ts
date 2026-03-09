@@ -33,9 +33,26 @@ export const jwtPlugin = fp(async (fastify) => {
     "authenticate",
     async (request: FastifyRequest, reply: FastifyReply) => {
       try {
-        await request.jwtVerify();
+        const authHeader = request.headers.authorization;
+
+        // If Authorization header exists → normal flow
+        if (authHeader?.startsWith("Bearer ")) {
+          await request.jwtVerify();
+          return;
+        }
+
+        // If token provided in query
+        const queryToken = (request.query as any)?.token;
+
+        if (queryToken) {
+          request.headers.authorization = `Bearer ${queryToken}`;
+          await request.jwtVerify();
+          return;
+        }
+
+        return reply.code(401).send({ message: "Unauthorized" });
       } catch (err) {
-        reply.code(401).send({ message: "Unauthorized" });
+        return reply.code(401).send({ message: "Unauthorized" });
       }
     },
   );

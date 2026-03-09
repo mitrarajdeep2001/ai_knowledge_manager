@@ -73,6 +73,8 @@ export const documentsAPI = {
   list: () => api.get('/documents'),
   get: (id: string) => api.get(`/documents/${id}`),
   status: (id: string) => api.get(`/documents/${id}/status`),
+  view: (id: string) => api.get(`/documents/${id}/view`, { responseType: 'blob' }),
+  download: (id: string) => api.get(`/documents/${id}/download`, { responseType: 'blob' }),
   upload: (formData: FormData) =>
     api.post('/documents/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },

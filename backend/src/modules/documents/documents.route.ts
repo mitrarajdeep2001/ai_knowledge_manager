@@ -62,6 +62,44 @@ export const documentsRoutes: FastifyPluginAsyncZod = async (fastify) => {
   );
 
   fastify.get(
+    "/:id/view",
+    {
+      preValidation: [fastify.authenticate],
+      schema: {
+        tags: ["Documents"],
+        summary: "Preview uploaded document",
+        security: [{ bearerAuth: [] }],
+        params: documentIdParamsSchema,
+      },
+    },
+    async (request, reply) => {
+      const payload = await documentsService.getViewStream(request.user.id, request.params.id);
+      reply.header("Content-Type", payload.mimeType || "application/octet-stream");
+      reply.header("Content-Disposition", `inline; filename="${payload.filename}"`);
+      return reply.send(payload.stream);
+    },
+  );
+
+  fastify.get(
+    "/:id/download",
+    {
+      preValidation: [fastify.authenticate],
+      schema: {
+        tags: ["Documents"],
+        summary: "Download uploaded document",
+        security: [{ bearerAuth: [] }],
+        params: documentIdParamsSchema,
+      },
+    },
+    async (request, reply) => {
+      const payload = await documentsService.getDownloadStream(request.user.id, request.params.id);
+      reply.header("Content-Type", payload.mimeType || "application/octet-stream");
+      reply.header("Content-Disposition", `attachment; filename="${payload.filename}"`);
+      return reply.send(payload.stream);
+    },
+  );
+
+  fastify.get(
     "/:id/status",
     {
       preValidation: [fastify.authenticate],

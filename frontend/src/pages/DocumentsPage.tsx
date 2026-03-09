@@ -1,43 +1,59 @@
-import { useEffect, useState, useCallback, useMemo } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { Upload, Loader2, Trash2, File, CheckCircle, Tag } from 'lucide-react'
-import { documentsAPI } from '../services/api'
-import toast from 'react-hot-toast'
-import { format } from 'date-fns'
-import ProgressBar from '../components/ProgressBar'
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { useDropzone } from "react-dropzone";
+import {
+  Upload,
+  Loader2,
+  Trash2,
+  File,
+  CheckCircle,
+  Tag,
+  Eye,
+  Download,
+} from "lucide-react";
+import { documentsAPI } from "../services/api";
+import toast from "react-hot-toast";
+import { format } from "date-fns";
+import ProgressBar from "../components/ProgressBar";
 
-type DocStatus = 'uploaded' | 'processing' | 'completed' | 'failed'
+type DocStatus = "uploaded" | "processing" | "completed" | "failed";
 
 interface Doc {
-  id: string
-  userId: string
-  filename: string
-  filePath: string
-  mimeType: string
-  status: DocStatus
-  processedChunks: number
-  totalChunks: number
-  progress: number
-  tags: string[]
-  createdAt: string
+  id: string;
+  userId: string;
+  filename: string;
+  filePath: string;
+  mimeType: string;
+  status: DocStatus;
+  processedChunks: number;
+  totalChunks: number;
+  progress: number;
+  tags: string[];
+  createdAt: string;
 }
 
 const getFileExtension = (filename: string) => {
-  const parts = filename.split('.')
-  return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : ''
-}
+  const parts = filename.split(".");
+  return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
+};
 
-const toProgress = (status: DocStatus, processedChunks: number, totalChunks: number): number => {
-  if (status === 'completed') return 100
-  if (status === 'failed' || status === 'uploaded') return 0
-  if (totalChunks <= 0) return 0
-  return Math.max(0, Math.min(100, Math.round((processedChunks / totalChunks) * 100)))
-}
+const toProgress = (
+  status: DocStatus,
+  processedChunks: number,
+  totalChunks: number,
+): number => {
+  if (status === "completed") return 100;
+  if (status === "failed" || status === "uploaded") return 0;
+  if (totalChunks <= 0) return 0;
+  return Math.max(
+    0,
+    Math.min(100, Math.round((processedChunks / totalChunks) * 100)),
+  );
+};
 
 const mapDoc = (doc: any): Doc => {
-  const status = (doc.status ?? 'uploaded') as DocStatus
-  const processedChunks = doc.processedChunks ?? 0
-  const totalChunks = doc.totalChunks ?? 0
+  const status = (doc.status ?? "uploaded") as DocStatus;
+  const processedChunks = doc.processedChunks ?? 0;
+  const totalChunks = doc.totalChunks ?? 0;
 
   return {
     id: doc.id,
@@ -51,49 +67,70 @@ const mapDoc = (doc: any): Doc => {
     progress: toProgress(status, processedChunks, totalChunks),
     tags: doc.tags ?? [],
     createdAt: doc.createdAt,
+  };
+};
+
+const parseFilenameFromDisposition = (
+  contentDisposition?: string,
+): string | null => {
+  if (!contentDisposition) {
+    return null;
   }
-}
+
+  const utf8Match = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i);
+  if (utf8Match?.[1]) {
+    return decodeURIComponent(utf8Match[1]);
+  }
+
+  const plainMatch = contentDisposition.match(/filename="?([^";]+)"?/i);
+  return plainMatch?.[1] ?? null;
+};
 
 export default function DocumentsPage() {
-  const [docs, setDocs] = useState<Doc[]>([])
-  const [loading, setLoading] = useState(true)
-  const [uploading, setUploading] = useState(false)
-  const [uploadTitle, setUploadTitle] = useState('')
-  const [uploadTags, setUploadTags] = useState('')
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [docs, setDocs] = useState<Doc[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [uploadTitle, setUploadTitle] = useState("");
+  const [uploadTags, setUploadTags] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const processingDocIds = useMemo(
-    () => docs.filter((doc) => doc.status === 'uploaded' || doc.status === 'processing').map((doc) => doc.id),
+    () =>
+      docs
+        .filter(
+          (doc) => doc.status === "uploaded" || doc.status === "processing",
+        )
+        .map((doc) => doc.id),
     [docs],
-  )
+  );
 
   const loadDocs = useCallback(async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const r = await documentsAPI.list()
-      const list = Array.isArray(r.data) ? r.data : (r.data?.data ?? [])
-      const mapped = Array.isArray(list) ? list.map(mapDoc) : []
-      setDocs(mapped)
+      const r = await documentsAPI.list();
+      const list = Array.isArray(r.data) ? r.data : (r.data?.data ?? []);
+      const mapped = Array.isArray(list) ? list.map(mapDoc) : [];
+      setDocs(mapped);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
+  }, []);
 
   const refreshStatuses = useCallback(async () => {
-    if (processingDocIds.length === 0) return
+    if (processingDocIds.length === 0) return;
 
     try {
       const results = await Promise.all(
         processingDocIds.map(async (id) => {
-          const response = await documentsAPI.status(id)
-          return { id, ...response.data }
+          const response = await documentsAPI.status(id);
+          return { id, ...response.data };
         }),
-      )
+      );
 
       setDocs((prev) =>
         prev.map((doc) => {
-          const state = results.find((result) => result.id === doc.id)
-          if (!state) return doc
+          const state = results.find((result) => result.id === doc.id);
+          if (!state) return doc;
 
           return {
             ...doc,
@@ -101,90 +138,133 @@ export default function DocumentsPage() {
             processedChunks: state.processedChunks,
             totalChunks: state.totalChunks,
             progress: state.progress,
-          }
+          };
         }),
-      )
+      );
     } catch {
       // Ignore transient polling errors.
     }
-  }, [processingDocIds])
+  }, [processingDocIds]);
 
   useEffect(() => {
-    loadDocs()
-  }, [loadDocs])
+    loadDocs();
+  }, [loadDocs]);
 
   useEffect(() => {
-    if (processingDocIds.length === 0) return
+    if (processingDocIds.length === 0) return;
 
     const timer = setInterval(() => {
-      refreshStatuses()
-    }, 2000)
+      refreshStatuses();
+    }, 2000);
 
-    return () => clearInterval(timer)
-  }, [processingDocIds.length, refreshStatuses])
+    return () => clearInterval(timer);
+  }, [processingDocIds.length, refreshStatuses]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
-      'application/pdf': ['.pdf'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-      'text/plain': ['.txt'],
-      'text/markdown': ['.md'],
+      "application/pdf": [".pdf"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docx"],
+      "text/plain": [".txt"],
+      "text/markdown": [".md"],
     },
     maxSize: 10 * 1024 * 1024,
     multiple: false,
     onDrop: (accepted) => {
       if (accepted.length > 0) {
-        setSelectedFile(accepted[0])
-        setUploadTitle(accepted[0].name.replace(/\.[^/.]+$/, ''))
+        setSelectedFile(accepted[0]);
+        setUploadTitle(accepted[0].name.replace(/\.[^/.]+$/, ""));
       }
     },
-    onDropRejected: () => toast.error('File rejected (max 10MB, PDF/DOCX/TXT/MD only)'),
-  })
+    onDropRejected: () =>
+      toast.error("File rejected (max 10MB, PDF/DOCX/TXT/MD only)"),
+  });
 
   const handleUpload = async () => {
-    if (!selectedFile) return
-    setUploading(true)
+    if (!selectedFile) return;
+    setUploading(true);
     try {
-      const fd = new FormData()
-      fd.append('file', selectedFile)
-      fd.append('title', uploadTitle || selectedFile.name)
-      fd.append('tags', uploadTags)
+      const fd = new FormData();
+      fd.append("file", selectedFile);
+      fd.append("title", uploadTitle || selectedFile.name);
+      fd.append("tags", uploadTags);
 
-      const r = await documentsAPI.upload(fd)
-      setDocs((prev) => [mapDoc(r.data), ...prev])
-      setSelectedFile(null)
-      setUploadTitle('')
-      setUploadTags('')
-      toast.success('Document uploaded and processing started')
+      const r = await documentsAPI.upload(fd);
+      setDocs((prev) => [mapDoc(r.data), ...prev]);
+      setSelectedFile(null);
+      setUploadTitle("");
+      setUploadTags("");
+      toast.success("Document uploaded and processing started");
     } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Upload failed')
+      toast.error(err.response?.data?.message || "Upload failed");
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this document?')) return
+    if (!confirm("Delete this document?")) return;
     try {
-      await documentsAPI.delete(id)
-      setDocs((prev) => prev.filter((d) => d.id !== id))
-      toast.success('Document deleted')
+      await documentsAPI.delete(id);
+      setDocs((prev) => prev.filter((d) => d.id !== id));
+      toast.success("Document deleted");
     } catch {
-      toast.error('Delete failed')
+      toast.error("Delete failed");
     }
-  }
+  };
+
+  const handleView = (id: string) => {
+    const token = localStorage.getItem("pkm_token");
+
+    if (token) {
+      window.open(
+        `${import.meta.env.VITE_API_BASE_URL}/documents/${id}/view?token=${token}`,
+        // "_blank",
+      );
+    }
+  };
+
+  const handleDownload = async (id: string, fallbackFilename: string) => {
+    try {
+      const response = await documentsAPI.download(id);
+      const blob = response.data as Blob;
+      const contentDisposition = response.headers["content-disposition"] as
+        | string
+        | undefined;
+      const resolvedName =
+        parseFilenameFromDisposition(contentDisposition) || fallbackFilename;
+
+      const url = window.URL.createObjectURL(blob);
+      const link = window.document.createElement("a");
+      link.href = url;
+      link.download = resolvedName;
+      window.document.body.appendChild(link);
+      link.click();
+      window.document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Unable to download document");
+    }
+  };
 
   const fileTypeIcon = (filename: string) => {
-    const ext = getFileExtension(filename)
-    const icons: Record<string, string> = { pdf: 'PDF', docx: 'DOC', txt: 'TXT', md: 'MD' }
-    return icons[ext] || 'FILE'
-  }
+    const ext = getFileExtension(filename);
+    const icons: Record<string, string> = {
+      pdf: "PDF",
+      docx: "DOC",
+      txt: "TXT",
+      md: "MD",
+    };
+    return icons[ext] || "FILE";
+  };
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-white">Documents</h1>
-        <p className="text-gray-500 text-sm">Upload PDFs, Word docs, and text files to your knowledge base</p>
+        <p className="text-gray-500 text-sm">
+          Upload PDFs, Word docs, and text files to your knowledge base
+        </p>
       </div>
 
       <div className="card p-6 mb-6">
@@ -197,10 +277,10 @@ export default function DocumentsPage() {
           {...getRootProps()}
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
             isDragActive
-              ? 'border-brand-500 bg-brand-900/20'
+              ? "border-brand-500 bg-brand-900/20"
               : selectedFile
-                ? 'border-green-600 bg-green-900/10'
-                : 'border-gray-700 hover:border-gray-600 hover:bg-gray-800/50'
+                ? "border-green-600 bg-green-900/10"
+                : "border-gray-700 hover:border-gray-600 hover:bg-gray-800/50"
           }`}
         >
           <input {...getInputProps()} />
@@ -213,9 +293,13 @@ export default function DocumentsPage() {
             <div>
               <Upload className="w-10 h-10 text-gray-600 mx-auto mb-3" />
               <p className="text-gray-400">
-                {isDragActive ? 'Drop here!' : 'Drag and drop or click to upload'}
+                {isDragActive
+                  ? "Drop here!"
+                  : "Drag and drop or click to upload"}
               </p>
-              <p className="text-gray-600 text-sm mt-1">PDF, DOCX, TXT, MD - Max 10MB</p>
+              <p className="text-gray-600 text-sm mt-1">
+                PDF, DOCX, TXT, MD - Max 10MB
+              </p>
             </div>
           )}
         </div>
@@ -238,8 +322,17 @@ export default function DocumentsPage() {
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={() => setSelectedFile(null)} className="btn-secondary">Cancel</button>
-              <button onClick={handleUpload} disabled={uploading} className="btn-primary flex-1 justify-center">
+              <button
+                onClick={() => setSelectedFile(null)}
+                className="btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpload}
+                disabled={uploading}
+                className="btn-primary flex-1 justify-center"
+              >
                 {uploading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" /> Processing...
@@ -255,34 +348,49 @@ export default function DocumentsPage() {
         )}
       </div>
 
-      <h2 className="text-base font-semibold text-white mb-3">Your Documents ({docs.length})</h2>
+      <h2 className="text-base font-semibold text-white mb-3">
+        Your Documents ({docs.length})
+      </h2>
 
       {loading ? (
         <div className="space-y-3">
-          {[...Array(3)].map((_, i) => <div key={i} className="card h-20 animate-pulse" />)}
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="card h-20 animate-pulse" />
+          ))}
         </div>
       ) : docs.length === 0 ? (
         <div className="card p-12 text-center">
           <File className="w-12 h-12 text-gray-700 mx-auto mb-3" />
-          <p className="text-gray-500">No documents yet. Upload your first document above.</p>
+          <p className="text-gray-500">
+            No documents yet. Upload your first document above.
+          </p>
         </div>
       ) : (
         <div className="space-y-3">
           {docs.map((doc) => (
-            <div key={doc.id} className="card p-4 flex items-center gap-4 hover:border-gray-700 transition-all">
+            <div
+              key={doc.id}
+              className="card p-4 flex items-center gap-4 hover:border-gray-700 transition-all"
+            >
               <div className="text-xs font-semibold text-gray-300 px-2 py-1 border border-gray-700 rounded">
                 {fileTypeIcon(doc.filename)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-medium text-white truncate">{doc.filename}</h3>
+                  <h3 className="font-medium text-white truncate">
+                    {doc.filename}
+                  </h3>
                 </div>
                 <div className="flex items-center gap-3 mt-1 mb-2">
                   <span className="text-xs text-gray-500">{doc.mimeType}</span>
                   <span className="text-xs text-gray-600">-</span>
-                  <span className="text-xs text-gray-500">{doc.processedChunks}/{doc.totalChunks} chunks</span>
+                  <span className="text-xs text-gray-500">
+                    {doc.processedChunks}/{doc.totalChunks} chunks
+                  </span>
                   <span className="text-xs text-gray-600">-</span>
-                  <span className="text-xs text-gray-500">{format(new Date(doc.createdAt), 'MMM d, yyyy')}</span>
+                  <span className="text-xs text-gray-500">
+                    {format(new Date(doc.createdAt), "MMM d, yyyy")}
+                  </span>
                 </div>
 
                 <ProgressBar
@@ -294,26 +402,44 @@ export default function DocumentsPage() {
                 {doc.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {doc.tags.map((tag) => (
-                      <span key={tag} className="badge bg-purple-900/30 text-purple-300 border border-purple-800/40 text-xs">
+                      <span
+                        key={tag}
+                        className="badge bg-purple-900/30 text-purple-300 border border-purple-800/40 text-xs"
+                      >
                         #{tag}
                       </span>
                     ))}
                   </div>
                 )}
               </div>
-              <button
-                onClick={() => handleDelete(doc.id)}
-                className="text-gray-600 hover:text-red-400 transition-colors p-2"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => handleView(doc.id)}
+                  className="text-gray-400 hover:text-brand-300 transition-colors p-2"
+                  title="View"
+                >
+                  <Eye className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleDownload(doc.id, doc.filename)}
+                  className="text-gray-400 hover:text-brand-300 transition-colors p-2"
+                  title="Download"
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleDelete(doc.id)}
+                  className="text-gray-600 hover:text-red-400 transition-colors p-2"
+                  title="Delete"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }
-
-
-
