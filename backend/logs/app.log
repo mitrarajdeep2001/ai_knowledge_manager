@@ -402,3 +402,258 @@
 {"level":"info","time":"2026-03-09T06:52:57.511Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"15ms","module":"http-request","msg":"Request completed"}
 {"level":"info","time":"2026-03-09T06:53:08.260Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
 {"level":"info","time":"2026-03-09T06:53:08.260Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":401,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T07:05:09.522Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T07:05:09.525Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T07:05:09.552Z","pid":29244,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"27ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T07:12:28.317Z","pid":28800,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:12:32.830Z","pid":28800,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:12:39.657Z","pid":28800,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:14:36.974Z","pid":23384,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:14:37.137Z","pid":23384,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:14:37.396Z","pid":23384,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:14:59.730Z","pid":22620,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:14:59.894Z","pid":22620,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:15:00.159Z","pid":22620,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:15:21.535Z","pid":30684,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:15:21.712Z","pid":30684,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:15:22.137Z","pid":30684,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:23:21.929Z","pid":21292,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:23:22.098Z","pid":21292,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:23:22.476Z","pid":21292,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:11.146Z","pid":23276,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:11.309Z","pid":23276,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:11.570Z","pid":23276,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:35.177Z","pid":24112,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:35.329Z","pid":24112,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:35.589Z","pid":24112,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:53.556Z","pid":25672,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:53.738Z","pid":25672,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:55:54.040Z","pid":25672,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:56:08.721Z","pid":14964,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:56:08.899Z","pid":14964,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:56:09.182Z","pid":14964,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:57:59.239Z","pid":21692,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:57:59.398Z","pid":21692,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:57:59.662Z","pid":21692,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:58:00.200Z","pid":21692,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T07:58:00.200Z","pid":21692,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T07:58:00.200Z","pid":21692,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T07:58:00.201Z","pid":21692,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T07:58:38.112Z","pid":21368,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:58:38.293Z","pid":21368,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:58:38.573Z","pid":21368,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:58:38.875Z","pid":21368,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T07:58:38.875Z","pid":21368,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T07:58:38.875Z","pid":21368,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T07:58:38.875Z","pid":21368,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T07:59:28.943Z","pid":9828,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:59:29.111Z","pid":9828,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:59:29.438Z","pid":9828,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T07:59:29.748Z","pid":9828,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T07:59:29.748Z","pid":9828,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T07:59:29.748Z","pid":9828,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T07:59:29.748Z","pid":9828,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:00:03.078Z","pid":20568,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:03.242Z","pid":20568,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:03.525Z","pid":20568,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:03.814Z","pid":20568,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T08:00:03.815Z","pid":20568,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T08:00:03.815Z","pid":20568,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T08:00:03.815Z","pid":20568,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:00:26.213Z","pid":18948,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:26.374Z","pid":18948,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:26.648Z","pid":18948,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"error","time":"2026-03-09T08:00:26.936Z","pid":18948,"hostname":"DESKTOP-44C7FUN","module":"bootstrap","err":{"type":"Error","message":"listen EADDRINUSE: address already in use 0.0.0.0:3000","stack":"Error: listen EADDRINUSE: address already in use 0.0.0.0:3000\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at node:net:2205:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)","code":"EADDRINUSE","errno":-4091,"syscall":"listen","address":"0.0.0.0","port":3000},"msg":"Failed to start server"}
+{"level":"info","time":"2026-03-09T08:00:46.106Z","pid":27996,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:46.281Z","pid":27996,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:46.588Z","pid":27996,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:00:46.868Z","pid":27996,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3010"}
+{"level":"info","time":"2026-03-09T08:00:46.868Z","pid":27996,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3010"}
+{"level":"info","time":"2026-03-09T08:00:46.868Z","pid":27996,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3010"}
+{"level":"info","time":"2026-03-09T08:00:46.869Z","pid":27996,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3010","port":3010,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:02:08.191Z","pid":13780,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:02:08.347Z","pid":13780,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:02:08.592Z","pid":13780,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:02:09.015Z","pid":13780,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/test-protected","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:02:09.019Z","pid":13780,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/test-protected","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:02:09.020Z","pid":13780,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/test-protected","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:02:09.021Z","pid":13780,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/test-protected","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:04:28.664Z","pid":13648,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:04:28.819Z","pid":13648,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:04:29.083Z","pid":13648,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:04:29.341Z","pid":13648,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3011"}
+{"level":"info","time":"2026-03-09T08:04:29.341Z","pid":13648,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3011"}
+{"level":"info","time":"2026-03-09T08:04:29.341Z","pid":13648,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3011"}
+{"level":"info","time":"2026-03-09T08:04:29.342Z","pid":13648,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3011","port":3011,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:06:10.973Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:11.151Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:11.391Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:11.666Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T08:06:11.666Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T08:06:11.666Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T08:06:11.666Z","pid":26896,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:06:17.920Z","pid":14000,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:18.068Z","pid":14000,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:18.327Z","pid":14000,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:18.608Z","pid":14000,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-09T08:06:18.608Z","pid":14000,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-09T08:06:18.608Z","pid":14000,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-09T08:06:18.608Z","pid":14000,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-09T08:06:27.401Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:27.401Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:27.402Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-09T08:06:33.970Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:33.973Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:33.974Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:33.975Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:34.008Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:34.011Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:34.013Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:34.014Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:36.670Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:36.671Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:36.673Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:36.673Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:36.702Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:36.703Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:36.704Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:36.705Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:44.624Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:44.627Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/login","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:44.630Z","pid":14000,"hostname":"DESKTOP-44C7FUN","email":"rajdeepmitra8@gmail.com","module":"auth-service","msg":"User login started"}
+{"level":"info","time":"2026-03-09T08:06:44.748Z","pid":14000,"hostname":"DESKTOP-44C7FUN","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","email":"rajdeepmitra8@gmail.com","module":"auth-service","msg":"User login completed"}
+{"level":"info","time":"2026-03-09T08:06:44.749Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/login","statusCode":200,"duration":"122ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:44.854Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:44.854Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:44.855Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:44.856Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:48.258Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:48.309Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","statusCode":200,"duration":"51ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:48.309Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:48.313Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:48.607Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:48.622Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"15ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:51.776Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:51.787Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"11ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:51.788Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:51.795Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:56.226Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:56.233Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:06:56.305Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:06:56.308Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:07:01.312Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:07:01.318Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:07:01.358Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:07:01.361Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:07:13.888Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:07:13.907Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:08:10.839Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:08:10.856Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"17ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:08:10.857Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:08:10.859Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"2ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:08:10.879Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:08:10.899Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"20ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:08:10.901Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:08:10.905Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:31.269Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:31.270Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:31.271Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:31.272Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:34.551Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:34.552Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:45.277Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:45.278Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:45.280Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:45.280Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:45.318Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:45.319Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T08:09:45.320Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T08:09:45.320Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T09:49:40.797Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T09:49:40.811Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"15ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T09:49:40.815Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T09:49:40.816Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T09:49:40.861Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T09:49:40.870Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T09:49:40.874Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T09:49:40.875Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:29.282Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:29.285Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:29.287Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:29.288Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":401,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:29.321Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:29.324Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:29.326Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:29.326Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/logout","statusCode":200,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:35.865Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:35.869Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/login","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:35.888Z","pid":14000,"hostname":"DESKTOP-44C7FUN","email":"rajdeepmitra8@gmail.com","module":"auth-service","msg":"User login started"}
+{"level":"info","time":"2026-03-09T13:30:36.027Z","pid":14000,"hostname":"DESKTOP-44C7FUN","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","email":"rajdeepmitra8@gmail.com","module":"auth-service","msg":"User login completed"}
+{"level":"info","time":"2026-03-09T13:30:36.028Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/auth/login","statusCode":200,"duration":"159ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:36.131Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:36.131Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:36.136Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:36.136Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:39.855Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:39.894Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"39ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:30:39.895Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:30:39.915Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"20ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:31:43.327Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:31:43.357Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"30ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:31:43.358Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:31:43.359Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:42:28.587Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:42:28.643Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"56ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:42:28.645Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:42:28.652Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:29.562Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/documents/upload","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:29.680Z","pid":14000,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Document upload started"}
+{"level":"info","time":"2026-03-09T13:43:29.703Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/documents/upload","statusCode":201,"duration":"141ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:29.724Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"embeddings-worker","jobName":"document-processing","jobId":"document_62c1266f-ce51-4a2d-bac2-77fd349c86bf","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","msg":"Worker job received"}
+{"level":"info","time":"2026-03-09T13:43:29.802Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Document processing started"}
+{"level":"info","time":"2026-03-09T13:43:31.017Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Text extraction completed"}
+{"level":"info","time":"2026-03-09T13:43:31.019Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","chunkCount":1,"msg":"Chunking completed"}
+{"level":"info","time":"2026-03-09T13:43:31.023Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","existingHashesCount":0,"totalChunkRecords":1,"msg":"Document chunk hash analysis"}
+{"level":"info","time":"2026-03-09T13:43:31.027Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","chunksToEmbedCount":1,"expectedPersistedCount":1,"msg":"Document embedding plan prepared"}
+{"level":"info","time":"2026-03-09T13:43:31.031Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","batchStartIndex":0,"batchSize":1,"msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-09T13:43:31.031Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-09T13:43:31.722Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:31.729Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:31.860Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-09T13:43:31.885Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","batchStartIndex":0,"persistedCountAfterBatch":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-09T13:43:31.891Z","pid":31184,"hostname":"DESKTOP-44C7FUN","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","totalChunks":1,"finalPersistedCount":1,"module":"document-processing","msg":"Document processing completed"}
+{"level":"info","time":"2026-03-09T13:43:31.898Z","pid":31184,"hostname":"DESKTOP-44C7FUN","module":"embeddings-worker","jobName":"document-processing","jobId":"document_62c1266f-ce51-4a2d-bac2-77fd349c86bf","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","documentId":"62c1266f-ce51-4a2d-bac2-77fd349c86bf","msg":"Worker job completed"}
+{"level":"info","time":"2026-03-09T13:43:33.749Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:33.768Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:40.129Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:40.157Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"28ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:47.598Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:47.616Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","statusCode":200,"duration":"18ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:47.617Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:47.621Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/tags","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:47.923Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:47.941Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"18ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:57.149Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:57.159Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"10ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:43:59.794Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:43:59.799Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:01.984Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:01.989Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:05.854Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:05.859Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:08.070Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:08.074Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:11.532Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:11.536Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:12.498Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:12.504Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:13.869Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:13.872Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:16.258Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:16.268Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"10ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:17.883Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:17.888Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:20.432Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:20.438Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-09T13:44:23.798Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-09T13:44:23.802Z","pid":14000,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}

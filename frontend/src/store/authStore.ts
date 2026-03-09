@@ -10,35 +10,19 @@ interface RegisterInput {
 
 interface AuthState {
   user: AuthUser | null
-  token: string | null
   isAuthenticated: boolean
   isLoading: boolean
   isHydrated: boolean
   login: (email: string, password: string) => Promise<void>
   register: (data: RegisterInput) => Promise<void>
-  logout: () => void
+  logout: () => Promise<void>
   hydrate: () => Promise<void>
   hasPermission: (permission?: string) => boolean
 }
 
-const loadStoredUser = (): AuthUser | null => {
-  const raw = localStorage.getItem('pkm_user')
-  if (!raw) {
-    return null
-  }
-
-  try {
-    return JSON.parse(raw) as AuthUser
-  } catch {
-    localStorage.removeItem('pkm_user')
-    return null
-  }
-}
-
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: loadStoredUser(),
-  token: localStorage.getItem('pkm_token'),
-  isAuthenticated: !!localStorage.getItem('pkm_token'),
+  user: null,
+  isAuthenticated: false,
   isLoading: false,
   isHydrated: false,
 
@@ -46,15 +30,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true })
     try {
       const res = await authAPI.login({ email, password })
-      const { token, user } = res.data
-
-      localStorage.setItem('pkm_token', token)
-      localStorage.setItem('pkm_user', JSON.stringify(user))
+      const { user } = res.data
 
       set({
-        token,
         user,
         isAuthenticated: true,
+        isHydrated: true,
         isLoading: false,
       })
     } catch (err) {
@@ -67,15 +48,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true })
     try {
       const res = await authAPI.register(data)
-      const { token, user } = res.data
-
-      localStorage.setItem('pkm_token', token)
-      localStorage.setItem('pkm_user', JSON.stringify(user))
+      const { user } = res.data
 
       set({
-        token,
         user,
         isAuthenticated: true,
+        isHydrated: true,
         isLoading: false,
       })
     } catch (err) {
@@ -84,54 +62,38 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  logout: () => {
-    localStorage.removeItem('pkm_token')
-    localStorage.removeItem('pkm_user')
-    set({
-      user: null,
-      token: null,
-      isAuthenticated: false,
-      isHydrated: true,
-    })
-  },
-
-  hydrate: async () => {
-    const token = localStorage.getItem('pkm_token')
-    const localUser = loadStoredUser()
-
-    if (!token) {
+  logout: async () => {
+    try {
+      await authAPI.logout()
+    } catch {
+      // Always clear client auth state, even if the API call fails.
+    } finally {
       set({
         user: null,
-        token: null,
         isAuthenticated: false,
         isHydrated: true,
       })
-      return
     }
+  },
 
-    set({ token, user: localUser, isAuthenticated: true })
-
+  hydrate: async () => {
     try {
       const res = await authAPI.me()
-      const mergedUser: AuthUser = {
-        ...(localUser ?? {}),
+      const user: AuthUser = {
         id: res.data.id,
         email: res.data.email,
+        username: res.data.username,
+        fullname: res.data.fullname,
       }
 
-      localStorage.setItem('pkm_user', JSON.stringify(mergedUser))
-
       set({
-        user: mergedUser,
+        user,
         isAuthenticated: true,
         isHydrated: true,
       })
     } catch {
-      localStorage.removeItem('pkm_token')
-      localStorage.removeItem('pkm_user')
       set({
         user: null,
-        token: null,
         isAuthenticated: false,
         isHydrated: true,
       })
@@ -159,3 +121,4 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     return get().isAuthenticated
   },
 }))
+

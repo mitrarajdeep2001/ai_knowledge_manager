@@ -5,7 +5,29 @@ import { logger } from "../../utils/logger";
 import { authRepository } from "./auth.repository";
 import { RegisterInput, LoginInput } from "./auth.schema";
 
+const DEFAULT_JWT_EXPIRES_IN = "7d";
+
 export class AuthService {
+  private signAccessToken(fastify: FastifyInstance, payload: { id: string; email: string }) {
+    return fastify.jwt.sign(payload, {
+      expiresIn: process.env.JWT_EXPIRES_IN ?? DEFAULT_JWT_EXPIRES_IN,
+    });
+  }
+
+  private toSafeUser(user: {
+    id: string;
+    email: string;
+    username: string;
+    fullname: string;
+  }) {
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      fullname: user.fullname,
+    };
+  }
+
   async register(input: RegisterInput, fastify: FastifyInstance) {
     const existingEmail = await authRepository.findUserByEmail(input.email);
     if (existingEmail) {
@@ -32,7 +54,7 @@ export class AuthService {
       passwordHash,
     });
 
-    const token = fastify.jwt.sign({ id: user.id, email: user.email });
+    const token = this.signAccessToken(fastify, { id: user.id, email: user.email });
 
     logger.info("User registration completed", {
       userId: user.id,
@@ -42,12 +64,7 @@ export class AuthService {
 
     return {
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        fullname: user.fullname,
-      },
+      user: this.toSafeUser(user),
     };
   }
 
@@ -67,7 +84,7 @@ export class AuthService {
       throw new AppError("Invalid credentials", 401);
     }
 
-    const token = fastify.jwt.sign({ id: user.id, email: user.email });
+    const token = this.signAccessToken(fastify, { id: user.id, email: user.email });
 
     logger.info("User login completed", {
       userId: user.id,
@@ -77,13 +94,17 @@ export class AuthService {
 
     return {
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        fullname: user.fullname,
-      },
+      user: this.toSafeUser(user),
     };
+  }
+
+  async getCurrentUser(userId: string) {
+    const user = await authRepository.findUserById(userId);
+    if (!user) {
+      throw new AppError("Unauthorized", 401);
+    }
+
+    return this.toSafeUser(user);
   }
 }
 

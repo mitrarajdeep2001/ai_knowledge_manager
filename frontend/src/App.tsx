@@ -26,7 +26,7 @@ function AppRoutes() {
 
   useEffect(() => {
     const onUnauthorized = () => {
-      logout()
+      void logout()
       navigate('/login', { replace: true })
     }
 
@@ -95,3 +95,4 @@ export default function App() {
     </BrowserRouter>
   )
 }
+

@@ -137,12 +137,14 @@ export class NotesService {
       throw new AppError("Note not found", 404);
     }
 
+    const status = note.embeddingStatus as "queued" | "processing" | "ready" | "failed";
+
     return {
-      status: note.embeddingStatus,
+      status,
       processedChunks: note.processedChunks,
       totalChunks: note.totalChunks,
       progress: calculateProgress(
-        note.embeddingStatus as "queued" | "processing" | "ready" | "failed",
+        status,
         note.processedChunks,
         note.totalChunks,
         note.embeddingProgress,
@@ -343,3 +345,4 @@ export class NotesService {
 }
 
 export const notesService = new NotesService();
+

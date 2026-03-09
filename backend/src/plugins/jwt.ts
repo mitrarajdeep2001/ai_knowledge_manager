@@ -35,23 +35,22 @@ export const jwtPlugin = fp(async (fastify) => {
       try {
         const authHeader = request.headers.authorization;
 
-        // If Authorization header exists → normal flow
+        // If Authorization header exists -> verify normally.
         if (authHeader?.startsWith("Bearer ")) {
           await request.jwtVerify();
           return;
         }
 
-        // If token provided in query
-        const queryToken = (request.query as any)?.token;
-
-        if (queryToken) {
-          request.headers.authorization = `Bearer ${queryToken}`;
+        // Otherwise, fallback to JWT token from HTTP-only cookie.
+        const cookieToken = request.cookies.auth_token;
+        if (cookieToken) {
+          request.headers.authorization = `Bearer ${cookieToken}`;
           await request.jwtVerify();
           return;
         }
 
         return reply.code(401).send({ message: "Unauthorized" });
-      } catch (err) {
+      } catch {
         return reply.code(401).send({ message: "Unauthorized" });
       }
     },

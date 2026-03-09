@@ -40,6 +40,24 @@ export class AuthRepository {
     }
   }
 
+  async findUserById(id: string): Promise<User | undefined> {
+    try {
+      const result = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, id))
+        .limit(1);
+      return result[0];
+    } catch (error) {
+      logger.error("Database error while finding user by id", {
+        userId: id,
+        module: "auth-repository",
+        err: error,
+      });
+      throw error;
+    }
+  }
+
   async createUser(data: NewUser): Promise<User> {
     try {
       const result = await db.insert(users).values(data).returning();

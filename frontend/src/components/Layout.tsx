@@ -1,7 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { 
-  Brain, LayoutDashboard, FileText, Upload, 
-  MessageSquare, HelpCircle, Search, LogOut, 
+import {
+  Brain, LayoutDashboard, FileText, Upload,
+  MessageSquare, HelpCircle, Search, LogOut,
   User, ChevronRight, Zap
 } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
@@ -20,8 +20,8 @@ export default function Layout() {
   const { user, logout } = useAuthStore()
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout()
     navigate('/login')
   }
 

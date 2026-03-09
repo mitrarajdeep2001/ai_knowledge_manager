@@ -13,6 +13,7 @@ import { hashChunk } from "../../utils/hashChunk";
 import { embeddingsService } from "../embeddings/embeddings.service";
 import { embeddingsRepository } from "../embeddings/embeddings.repository";
 import { logger } from "../../utils/logger";
+import type { UploadedDocumentFile } from "../../plugins/multer";
 import { resolveEmbeddingBatchSize } from "../../utils/embeddingBatchSize";
 
 type DocumentStatus = "uploaded" | "processing" | "completed" | "failed";
@@ -149,7 +150,7 @@ export class DocumentsService {
     }
   }
 
-  async upload(userId: string, file: Express.Multer.File | undefined, body: DocumentUploadBodyInput) {
+  async upload(userId: string, file: UploadedDocumentFile | undefined, body: DocumentUploadBodyInput) {
     if (!file) {
       throw new AppError("File is required", 400);
     }
@@ -492,4 +493,6 @@ export class DocumentsService {
 }
 
 export const documentsService = new DocumentsService();
+
+
 

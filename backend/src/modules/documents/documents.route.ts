@@ -1,4 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import type { Multipart } from "@fastify/multipart";
 import { z } from "zod";
 import { documentsService } from "./documents.service";
 import {
@@ -9,16 +10,34 @@ import {
   listDocumentsQuerySchema,
   paginatedDocumentsResponseSchema,
 } from "./documents.schema";
-import { upload } from "../../plugins/multer";
+import { persistUploadedFile } from "../../plugins/multer";
+import { AppError } from "../../utils/AppError";
 
 const deleteResponseSchema = z.object({ success: z.boolean() });
+
+const readMultipartFieldValue = (
+  value: Multipart | Multipart[] | undefined,
+): string | undefined => {
+  if (!value) {
+    return undefined;
+  }
+
+  if (Array.isArray(value)) {
+    return readMultipartFieldValue(value[0]);
+  }
+
+  if (value.type !== "field") {
+    return undefined;
+  }
+
+  return typeof value.value === "string" ? value.value : undefined;
+};
 
 export const documentsRoutes: FastifyPluginAsyncZod = async (fastify) => {
   fastify.post(
     "/upload",
     {
       preValidation: [fastify.authenticate],
-      preHandler: upload.single("file") as any,
       schema: {
         tags: ["Documents"],
         summary: "Upload document and enqueue ingestion",
@@ -30,11 +49,20 @@ export const documentsRoutes: FastifyPluginAsyncZod = async (fastify) => {
       },
     },
     async (request, reply) => {
-      const parsedBody = documentUploadBodySchema.parse(request.body ?? {});
-      const requestWithFile = request as typeof request & { file?: Express.Multer.File };
+      const filePart = await request.file();
+      if (!filePart) {
+        throw new AppError("File is required", 400);
+      }
+
+      const parsedBody = documentUploadBodySchema.parse({
+        title: readMultipartFieldValue(filePart.fields.title),
+        tags: readMultipartFieldValue(filePart.fields.tags),
+      });
+
+      const uploadedFile = await persistUploadedFile(filePart);
       const document = await documentsService.upload(
         request.user.id,
-        requestWithFile.file,
+        uploadedFile,
         parsedBody,
       );
 
@@ -137,3 +165,4 @@ export const documentsRoutes: FastifyPluginAsyncZod = async (fastify) => {
     },
   );
 };
+

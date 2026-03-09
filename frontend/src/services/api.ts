@@ -10,7 +10,6 @@ export interface AuthUser {
 }
 
 export interface AuthResponse {
-  token: string
   user: AuthUser
 }
 
@@ -18,23 +17,14 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
 
 const api = axios.create({
   baseURL: API_BASE,
+  withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
-})
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('pkm_token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
 })
 
 api.interceptors.response.use(
   (res) => res,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('pkm_token')
-      localStorage.removeItem('pkm_user')
       window.dispatchEvent(new Event('auth:unauthorized'))
     }
     return Promise.reject(error)
@@ -50,7 +40,8 @@ export const authAPI = {
   }) => api.post<AuthResponse>('/auth/register', data),
   login: (data: { email: string; password: string }) =>
     api.post<AuthResponse>('/auth/login', data),
-  me: () => api.get<Pick<AuthUser, 'id' | 'email'>>('/auth/me'),
+  logout: () => api.post<{ success: boolean }>('/auth/logout'),
+  me: () => api.get<Pick<AuthUser, 'id' | 'email' | 'username' | 'fullname'>>('/auth/me'),
 }
 
 export const notesAPI = {
@@ -108,3 +99,4 @@ export const statsAPI = {
 }
 
 export default api
+

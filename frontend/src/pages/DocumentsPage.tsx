@@ -214,14 +214,8 @@ export default function DocumentsPage() {
   };
 
   const handleView = (id: string) => {
-    const token = localStorage.getItem("pkm_token");
-
-    if (token) {
-      window.open(
-        `${import.meta.env.VITE_API_BASE_URL}/documents/${id}/view?token=${token}`,
-        // "_blank",
-      );
-    }
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || "/api";
+    window.open(`${baseUrl}/documents/${id}/view`, "_blank", "noopener,noreferrer");
   };
 
   const handleDownload = async (id: string, fallbackFilename: string) => {
@@ -443,3 +437,4 @@ export default function DocumentsPage() {
     </div>
   );
 }
+

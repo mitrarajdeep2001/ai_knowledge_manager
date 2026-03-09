@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import cookie from "@fastify/cookie";
 import helmet from "@fastify/helmet";
 import { jwtPlugin } from "./plugins/jwt";
 import { authRoutes } from "./modules/auth/auth.route";
@@ -23,7 +24,7 @@ import { requestLoggerPlugin } from "./plugins/requestLogger";
 
 export const buildApp = async () => {
   const app = Fastify({
-    logger: pinoLogger,
+    loggerInstance: pinoLogger,
     disableRequestLogging: true,
   }).withTypeProvider<ZodTypeProvider>();
 
@@ -48,9 +49,9 @@ export const buildApp = async () => {
         },
       },
     },
-    transform: ({ schema, url }) => {
+    transform: ({ schema, url, route }) => {
       try {
-        const transformed = jsonSchemaTransform({ schema, url });
+        const transformed = jsonSchemaTransform({ schema, url, route } as any);
 
         if (url === "/api/auth/register" && transformed.schema?.body) {
           (transformed.schema.body as any).example = {
@@ -83,8 +84,12 @@ export const buildApp = async () => {
     },
   });
 
-  await app.register(cors);
+  await app.register(cors, {
+    origin: true,
+    credentials: true,
+  });
   await app.register(helmet);
+  await app.register(cookie);
   await app.register(requestLoggerPlugin);
   await app.register(jwtPlugin);
   await app.register(multerPlugin);
@@ -113,12 +118,12 @@ export const buildApp = async () => {
         route: request.routeOptions?.url ?? request.url,
         statusCode: 400,
         module: "http-error-handler",
-        errors: error.errors,
+        errors: error.issues,
       });
 
       return reply
         .code(400)
-        .send({ message: "Validation error", errors: error.errors });
+        .send({ message: "Validation error", errors: error.issues });
     }
 
     logger.error("Unhandled API error", {
@@ -134,3 +139,7 @@ export const buildApp = async () => {
 
   return app;
 };
+
+
+
+
