@@ -1,7 +1,14 @@
 import { and, desc, eq, ilike, inArray, sql, type SQL } from "drizzle-orm";
 import { db } from "../../db";
 import { logger } from "../../utils/logger";
-import { documentTags, documents, tags, type Document, type NewDocument } from "../../db/schema";
+import {
+  documentTags,
+  documents,
+  knowledgeChunks,
+  tags,
+  type Document,
+  type NewDocument,
+} from "../../db/schema";
 
 type DocumentProcessingStatus = "uploaded" | "processing" | "completed" | "failed";
 
@@ -249,12 +256,25 @@ export class DocumentsRepository {
 
   async deleteByIdForUser(documentId: string, userId: string): Promise<Document | undefined> {
     try {
-      const rows = await db
-        .delete(documents)
-        .where(and(eq(documents.id, documentId), eq(documents.userId, userId)))
-        .returning();
+      return await db.transaction(async (tx) => {
+        await tx
+          .delete(knowledgeChunks)
+          .where(
+            and(
+              eq(knowledgeChunks.sourceType, "document"),
+              eq(knowledgeChunks.sourceId, documentId),
+            ),
+          );
 
-      return rows[0];
+        await tx.delete(documentTags).where(eq(documentTags.documentId, documentId));
+
+        const [deletedDocument] = await tx
+          .delete(documents)
+          .where(and(eq(documents.id, documentId), eq(documents.userId, userId)))
+          .returning();
+
+        return deletedDocument;
+      });
     } catch (error) {
       logger.error("Database error while deleting document", {
         documentId,

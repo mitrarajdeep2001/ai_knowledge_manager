@@ -1,18 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Loader2, FileText, Upload, Sparkles, X, SlidersHorizontal } from 'lucide-react'
-import { searchAPI } from '../services/api'
+import { searchAPI, type SearchResult } from '../services/api'
 import clsx from 'clsx'
-
-interface SearchResult {
-  id: number
-  chunk_id: number
-  type: 'note' | 'document'
-  title: string
-  content: string
-  score: number
-  tags: string[]
-}
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
@@ -20,14 +10,30 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [searched, setSearched] = useState(false)
   const [limit, setLimit] = useState(10)
+  const [page, setPage] = useState(1)
 
   const handleSearch = async (e?: React.FormEvent) => {
     e?.preventDefault()
     if (!query.trim()) return
     setLoading(true)
     setSearched(true)
+    setPage(1)
     try {
-      const r = await searchAPI.search({ query, limit, search_type: 'semantic' })
+      const r = await searchAPI.search({ q: query, limit, page: 1 })
+      setResults(r.data.results)
+    } catch {
+      setResults([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePageChange = async (newPage: number) => {
+    if (!query.trim()) return
+    setLoading(true)
+    setPage(newPage)
+    try {
+      const r = await searchAPI.search({ q: query, limit, page: newPage })
       setResults(r.data.results)
     } catch {
       setResults([])
@@ -46,6 +52,27 @@ export default function SearchPage() {
     if (score >= 0.8) return 'High'
     if (score >= 0.6) return 'Good'
     return 'Low'
+  }
+
+  const getSourceIcon = (sourceType: string) => {
+    if (sourceType === 'note') {
+      return <FileText className="w-4 h-4 text-blue-400" />
+    }
+    return <Upload className="w-4 h-4 text-purple-400" />
+  }
+
+  const getSourceBg = (sourceType: string) => {
+    if (sourceType === 'note') {
+      return 'bg-blue-900/40'
+    }
+    return 'bg-purple-900/40'
+  }
+
+  const getSourceBadge = (sourceType: string) => {
+    if (sourceType === 'note') {
+      return 'bg-blue-900/30 text-blue-400'
+    }
+    return 'bg-purple-900/30 text-purple-400'
   }
 
   return (
@@ -147,46 +174,61 @@ export default function SearchPage() {
             <span className="text-brand-400"> "{query}"</span>
           </p>
           {results.map((result, idx) => (
-            <Link
-              key={`${result.type}-${result.chunk_id}`}
-              to={result.type === 'note' ? `/notes/${result.id}` : '/documents'}
+            <div
+              key={`${result.sourceType}-${result.sourceId}`}
               className="card p-5 hover:border-gray-700 transition-all block animate-fadeIn group"
               style={{ animationDelay: `${idx * 50}ms` }}
             >
               <div className="flex items-start gap-3">
                 <div className={clsx(
                   'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
-                  result.type === 'note' ? 'bg-blue-900/40' : 'bg-purple-900/40'
+                  getSourceBg(result.sourceType)
                 )}>
-                  {result.type === 'note'
-                    ? <FileText className="w-4 h-4 text-blue-400" />
-                    : <Upload className="w-4 h-4 text-purple-400" />
-                  }
+                  {getSourceIcon(result.sourceType)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-medium text-white group-hover:text-brand-300 transition-colors truncate">
-                      {result.title}
+                      {result.sourceType === 'note' ? 'Note' : 'Document'} - {result.sourceId.slice(0, 8)}
                     </h3>
-                    <span className={`text-xs font-medium shrink-0 ${scoreColor(result.score)}`}>
-                      {scoreLabel(result.score)} match ({(result.score * 100).toFixed(0)}%)
+                    <span className={`text-xs font-medium shrink-0 ${scoreColor(result.similarity)}`}>
+                      {scoreLabel(result.similarity)} match ({(result.similarity * 100).toFixed(0)}%)
                     </span>
                   </div>
                   <p className="text-gray-500 text-sm line-clamp-3 mb-2">
                     {result.content}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    <span className={`badge ${result.type === 'note' ? 'bg-blue-900/30 text-blue-400' : 'bg-purple-900/30 text-purple-400'} text-xs capitalize`}>
-                      {result.type}
+                    <span className={`badge ${getSourceBadge(result.sourceType)} text-xs capitalize`}>
+                      {result.sourceType}
                     </span>
-                    {result.tags?.slice(0, 3).map((tag: string) => (
-                      <span key={tag} className="badge bg-gray-800 text-gray-500 text-xs">#{tag}</span>
-                    ))}
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
+          {/* Pagination */}
+          {results.length >= limit && (
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 1}
+                className="btn-secondary px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <span className="flex items-center px-4 text-gray-500">
+                Page {page}
+              </span>
+              <button
+                onClick={() => handlePageChange(page + 1)}
+                disabled={results.length < limit}
+                className="btn-secondary px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       ) : null}
     </div>

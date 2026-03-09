@@ -90,8 +90,24 @@ export const quizAPI = {
   getAttempts: (id: number) => api.get(`/quiz/${id}/attempts`),
 }
 
+export interface SearchResult {
+  sourceType: string
+  sourceId: string
+  content: string
+  similarity: number
+}
+
+export interface SearchResponse {
+  results: SearchResult[]
+  pagination: {
+    page: number
+    limit: number
+  }
+}
+
 export const searchAPI = {
-  search: (data: any) => api.post('/search', data),
+  search: (params: { q: string; limit?: number; page?: number }) =>
+    api.get<SearchResponse>('/search', { params }),
 }
 
 export const statsAPI = {

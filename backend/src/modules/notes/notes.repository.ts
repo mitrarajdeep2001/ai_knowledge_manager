@@ -382,12 +382,47 @@ export class NotesRepository {
 
   async deleteByIdForUser(id: string, userId: string): Promise<Note | undefined> {
     try {
-      const result = await db
-        .delete(notes)
-        .where(and(eq(notes.id, id), eq(notes.userId, userId)))
-        .returning();
+      return await db.transaction(async (tx) => {
+        await tx
+          .delete(knowledgeChunks)
+          .where(
+            and(
+              eq(knowledgeChunks.sourceType, "note"),
+              eq(knowledgeChunks.sourceId, id),
+            ),
+          );
 
-      return result[0];
+        const tagIdsToDelete = await tx
+          .select({ tagId: noteTags.tagId })
+          .from(noteTags)
+          .where(eq(noteTags.noteId, id));
+
+        await tx.delete(noteTags).where(eq(noteTags.noteId, id));
+
+        if (tagIdsToDelete.length > 0) {
+          const tagIds = tagIdsToDelete.map((t) => t.tagId);
+          const usedTagIds = await tx
+            .select({ tagId: noteTags.tagId })
+            .from(noteTags)
+            .where(inArray(noteTags.tagId, tagIds));
+
+          const usedTagIdSet = new Set(usedTagIds.map((t) => t.tagId));
+          const tagsToDelete = tagIds.filter((tagId) => !usedTagIdSet.has(tagId));
+
+          if (tagsToDelete.length > 0) {
+            await tx
+              .delete(tags)
+              .where(and(inArray(tags.id, tagsToDelete), eq(tags.userId, userId)));
+          }
+        }
+
+        const [deletedNote] = await tx
+          .delete(notes)
+          .where(and(eq(notes.id, id), eq(notes.userId, userId)))
+          .returning();
+
+        return deletedNote;
+      });
     } catch (error) {
       logger.error("Database error while deleting note", {
         noteId: id,
