@@ -307,7 +307,7 @@ export class DocumentsService {
       });
 
       const normalizedText = normalizeText(rawText);
-      const chunks = chunkText(normalizedText, 500, 50);
+      const chunks = chunkText(normalizedText, 300, 50);
 
       logger.info("Chunking completed", {
         documentId: document.id,

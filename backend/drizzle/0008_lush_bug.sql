@@ -1,0 +1,1 @@
+ALTER TABLE "knowledge_chunks" ADD COLUMN "search_vector" "tsvector";

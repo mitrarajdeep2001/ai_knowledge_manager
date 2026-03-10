@@ -22,6 +22,15 @@ const vector = customType<{ data: string | number[] }>({
   },
 });
 
+const tsvector = customType<{ data: string }>({
+  dataType() {
+    return "tsvector";
+  },
+  toDriver(value) {
+    return value;
+  },
+});
+
 export const knowledgeChunks = pgTable(
   "knowledge_chunks",
   {
@@ -32,6 +41,7 @@ export const knowledgeChunks = pgTable(
     content: text("content").notNull(),
     contentHash: text("content_hash").notNull(),
     embedding: vector("embedding").notNull(),
+    searchVector: tsvector("search_vector"),
     metadata: jsonb("metadata").notNull().default({}),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
