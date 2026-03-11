@@ -82,12 +82,24 @@ export const chatAPI = {
 }
 
 export const quizAPI = {
-  list: () => api.get('/quiz'),
-  get: (id: number) => api.get(`/quiz/${id}`),
-  generate: (data: any) => api.post('/quiz/generate', data),
-  delete: (id: number) => api.delete(`/quiz/${id}`),
-  submitAttempt: (id: number, data: any) => api.post(`/quiz/${id}/attempt`, data),
-  getAttempts: (id: number) => api.get(`/quiz/${id}/attempts`),
+  list: (params?: { page?: number; limit?: number }) => api.get('/quiz', { params }),
+  listHistory: (params?: { page?: number; limit?: number }) => api.get('/quiz/history', { params }),
+  generate: (data: {
+    sourceType: 'note' | 'document';
+    sourceId: string;
+    title: string;
+    questionCount?: number;
+    durationSeconds?: number;
+  }) => api.post('/quiz/generate', data),
+  generateByTopic: (data: {
+    topic: string;
+    questionCount?: number;
+  }) => api.post('/quiz/generate-by-topic', data),
+  start: (quizId: string) => api.post('/quiz/start', { quizId }),
+  submit: (data: {
+    attemptId: string;
+    answers: { questionId: string; answer: string }[];
+  }) => api.post('/quiz/submit', data),
 }
 
 export interface SearchResult {

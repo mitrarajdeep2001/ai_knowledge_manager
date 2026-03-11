@@ -78,8 +78,8 @@ export default function SearchPage() {
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">Semantic Search</h1>
-        <p className="text-gray-500 text-sm">Search your entire knowledge base using AI-powered vector similarity</p>
+        <h1 className="text-2xl font-bold text-white mb-1">Hybrid Search (Semantic + Keyword)</h1>
+        <p className="text-gray-500 text-sm">Search your entire knowledge base using AI-powered vector similarity and keyword matching</p>
       </div>
 
       {/* Search Input */}

@@ -8,6 +8,7 @@ import { notesRoutes } from "./modules/notes/notes.route";
 import { tagsRoutes } from "./modules/tags/tags.route";
 import { documentsRoutes } from "./modules/documents/documents.route";
 import { searchRoutes } from "./modules/search/search.route";
+import { quizRoutes } from "./modules/quiz/quiz.route";
 import { multerPlugin } from "./plugins/multer";
 import { AppError } from "./utils/AppError";
 import { ZodError } from "zod";
@@ -101,6 +102,7 @@ export const buildApp = async () => {
   app.register(tagsRoutes, { prefix: "/api/tags" });
   app.register(documentsRoutes, { prefix: "/api/documents" });
   app.register(searchRoutes, { prefix: "/api/search" });
+  app.register(quizRoutes, { prefix: "/api/quiz" });
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof AppError) {
