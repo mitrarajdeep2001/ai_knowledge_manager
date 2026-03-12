@@ -1,0 +1,438 @@
+{"level":"info","time":"2026-03-12T04:53:16.747Z","pid":9664,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:20.091Z","pid":9664,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:24.816Z","pid":9664,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:29.935Z","pid":9664,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T04:53:29.935Z","pid":9664,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T04:53:29.936Z","pid":9664,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T04:53:29.936Z","pid":9664,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T04:53:30.818Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:30.818Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:30.818Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T04:53:48.030Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:48.090Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"60ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:48.092Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:48.095Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"2ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:48.176Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:48.177Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"1ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:48.181Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:48.181Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/stats","statusCode":404,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:55.921Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:55.924Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:55.955Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"31ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:55.958Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"37ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:55.959Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:55.963Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:53:55.967Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:53:55.973Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"10ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:15.315Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:15.319Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:15.348Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"33ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:15.349Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:15.354Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:15.365Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"46ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:15.366Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:15.370Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:51.495Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:51.497Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:51.534Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"37ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.052Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.056Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.056Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.058Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"2ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.092Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.094Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.114Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"20ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.115Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"23ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.116Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.117Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:54:59.119Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:54:59.122Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:55:15.564Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:55:15.566Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:55:15.589Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"23ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:16.235Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:16.237Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:56:16.283Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"46ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:16.294Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:56:16.312Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"18ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:16.314Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:56:16.317Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:29.454Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:56:29.456Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:56:29.478Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"22ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.770Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.796Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"26ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.797Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.800Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.827Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.843Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"16ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.845Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.848Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.850Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.854Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T04:58:39.856Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T04:58:39.859Z","pid":9664,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:26:01.970Z","pid":23840,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:02.159Z","pid":23840,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:02.493Z","pid":23840,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:02.796Z","pid":23840,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:02.796Z","pid":23840,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:26:02.796Z","pid":23840,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:02.796Z","pid":23840,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:26:05.382Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:05.548Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:05.826Z","pid":26896,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:06.125Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:06.125Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:26:06.125Z","pid":26896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:06.125Z","pid":26896,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:26:34.326Z","pid":22896,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:34.558Z","pid":22896,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:34.847Z","pid":22896,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:35.141Z","pid":22896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:35.141Z","pid":22896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:26:35.141Z","pid":22896,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:35.141Z","pid":22896,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:26:48.812Z","pid":20024,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:48.985Z","pid":20024,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:49.250Z","pid":20024,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:26:49.544Z","pid":20024,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:49.544Z","pid":20024,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:26:49.545Z","pid":20024,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:26:49.545Z","pid":20024,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:27:04.561Z","pid":24096,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:04.730Z","pid":24096,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:05.004Z","pid":24096,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:05.305Z","pid":24096,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:27:05.305Z","pid":24096,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:27:05.305Z","pid":24096,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:27:05.305Z","pid":24096,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:27:24.749Z","pid":22524,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:24.980Z","pid":22524,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:25.446Z","pid":22524,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:27:25.795Z","pid":22524,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:27:25.795Z","pid":22524,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:27:25.795Z","pid":22524,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:27:25.795Z","pid":22524,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:34:26.855Z","pid":21696,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:27.067Z","pid":21696,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:27.385Z","pid":21696,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:27.679Z","pid":21696,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:27.679Z","pid":21696,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:34:27.679Z","pid":21696,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:27.679Z","pid":21696,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:34:37.871Z","pid":7520,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:38.046Z","pid":7520,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:38.338Z","pid":7520,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:38.622Z","pid":7520,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:38.622Z","pid":7520,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:34:38.623Z","pid":7520,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:38.623Z","pid":7520,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:34:56.196Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:56.387Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"notes-service","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:56.692Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"document-processing","batchSize":8,"msg":"Embedding batch size resolved"}
+{"level":"info","time":"2026-03-12T05:34:57.007Z","pid":7744,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://127.0.0.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:57.007Z","pid":7744,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://192.168.0.202:3000"}
+{"level":"info","time":"2026-03-12T05:34:57.007Z","pid":7744,"hostname":"DESKTOP-44C7FUN","msg":"Server listening at http://172.20.80.1:3000"}
+{"level":"info","time":"2026-03-12T05:34:57.008Z","pid":7744,"hostname":"DESKTOP-44C7FUN","address":"http://127.0.0.1:3000","port":3000,"module":"bootstrap","msg":"Server listening"}
+{"level":"info","time":"2026-03-12T05:35:18.455Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:18.505Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/auth/me","statusCode":200,"duration":"50ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:18.522Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:18.546Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"24ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:18.549Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:18.556Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:18.558Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:18.562Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:18.564Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:18.568Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:51.147Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:51.150Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:35:51.182Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"32ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:35:51.186Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"39ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:40.691Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:40.694Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"DELETE","route":"/api/quiz/:id","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:40.694Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"b5e43f7d-d83e-44f8-af88-656392c70812","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"quiz-service","msg":"Deleting quiz set"}
+{"level":"info","time":"2026-03-12T05:36:40.732Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"b5e43f7d-d83e-44f8-af88-656392c70812","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"quiz-service","msg":"Quiz set deleted successfully"}
+{"level":"info","time":"2026-03-12T05:36:40.733Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"DELETE","route":"/api/quiz/:id","statusCode":200,"duration":"39ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:40.748Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:40.750Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:40.769Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:40.769Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:46.485Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:46.488Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:46.496Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"11ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:46.499Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"11ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:46.499Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:46.503Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:46.506Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:46.515Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"12ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:54.887Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:54.895Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:36:54.897Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:36:54.903Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:37.007Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/documents/upload","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:37.098Z","pid":7744,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Document upload started"}
+{"level":"info","time":"2026-03-12T05:59:37.115Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/documents/upload","statusCode":201,"duration":"108ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:37.155Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"embeddings-worker","jobName":"document-processing","jobId":"document_13082181-b519-4511-a0c0-fd1795de1794","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","msg":"Worker job received"}
+{"level":"info","time":"2026-03-12T05:59:37.221Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Document processing started"}
+{"level":"info","time":"2026-03-12T05:59:38.564Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","msg":"Text extraction completed"}
+{"level":"info","time":"2026-03-12T05:59:38.567Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","chunkCount":3,"msg":"Chunking completed"}
+{"level":"info","time":"2026-03-12T05:59:38.572Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","existingHashesCount":0,"totalChunkRecords":3,"msg":"Document chunk hash analysis"}
+{"level":"info","time":"2026-03-12T05:59:38.578Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","chunksToEmbedCount":3,"expectedPersistedCount":3,"msg":"Document embedding plan prepared"}
+{"level":"info","time":"2026-03-12T05:59:38.584Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","batchStartIndex":0,"batchSize":3,"msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T05:59:38.585Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":3,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T05:59:39.136Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:39.144Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:41.156Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:41.159Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:43.172Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:43.175Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:44.414Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":3,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T05:59:44.555Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"document-processing","batchStartIndex":0,"persistedCountAfterBatch":3,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T05:59:44.560Z","pid":26768,"hostname":"DESKTOP-44C7FUN","documentId":"13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","totalChunks":3,"finalPersistedCount":3,"module":"document-processing","msg":"Document processing completed"}
+{"level":"info","time":"2026-03-12T05:59:44.612Z","pid":26768,"hostname":"DESKTOP-44C7FUN","module":"embeddings-worker","jobName":"document-processing","jobId":"document_13082181-b519-4511-a0c0-fd1795de1794","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","documentId":"13082181-b519-4511-a0c0-fd1795de1794","msg":"Worker job completed"}
+{"level":"info","time":"2026-03-12T05:59:45.197Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:45.200Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/status","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:51.354Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:51.364Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:51.406Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:51.412Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents/:id/view","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:59.846Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:59.868Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"22ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:59.871Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:59.877Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:59.881Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:59.889Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T05:59:59.892Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T05:59:59.897Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:03.524Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:03.526Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:03.534Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"10ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:03.536Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:03.541Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:03.551Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"25ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:03.552Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:03.558Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:35.014Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:35.016Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/generate","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:35.020Z","pid":7744,"hostname":"DESKTOP-44C7FUN","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","sourceType":"document","sourceId":"13082181-b519-4511-a0c0-fd1795de1794","module":"quiz-service","msg":"Generating quiz"}
+{"level":"info","time":"2026-03-12T06:00:35.043Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3.1-pro-preview","questionCount":5,"msg":"Attempting quiz generation"}
+{"level":"warn","time":"2026-03-12T06:00:35.763Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3.1-pro-preview","attempt":1,"questionCount":5,"msg":"Gemini quota exceeded"}
+{"level":"info","time":"2026-03-12T06:00:35.763Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3-flash-preview","questionCount":5,"msg":"Attempting quiz generation"}
+{"level":"info","time":"2026-03-12T06:00:54.045Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3-flash-preview","questionCount":5,"msg":"Quiz generation successful"}
+{"level":"info","time":"2026-03-12T06:00:54.067Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"e68780be-f77d-456c-a83e-6ae7a3f1037c","questionCount":5,"module":"quiz-service","msg":"Quiz generated successfully"}
+{"level":"info","time":"2026-03-12T06:00:54.068Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/generate","statusCode":201,"duration":"19052ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:54.078Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:54.081Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:54.103Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"22ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:54.105Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"27ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:58.501Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:00:58.503Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:00:58.514Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"11ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:21.762Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:21.765Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:01:21.794Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"29ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:21.804Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:01:21.807Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:01:21.824Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"17ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:21.825Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:27.470Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:01:27.472Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:01:27.481Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:03:02.571Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:03:02.885Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:03:02.917Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"32ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:03:02.924Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:03:02.943Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:03:02.945Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:03:02.949Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:34.870Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:35.180Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"DELETE","route":"/api/quiz/:id","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:35.180Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"5c94eda7-1dd1-4bf9-b780-caa46e9e9e3e","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"quiz-service","msg":"Deleting quiz set"}
+{"level":"info","time":"2026-03-12T06:15:35.215Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"5c94eda7-1dd1-4bf9-b780-caa46e9e9e3e","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","module":"quiz-service","msg":"Quiz set deleted successfully"}
+{"level":"info","time":"2026-03-12T06:15:35.216Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"DELETE","route":"/api/quiz/:id","statusCode":200,"duration":"36ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:35.225Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:35.246Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:35.248Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:35.251Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:43.320Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:43.322Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:43.332Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:57.410Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:57.412Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:57.440Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"28ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:57.447Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:57.449Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:15:57.467Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"20ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:15:57.468Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:07.634Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:07.636Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:16:07.658Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"22ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:56.063Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:56.065Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:16:56.108Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"43ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:56.116Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:16:56.119Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:16:56.141Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"25ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:16:56.145Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"26ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:12.581Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:12.583Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:12.607Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"26ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:12.609Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:12.612Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"29ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:12.614Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:12.617Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:12.617Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:42.215Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:42.217Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/generate-by-topic","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:42.219Z","pid":7744,"hostname":"DESKTOP-44C7FUN","userId":"cd65009e-1ebe-413a-8c1a-c9d3d7100bdf","topic":"Blockchain","questionCount":5,"module":"quiz-service","msg":"Generating quiz by topic"}
+{"level":"info","time":"2026-03-12T06:17:42.225Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T06:17:46.736Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T06:17:46.778Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3.1-pro-preview","questionCount":5,"msg":"Attempting quiz generation"}
+{"level":"warn","time":"2026-03-12T06:17:47.141Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3.1-pro-preview","attempt":1,"questionCount":5,"msg":"Gemini quota exceeded"}
+{"level":"info","time":"2026-03-12T06:17:47.141Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3-flash-preview","questionCount":5,"msg":"Attempting quiz generation"}
+{"level":"info","time":"2026-03-12T06:17:56.167Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"quiz-service","model":"gemini-3-flash-preview","questionCount":5,"msg":"Quiz generation successful"}
+{"level":"info","time":"2026-03-12T06:17:56.173Z","pid":7744,"hostname":"DESKTOP-44C7FUN","quizId":"19127c46-bcbe-4975-a5a6-e604fde54324","topic":"Blockchain","questionCount":5,"chunksUsed":5,"module":"quiz-service","msg":"Quiz generated by topic successfully"}
+{"level":"info","time":"2026-03-12T06:17:56.173Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/generate-by-topic","statusCode":201,"duration":"13956ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:56.187Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:56.189Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:17:56.210Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:17:56.211Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"24ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:18:04.359Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:18:04.361Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:18:04.374Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/start","statusCode":200,"duration":"13ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:19:38.975Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"OPTIONS","route":"*","statusCode":204,"duration":"0ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:19:39.284Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:19:39.316Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"POST","route":"/api/quiz/submit","statusCode":200,"duration":"32ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:19:39.325Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:19:39.344Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"19ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:19:39.346Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:19:39.349Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:20:08.057Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:20:08.059Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:20:08.080Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"23ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:20:08.080Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:20:08.081Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:20:08.083Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:20:08.087Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:20:08.088Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:21:35.271Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:21:35.273Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T06:21:35.722Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T06:21:35.762Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","statusCode":200,"duration":"491ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:21:50.922Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:21:50.923Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T06:21:51.303Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T06:21:51.360Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","statusCode":200,"duration":"438ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:22:12.984Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:22:12.986Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T06:22:13.372Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T06:22:13.390Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","statusCode":200,"duration":"406ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:04.860Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:04.861Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:04.886Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"25ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:04.889Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"29ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:04.889Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:04.890Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:04.893Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:04.896Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:28.340Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:28.342Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"endpoint":"https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction","msg":"Embedding batch started"}
+{"level":"info","time":"2026-03-12T06:24:28.899Z","pid":7744,"hostname":"DESKTOP-44C7FUN","module":"embeddings-service","batchSize":1,"attempt":1,"msg":"Embedding batch completed"}
+{"level":"info","time":"2026-03-12T06:24:28.924Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/search","statusCode":200,"duration":"584ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:57.719Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:57.743Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"24ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:24:57.745Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:24:57.752Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:23.391Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:23.393Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:23.421Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"28ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:23.422Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"31ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:23.423Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:23.425Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:23.427Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:23.430Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:35.520Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:35.522Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:35.543Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"21ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:35.544Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"24ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:35.545Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:35.547Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:25:35.550Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:25:35.552Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:53:05.465Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:53:05.476Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:53:05.478Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:53:05.479Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:53:05.521Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"42ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:53:05.524Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"46ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:53:05.527Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"62ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:53:05.528Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"52ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:01.825Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:01.826Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:01.828Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:01.832Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:01.861Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"33ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:01.862Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"30ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:01.863Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"38ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:01.863Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"37ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:27.143Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:27.145Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:27.147Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:27.148Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:27.173Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"30ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:27.174Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"29ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:27.177Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"30ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:27.180Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"32ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:28.153Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:28.154Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:28.154Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:28.155Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:28.159Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"4ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:28.161Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:28.162Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:28.163Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:29.141Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:29.142Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:29.144Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:29.145Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:29.150Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"5ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:29.151Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"10ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:29.151Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"9ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:29.152Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:31.154Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:31.156Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:31.156Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:31.158Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:54:31.161Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:31.162Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:31.162Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:54:31.163Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:24.158Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:24.160Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:24.161Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:24.163Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:24.185Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"25ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:24.185Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"27ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:24.186Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"25ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:24.190Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"27ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.156Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.157Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.158Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.159Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.162Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"3ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.163Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.164Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.164Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"8ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.165Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.167Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:25.171Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"6ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:25.174Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"7ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:39.587Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:39.589Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:39.590Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:39.590Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","module":"http-request","msg":"Request started"}
+{"level":"info","time":"2026-03-12T06:55:39.621Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz/history","statusCode":200,"duration":"31ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:39.623Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/quiz","statusCode":200,"duration":"33ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:39.625Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/notes","statusCode":200,"duration":"37ms","module":"http-request","msg":"Request completed"}
+{"level":"info","time":"2026-03-12T06:55:39.625Z","pid":7744,"hostname":"DESKTOP-44C7FUN","method":"GET","route":"/api/documents","statusCode":200,"duration":"36ms","module":"http-request","msg":"Request completed"}

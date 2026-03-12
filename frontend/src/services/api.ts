@@ -100,6 +100,7 @@ export const quizAPI = {
     attemptId: string;
     answers: { questionId: string; answer: string }[];
   }) => api.post('/quiz/submit', data),
+  delete: (id: string) => api.delete(`/quiz/${id}`),
 }
 
 export interface SearchResult {

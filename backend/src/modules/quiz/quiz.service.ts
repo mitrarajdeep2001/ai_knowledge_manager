@@ -16,12 +16,18 @@ interface QuizQuestionData {
   question: string;
   type: "mcq" | "true_false";
   options: Record<string, string>;
-  correctAnswer: string;
+  correct_answer?: string;
+  correctAnswer?: string;
   explanation?: string;
 }
 
-interface QuizQuestionWithQuizId extends QuizQuestionData {
+interface QuizQuestionWithQuizId {
   quizId: string;
+  question: string;
+  type: "mcq" | "true_false";
+  options: Record<string, string>;
+  correctAnswer: string;
+  explanation?: string;
 }
 
 interface GeminiQuizResponse {
@@ -40,7 +46,7 @@ Context:
 {context}
 
 Return JSON in this exact format:
-{"questions":[{"question":"","type":"mcq","options":{"A":"","B":"","C":"","D":""},"correct_answer":"","explanation":""}]}`;
+{"questions":[{"question":"","type":"mcq","options":{"A":"","B":"","C":"","D":""},"correct_answer":"A","explanation":"why A is correct"}]}`;
 
 const MAX_CONTEXT_CHUNKS = 5;
 
@@ -342,7 +348,7 @@ export class QuizService {
       question: q.question,
       type: q.type || "mcq",
       options: q.options || {},
-      correctAnswer: q.correctAnswer || "",
+      correctAnswer: (q.correct_answer || q.correctAnswer || "") as string,
       explanation: q.explanation,
     }));
   }
@@ -509,6 +515,31 @@ export class QuizService {
         totalPages,
       },
     };
+  }
+
+  async deleteQuizSet(quizId: string, userId: string) {
+    logger.info("Deleting quiz set", {
+      quizId,
+      userId,
+      module: "quiz-service",
+    });
+
+    const quizSet = await quizRepository.findQuizSetById(quizId);
+    if (!quizSet) {
+      throw new AppError("Quiz not found", 404);
+    }
+
+    if (quizSet.userId !== userId) {
+      throw new AppError("Unauthorized", 403);
+    }
+
+    await quizRepository.deleteQuizSet(quizId, userId);
+
+    logger.info("Quiz set deleted successfully", {
+      quizId,
+      userId,
+      module: "quiz-service",
+    });
   }
 }
 

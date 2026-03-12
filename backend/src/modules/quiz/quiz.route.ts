@@ -1,4 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import { z } from "zod";
 import { quizService } from "./quiz.service";
 import {
   generateQuizSchema,
@@ -127,6 +128,29 @@ export const quizRoutes: FastifyPluginAsyncZod = async (fastify) => {
     },
     async (request) => {
       return quizService.listQuizSets(request.user.id, request.query);
+    },
+  );
+
+  fastify.delete(
+    "/:id",
+    {
+      preValidation: [fastify.authenticate],
+      schema: {
+        tags: ["Quiz"],
+        summary: "Delete a quiz set and all its history",
+        security: [{ bearerAuth: [] }],
+        params: z.object({
+          id: z.string().uuid(),
+        }),
+        response: {
+          200: z.object({ message: z.string() }),
+        },
+      },
+    },
+    async (request, reply) => {
+      const { id } = request.params as { id: string };
+      await quizService.deleteQuizSet(id, request.user.id);
+      return { message: "Quiz deleted successfully" };
     },
   );
 };
