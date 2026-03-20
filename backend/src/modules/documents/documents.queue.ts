@@ -1,4 +1,4 @@
-import { embeddingsQueue, type DocumentProcessingJobData } from "../embeddings/embeddings.queue";
+import { embeddingsQueue, type DocumentProcessingJobData } from "../../shared/ai/embeddings/embeddings.queue";
 
 export { type DocumentProcessingJobData };
 

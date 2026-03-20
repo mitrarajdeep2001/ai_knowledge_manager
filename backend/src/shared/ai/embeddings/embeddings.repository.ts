@@ -1,7 +1,7 @@
 import { and, eq, notInArray, sql } from "drizzle-orm";
-import { db } from "../../db";
-import { logger } from "../../utils/logger";
-import { knowledgeChunks, notes } from "../../db/schema";
+import { db } from "../../../db";
+import { logger } from "../../../utils/logger";
+import { knowledgeChunks, notes } from "../../../db/schema";
 
 export interface ChunkToStore {
   userId: string;

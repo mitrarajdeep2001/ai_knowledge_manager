@@ -1,5 +1,5 @@
-import { logger } from "../../utils/logger";
-import { resolveEmbeddingBatchSize } from "../../utils/embeddingBatchSize";
+import { logger } from "../../../utils/logger";
+import { resolveEmbeddingBatchSize } from "../../../utils/embeddingBatchSize";
 
 const HF_E5_ENDPOINT =
   "https://router.huggingface.co/hf-inference/models/intfloat/multilingual-e5-large/pipeline/feature-extraction";

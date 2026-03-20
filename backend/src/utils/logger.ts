@@ -1,4 +1,4 @@
-import { mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import pino, { multistream, stdTimeFunctions, type LoggerOptions } from "pino";
 
@@ -9,6 +9,13 @@ mkdirSync(logsDir, { recursive: true });
 
 const appLogPath = resolve(logsDir, "app.log");
 const errorLogPath = resolve(logsDir, "error.log");
+
+// Ensure log files exist
+for (const file of [appLogPath, errorLogPath]) {
+  if (!existsSync(file)) {
+    writeFileSync(file, "");
+  }
+}
 
 const options: LoggerOptions = {
   level: process.env.LOG_LEVEL || "info",

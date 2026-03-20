@@ -4,7 +4,7 @@ import { normalizeText } from "../../utils/normalizeText";
 import { chunkText } from "../../utils/chunkText";
 import { hashChunk } from "../../utils/hashChunk";
 import { resolveEmbeddingBatchSize } from "../../utils/embeddingBatchSize";
-import { embeddingsService } from "../embeddings/embeddings.service";
+import { embeddingsService } from "../../shared/ai/embeddings/embeddings.service";
 import { enqueueNoteEmbeddingJob } from "./notes.queue";
 import { notesRepository, type NoteWithTags } from "./notes.repository";
 import {

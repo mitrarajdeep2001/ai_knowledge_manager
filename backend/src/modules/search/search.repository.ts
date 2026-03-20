@@ -78,7 +78,7 @@ export class SearchRepository {
   }
 
   private async getQueryEmbedding(query: string): Promise<number[]> {
-    const { embeddingsService } = await import("../embeddings/embeddings.service");
+    const { embeddingsService } = await import("../../shared/ai/embeddings/embeddings.service");
 
     const embeddings = await embeddingsService.generateEmbeddings([query]);
 

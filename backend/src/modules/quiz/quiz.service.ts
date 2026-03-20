@@ -4,6 +4,7 @@ import { notesRepository } from "../notes/notes.repository";
 import { documentsRepository } from "../documents/documents.repository";
 import { searchRepository } from "../search/search.repository";
 import { quizRepository } from "./quiz.repository";
+import { llmService } from "../../shared/ai/llm";
 import type {
   GenerateQuizInput,
   GenerateQuizByTopicInput,
@@ -49,148 +50,6 @@ Return JSON in this exact format:
 {"questions":[{"question":"","type":"mcq","options":{"A":"","B":"","C":"","D":""},"correct_answer":"A","explanation":"why A is correct"}]}`;
 
 const MAX_CONTEXT_CHUNKS = 5;
-
-const DEFAULT_GEMINI_MODELS = [
-  "gemini-3.1-pro-preview",
-  "gemini-3-flash-preview",
-  "gemini-3.1-flash-lite-preview",
-  "gemini-2.5-flash",
-  "gemini-2.5-flash-lite",
-];
-
-const getGeminiModels = (): string[] => {
-  const envModels = process.env.GEMINI_MODELS;
-  if (envModels) {
-    return envModels.split(",").map((m) => m.trim()).filter(Boolean);
-  }
-  return DEFAULT_GEMINI_MODELS;
-};
-
-const MAX_RETRIES_PER_MODEL = 2;
-
-const isTransientError = (status: number): boolean => {
-  return status === 429 || (status >= 500 && status < 600);
-};
-
-const generateWithFallback = async (
-  prompt: string,
-  context?: { topic?: string; questionCount?: number },
-): Promise<string> => {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not configured");
-  }
-
-  const models = getGeminiModels();
-  let lastError: Error | null = null;
-
-  for (const model of models) {
-    logger.info("Attempting quiz generation", {
-      module: "quiz-service",
-      model,
-      ...context,
-    });
-
-    for (let attempt = 1; attempt <= MAX_RETRIES_PER_MODEL; attempt++) {
-      try {
-        const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: {
-                temperature: 0.7,
-                maxOutputTokens: 4000,
-              },
-            }),
-          },
-        );
-
-        if (response.status === 429) {
-          logger.warn("Gemini quota exceeded", {
-            module: "quiz-service",
-            model,
-            attempt,
-            ...context,
-          });
-          break;
-        }
-
-        if (response.status === 404) {
-          logger.warn("Gemini model not supported", {
-            module: "quiz-service",
-            model,
-            ...context,
-          });
-          break;
-        }
-
-        if (!response.ok) {
-          if (isTransientError(response.status)) {
-            logger.warn("Gemini transient error, retrying", {
-              module: "quiz-service",
-              model,
-              attempt,
-              status: response.status,
-              ...context,
-            });
-            continue;
-          }
-
-          const errorBody = await response.text();
-          logger.warn("Gemini API error, skipping model", {
-            module: "quiz-service",
-            model,
-            status: response.status,
-            error: errorBody,
-            ...context,
-          });
-          break;
-        }
-
-        const data = (await response.json()) as {
-          candidates?: {
-            content: {
-              parts: { text: string }[];
-            };
-          }[];
-        };
-
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-        if (!text) {
-          throw new Error("Empty response from Gemini");
-        }
-
-        logger.info("Quiz generation successful", {
-          module: "quiz-service",
-          model,
-          ...context,
-        });
-
-        return text;
-      } catch (error) {
-        lastError = error instanceof Error ? error : new Error(String(error));
-        logger.warn("Quiz generation attempt failed", {
-          module: "quiz-service",
-          model,
-          attempt,
-          error: lastError.message,
-          ...context,
-        });
-      }
-    }
-  }
-
-  logger.error("Quiz generation failed after trying all models", {
-    module: "quiz-service",
-    ...context,
-    err: lastError,
-  });
-
-  throw new Error("Failed to generate quiz. Please try again later.");
-};
 
 export class QuizService {
   async generateQuiz(userId: string, input: GenerateQuizInput) {
@@ -323,7 +182,17 @@ export class QuizService {
       .replace("{count}", count.toString())
       .replace("{context}", context);
 
-    const text = await generateWithFallback(prompt, { questionCount: count });
+    const result = await llmService.generateText({
+      prompt,
+      temperature: 0.7,
+      maxOutputTokens: 4000,
+      metadata: {
+        module: "quiz-service",
+        questionCount: count,
+      },
+    });
+
+    const text = result.text;
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {

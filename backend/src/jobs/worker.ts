@@ -5,7 +5,7 @@ import {
   type DocumentProcessingJobData,
   type EmbeddingsJobName,
   type NoteEmbeddingJobData,
-} from "../modules/embeddings/embeddings.queue";
+} from "../shared/ai/embeddings/embeddings.queue";
 import { documentsService } from "../modules/documents/documents.service";
 import { notesService } from "../modules/notes/notes.service";
 import { logger } from "../utils/logger";

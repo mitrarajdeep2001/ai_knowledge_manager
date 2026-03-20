@@ -773,11 +773,7 @@ export default function QuizPage() {
                           <div
                             className={clsx(
                               "text-lg font-bold",
-                              item.score >= 80
-                                ? "text-green-400"
-                                : item.score >= 60
-                                  ? "text-yellow-400"
-                                  : "text-red-400",
+                              item.score === 0 ? "text-red-400" : "text-green-400"
                             )}
                           >
                             {item.score}/{item.totalQuestions}

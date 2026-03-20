@@ -1,4 +1,5 @@
 import { Queue, type ConnectionOptions } from "bullmq";
+import { logger } from "../../../utils/logger";
 
 export type NoteEmbeddingJobData = {
   noteId: string;
