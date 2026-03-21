@@ -75,10 +75,98 @@ export const documentsAPI = {
 
 export const chatAPI = {
   listSessions: () => api.get('/chat/sessions'),
-  createSession: () => api.post('/chat/sessions'),
-  getSession: (id: number) => api.get(`/chat/sessions/${id}`),
-  deleteSession: (id: number) => api.delete(`/chat/sessions/${id}`),
-  sendMessage: (data: any) => api.post('/chat/message', data),
+  getSessionMessages: (id: string) => api.get(`/chat/sessions/${id}/messages`),
+  
+  /**
+   * Scoped RAG SSE streaming endpoint wrapper.
+   */
+  streamMessage: async (
+    params: { message: string; sessionId?: string; scope: any },
+    handlers: {
+      onToken: (token: string) => void;
+      onSessionId: (sessionId: string) => void;
+      onError: (err: string) => void;
+      onDone: () => void;
+    },
+    signal?: AbortSignal
+  ) => {
+    try {
+      const response = await fetch(`${API_BASE}/chat/stream`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(params),
+        signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Chat API error: ${response.statusText}`);
+      }
+      
+      const contentType = response.headers.get("content-type");
+      if (!contentType?.includes("text/event-stream")) {
+        throw new Error("Invalid response type (expected SSE)");
+      }
+
+      if (!response.body) {
+        throw new Error("No response body");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        // SSE events are separated by double newlines
+        const events = buffer.split("\n\n");
+
+        // The last element is either incomplete or empty, keep it in the buffer
+        buffer = events.pop() ?? "";
+
+        for (const event of events) {
+          const trimmed = event.trim();
+          if (!trimmed.startsWith("data:")) continue;
+
+          // Extract the JSON string following "data:"
+          const jsonStr = trimmed.slice("data:".length).trim();
+          if (!jsonStr) continue;
+
+          if (jsonStr === "[DONE]") {
+             handlers.onDone();
+             return;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.token) {
+              handlers.onToken(parsed.token);
+            } else if (parsed.sessionId) {
+              handlers.onSessionId(parsed.sessionId);
+            } else if (parsed.error) {
+              handlers.onError(parsed.error);
+            }
+          } catch (err) {
+            // Ignore malformed JSON chunks
+          }
+        }
+      }
+      
+      handlers.onDone();
+    } catch (error: any) {
+      if (error.name === "AbortError") {
+        console.log("Chat stream aborted");
+        return;
+      }
+      handlers.onError(error.message || "Failed to stream message");
+      handlers.onDone();
+    }
+  },
 }
 
 export const quizAPI = {

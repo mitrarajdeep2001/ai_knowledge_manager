@@ -136,3 +136,16 @@
 @keyframes shimmer {
   100% { transform: translateX(200%); }
 }
+
+.cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1 }
+  25%, 75% { opacity: 0 }
+}
+
+.markdown-wrapper.typing > *:last-child {
+  display: inline;
+}
