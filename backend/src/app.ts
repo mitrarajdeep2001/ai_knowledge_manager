@@ -10,6 +10,7 @@ import { documentsRoutes } from "./modules/documents/documents.route";
 import { searchRoutes } from "./modules/search/search.route";
 import { quizRoutes } from "./modules/quiz/quiz.route";
 import { chatRoutes } from "./modules/chat/chat.route";
+import { dashboardRoutes } from "./modules/dashboard/dashboard.route";
 import { multerPlugin } from "./plugins/multer";
 import { AppError } from "./utils/AppError";
 import { ZodError } from "zod";
@@ -105,6 +106,7 @@ export const buildApp = async () => {
   app.register(searchRoutes, { prefix: "/api/search" });
   app.register(quizRoutes, { prefix: "/api/quiz" });
   app.register(chatRoutes, { prefix: "/api/chat" });
+  app.register(dashboardRoutes, { prefix: "/api/dashboard" });
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof AppError) {

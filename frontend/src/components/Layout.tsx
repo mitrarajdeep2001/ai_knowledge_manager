@@ -62,7 +62,7 @@ export default function Layout() {
             <Zap className="w-3.5 h-3.5 text-brand-400" />
             <span className="text-xs font-semibold text-brand-300">AI Powered</span>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">Gemini 1.5 Flash · pgvector RAG</p>
+          <p className="text-xs text-gray-500 leading-relaxed">Gemini · pgvector RAG</p>
         </div>
 
         {/* User */}

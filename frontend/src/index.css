@@ -68,7 +68,7 @@
   @apply text-white font-semibold mt-4 mb-2;
 }
 .prose-dark p {
-  @apply mb-3 leading-relaxed;
+  @apply leading-relaxed;
 }
 .prose-dark code {
   @apply bg-gray-800 text-brand-300 px-1.5 py-0.5 rounded text-sm font-mono;

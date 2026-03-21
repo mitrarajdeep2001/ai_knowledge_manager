@@ -215,5 +215,36 @@ export const statsAPI = {
   get: () => api.get('/stats'),
 }
 
+export interface DashboardStats {
+  notes: number
+  documents: number
+  quizzes: number
+  chatSessions: number
+}
+
+export interface DashboardKnowledgeBase {
+  embeddingsCount: number
+  embeddingModel: string
+  dimension: number
+  status: 'online' | 'empty'
+}
+
+export interface DashboardActivityItem {
+  id: string
+  type: 'note' | 'document' | 'quiz' | 'chat'
+  title: string
+  createdAt: string
+}
+
+export interface DashboardData {
+  stats: DashboardStats
+  knowledgeBase: DashboardKnowledgeBase
+  recentActivity: DashboardActivityItem[]
+}
+
+export const dashboardAPI = {
+  get: () => api.get<DashboardData>('/dashboard'),
+}
+
 export default api
 
