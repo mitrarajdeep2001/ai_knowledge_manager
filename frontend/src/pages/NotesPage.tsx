@@ -220,8 +220,8 @@ export default function NotesPage() {
     <div className="p-8 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Notes</h1>
-          <p className="text-gray-500 text-sm">
+          <h1 className="heading-1">Notes</h1>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             {pagination.total} notes in your knowledge base
           </p>
         </div>
@@ -231,30 +231,37 @@ export default function NotesPage() {
       </div>
 
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search notes by title or content..."
-          className="input pl-10"
+          className="input pl-12"
         />
         {search && (
           <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
-            <X className="w-4 h-4 text-gray-500" />
+            <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
           </button>
         )}
       </div>
 
-      <div className="mb-6 rounded-xl border border-gray-800 bg-gray-900/40 p-3">
-        <div className="flex items-center gap-2 mb-2">
-          <Tag className="w-4 h-4 text-brand-400" />
-          <p className="text-sm text-gray-300">Filter by tags</p>
+      <div 
+        className="mb-6 rounded-2xl p-4"
+        style={{ 
+          backgroundColor: 'var(--bg-secondary)',
+          border: '1px solid var(--border-primary)'
+        }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <Tag className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Filter by tags</p>
           {selectedTags.length > 0 && (
             <button
               type="button"
               onClick={clearTagFilters}
-              className="ml-auto text-xs text-brand-400 hover:text-brand-300"
+              className="ml-auto text-xs"
+              style={{ color: 'var(--accent-primary)' }}
             >
               Clear filters
             </button>
@@ -262,7 +269,7 @@ export default function NotesPage() {
         </div>
 
         {availableTags.length === 0 ? (
-          <p className="text-xs text-gray-500">No tags available yet.</p>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>No tags available yet.</p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {availableTags.map((tag) => {
@@ -272,9 +279,12 @@ export default function NotesPage() {
                   key={tag}
                   type="button"
                   onClick={() => toggleTagFilter(tag)}
-                  className={active
-                    ? 'badge bg-brand-900/50 text-brand-300 border border-brand-700'
-                    : 'badge bg-gray-800 text-gray-300 border border-gray-700 hover:border-gray-600'}
+                  className="badge"
+                  style={{
+                    backgroundColor: active ? 'var(--accent-glow)' : 'var(--bg-tertiary)',
+                    color: active ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                    border: `1px solid ${active ? 'var(--border-accent)' : 'var(--border-primary)'}`,
+                  }}
                 >
                   #{tag}
                 </button>
@@ -285,12 +295,15 @@ export default function NotesPage() {
       </div>
 
       {showCreate && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+        >
           <div className="card w-full max-w-2xl p-6 animate-fadeIn">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-semibold text-white">New Note</h2>
+              <h2 className="heading-2">New Note</h2>
               <button onClick={() => setShowCreate(false)}>
-                <X className="w-5 h-5 text-gray-500 hover:text-gray-300" />
+                <X className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
               </button>
             </div>
             <form onSubmit={handleCreate} className="space-y-4">
@@ -311,12 +324,12 @@ export default function NotesPage() {
                 required
               />
               <div className="relative">
-                <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                 <input
                   type="text"
                   value={form.tags}
                   onChange={(e) => setForm((f) => ({ ...f, tags: e.target.value }))}
-                  className="input pl-10"
+                  className="input pl-12"
                   placeholder="Tags (comma-separated): react, fastify, drizzle"
                 />
               </div>
@@ -334,13 +347,23 @@ export default function NotesPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="card p-5 h-40 animate-pulse" />
+            <div key={i} className="card p-5 space-y-3">
+              <div className="skeleton-text w-3/4" />
+              <div className="skeleton-text w-full" />
+              <div className="skeleton-text w-5/6" />
+              <div className="flex gap-2 mt-4">
+                <div className="skeleton-text w-16" />
+                <div className="skeleton-text w-12" />
+              </div>
+            </div>
           ))}
         </div>
       ) : notes.length === 0 ? (
         <div className="text-center py-20">
-          <FileText className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">{search || selectedTags.length > 0 ? 'No notes match your filters' : 'No notes yet'}</p>
+          <FileText className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--text-faint)' }} />
+          <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
+            {search || selectedTags.length > 0 ? 'No notes match your filters' : 'No notes yet'}
+          </p>
           {!search && selectedTags.length === 0 && (
             <button onClick={() => setShowCreate(true)} className="btn-primary mt-4 mx-auto">
               <Plus className="w-4 h-4" /> Create your first note
@@ -357,26 +380,47 @@ export default function NotesPage() {
                 className="card p-5 hover:border-gray-700 transition-all group cursor-pointer flex flex-col"
               >
                 <div className="flex items-start justify-between mb-2 gap-2">
-                  <h3 className="font-semibold text-white group-hover:text-brand-300 transition-colors line-clamp-1 flex-1">
+                  <h3 
+                    className="font-semibold line-clamp-1 flex-1 group-hover:opacity-80 transition-colors"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
                     {note.title}
                   </h3>
                   <button
                     onClick={(e) => handleDelete(note.id, e)}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-600 hover:text-red-400"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ color: 'var(--text-faint)' }}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="text-gray-500 text-sm line-clamp-3 flex-1 mb-3">{note.content.slice(0, 200)}</p>
+                <p className="text-sm line-clamp-3 flex-1 mb-3" style={{ color: 'var(--text-muted)' }}>
+                  {note.content.slice(0, 200)}
+                </p>
                 {Array.isArray(note.tags) && note.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {note.tags.slice(0, 4).map((tag) => (
-                      <span key={tag} className="badge bg-brand-900/40 text-brand-300 border border-brand-800/50">
+                      <span 
+                        key={tag} 
+                        className="badge"
+                        style={{ 
+                          backgroundColor: 'var(--accent-glow)',
+                          color: 'var(--accent-primary)',
+                          border: '1px solid var(--border-accent)'
+                        }}
+                      >
                         #{tag}
                       </span>
                     ))}
                     {note.tags.length > 4 && (
-                      <span className="badge bg-gray-800 text-gray-400 border border-gray-700">
+                      <span 
+                        className="badge"
+                        style={{ 
+                          backgroundColor: 'var(--bg-tertiary)',
+                          color: 'var(--text-muted)',
+                          border: '1px solid var(--border-primary)'
+                        }}
+                      >
                         +{note.tags.length - 4}
                       </span>
                     )}
@@ -390,7 +434,7 @@ export default function NotesPage() {
                   className="mb-3"
                 />
 
-                <p className="text-xs text-gray-600">
+                <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
                   {formatDistanceToNow(new Date(note.updatedAt))} ago
                 </p>
               </Link>
@@ -406,7 +450,7 @@ export default function NotesPage() {
             >
               <ChevronLeft className="w-4 h-4" /> Prev
             </button>
-            <span className="text-sm text-gray-400 px-2">
+            <span className="text-sm px-2" style={{ color: 'var(--text-muted)' }}>
               Page {pagination.page} of {Math.max(1, pagination.totalPages)}
             </span>
             <button
@@ -423,8 +467,3 @@ export default function NotesPage() {
     </div>
   )
 }
-
-
-
-
-

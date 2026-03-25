@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-route
 import { Toaster } from 'react-hot-toast'
 import { useEffect } from 'react'
 import { useAuthStore } from './store/authStore'
+import { initTheme } from './store/themeStore'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -14,6 +15,8 @@ import QuizPage from './pages/QuizPage'
 import SearchPage from './pages/SearchPage'
 import UnauthorizedPage from './pages/UnauthorizedPage'
 import { ProtectedRoute, PublicOnlyRoute } from './components/RouteGuards'
+
+initTheme()
 
 function AppRoutes() {
   const navigate = useNavigate()

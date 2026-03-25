@@ -2,10 +2,10 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import {
   Brain, LayoutDashboard, FileText, Upload,
   MessageSquare, HelpCircle, Search, LogOut,
-  User, ChevronRight, Zap
+  Zap, Sun, Moon
 } from 'lucide-react'
 import { useAuthStore } from '../store/authStore'
-import { clsx } from 'clsx'
+import { useThemeStore } from '../store/themeStore'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -18,6 +18,7 @@ const navItems = [
 
 export default function Layout() {
   const { user, logout } = useAuthStore()
+  const { theme, toggleTheme } = useThemeStore()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -26,18 +27,55 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-950 overflow-hidden">
+    <div className="flex h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Sidebar */}
-      <aside className="w-64 flex flex-col bg-gray-900 border-r border-gray-800 shrink-0">
+      <aside 
+        className="w-64 flex flex-col shrink-0 border-r"
+        style={{ 
+          backgroundColor: 'var(--bg-secondary)',
+          borderColor: 'var(--border-primary)'
+        }}
+      >
         {/* Logo */}
-        <div className="flex items-center gap-3 p-5 border-b border-gray-800">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center shadow-lg shadow-brand-900/50">
-            <Brain className="w-5 h-5 text-white" />
+        <div 
+          className="flex items-center justify-between gap-3 p-5 border-b"
+          style={{ borderColor: 'var(--border-primary)' }}
+        >
+          <div className="flex items-center gap-3">
+            <div 
+              className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
+              style={{ background: 'var(--gradient-primary)' }}
+            >
+              <Brain className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>AI Knowledge</h1>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Manager</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-sm font-bold text-white">AI Knowledge</h1>
-            <p className="text-xs text-gray-500">Manager</p>
-          </div>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl transition-all duration-200"
+            style={{ 
+              color: 'var(--text-muted)',
+              backgroundColor: 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
+              e.currentTarget.style.color = 'var(--text-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = 'var(--text-muted)';
+            }}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </button>
         </div>
 
         {/* Nav */}
@@ -50,33 +88,59 @@ export default function Layout() {
                 isActive ? 'sidebar-item-active' : 'sidebar-item'
               }
             >
-              <Icon className="w-4 h-4 shrink-0" />
+              <Icon className="w-5 h-5 shrink-0" />
               <span className="text-sm font-medium">{label}</span>
             </NavLink>
           ))}
         </nav>
 
         {/* AI Indicator */}
-        <div className="mx-3 mb-3 p-3 rounded-xl bg-gradient-to-br from-brand-900/40 to-purple-900/20 border border-brand-800/30">
-          <div className="flex items-center gap-2 mb-1">
-            <Zap className="w-3.5 h-3.5 text-brand-400" />
-            <span className="text-xs font-semibold text-brand-300">AI Powered</span>
+        <div 
+          className="mx-3 mb-3 p-4 rounded-2xl border"
+          style={{ 
+            background: 'linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%)',
+            borderColor: 'var(--border-accent)'
+          }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
+            <span className="text-xs font-semibold" style={{ color: 'var(--accent-primary)' }}>AI Powered</span>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">Gemini · pgvector RAG</p>
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>Gemini · pgvector RAG</p>
         </div>
 
         {/* User */}
-        <div className="p-3 border-t border-gray-800">
-          <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-800 transition-colors group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-xs font-bold text-white">
+        <div className="p-3 border-t" style={{ borderColor: 'var(--border-primary)' }}>
+          <div 
+            className="flex items-center gap-3 px-3 py-3 rounded-xl transition-colors group cursor-pointer"
+            style={{ backgroundColor: 'transparent' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            <div 
+              className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white"
+              style={{ background: 'var(--gradient-primary)' }}
+            >
               {user?.username?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-200 truncate">{user?.username}</p>
-              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+              <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>{user?.username}</p>
+              <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>{user?.email}</p>
             </div>
-            <button onClick={handleLogout} className="opacity-0 group-hover:opacity-100 transition-opacity">
-              <LogOut className="w-4 h-4 text-gray-500 hover:text-red-400 transition-colors" />
+            <button 
+              onClick={handleLogout} 
+              className="transition-opacity opacity-0 group-hover:opacity-100"
+            >
+              <LogOut 
+                className="w-4 h-4" 
+                style={{ color: 'var(--text-muted)' }} 
+                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--error)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+              />
             </button>
           </div>
         </div>

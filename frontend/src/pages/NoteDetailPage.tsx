@@ -71,14 +71,20 @@ export default function NoteDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-8 h-8 animate-spin text-brand-400" />
+        <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--accent-primary)' }} />
       </div>
     )
   }
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-800 bg-gray-900 shrink-0">
+      <div 
+        className="flex items-center gap-3 px-6 py-4 shrink-0"
+        style={{ 
+          backgroundColor: 'var(--bg-secondary)',
+          borderBottom: '1px solid var(--border-primary)'
+        }}
+      >
         <button onClick={() => navigate('/notes')} className="btn-ghost">
           <ArrowLeft className="w-4 h-4" />
         </button>
@@ -90,7 +96,7 @@ export default function NoteDetailPage() {
               className="input text-lg font-semibold py-1"
             />
           ) : (
-            <h1 className="text-lg font-semibold text-white">{note?.title}</h1>
+            <h1 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{note?.title}</h1>
           )}
         </div>
         <div className="flex items-center gap-2">

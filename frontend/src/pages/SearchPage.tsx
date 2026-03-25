@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Search, Loader2, FileText, Upload, Sparkles, X, SlidersHorizontal } from 'lucide-react'
 import { searchAPI, type SearchResult } from '../services/api'
 import clsx from 'clsx'
@@ -43,9 +42,9 @@ export default function SearchPage() {
   }
 
   const scoreColor = (score: number) => {
-    if (score >= 0.8) return 'text-green-400'
-    if (score >= 0.6) return 'text-yellow-400'
-    return 'text-orange-400'
+    if (score >= 0.8) return { color: '#4ade80' }
+    if (score >= 0.6) return { color: '#facc15' }
+    return { color: '#fb923c' }
   }
 
   const scoreLabel = (score: number) => {
@@ -56,37 +55,39 @@ export default function SearchPage() {
 
   const getSourceIcon = (sourceType: string) => {
     if (sourceType === 'note') {
-      return <FileText className="w-4 h-4 text-blue-400" />
+      return <FileText className="w-4 h-4" style={{ color: '#60a5fa' }} />
     }
-    return <Upload className="w-4 h-4 text-purple-400" />
+    return <Upload className="w-4 h-4" style={{ color: '#a78bfa' }} />
   }
 
   const getSourceBg = (sourceType: string) => {
     if (sourceType === 'note') {
-      return 'bg-blue-900/40'
+      return { backgroundColor: 'rgba(96, 165, 250, 0.15)' }
     }
-    return 'bg-purple-900/40'
+    return { backgroundColor: 'rgba(167, 139, 250, 0.15)' }
   }
 
   const getSourceBadge = (sourceType: string) => {
     if (sourceType === 'note') {
-      return 'bg-blue-900/30 text-blue-400'
+      return { backgroundColor: 'rgba(96, 165, 250, 0.15)', color: '#60a5fa', border: '1px solid rgba(96, 165, 250, 0.3)' }
     }
-    return 'bg-purple-900/30 text-purple-400'
+    return { backgroundColor: 'rgba(167, 139, 250, 0.15)', color: '#a78bfa', border: '1px solid rgba(167, 139, 250, 0.3)' }
   }
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white mb-1">Hybrid Search (Semantic + Keyword)</h1>
-        <p className="text-gray-500 text-sm">Search your entire knowledge base using AI-powered vector similarity and keyword matching</p>
+        <h1 className="heading-1 mb-1">Hybrid Search (Semantic + Keyword)</h1>
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          Search your entire knowledge base using AI-powered vector similarity and keyword matching
+        </p>
       </div>
 
       {/* Search Input */}
       <form onSubmit={handleSearch} className="mb-6">
         <div className="flex gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
             <input
               type="text"
               value={query}
@@ -100,7 +101,7 @@ export default function SearchPage() {
                 onClick={() => { setQuery(''); setResults([]); setSearched(false) }}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
               >
-                <X className="w-4 h-4 text-gray-500" />
+                <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
               </button>
             )}
           </div>
@@ -109,7 +110,7 @@ export default function SearchPage() {
           </button>
         </div>
         <div className="flex items-center gap-4 mt-3">
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
             <SlidersHorizontal className="w-4 h-4" />
             Results:
           </div>
@@ -118,10 +119,12 @@ export default function SearchPage() {
               key={n}
               type="button"
               onClick={() => setLimit(n)}
-              className={clsx(
-                'px-3 py-1 rounded-lg text-sm transition-all',
-                limit === n ? 'bg-brand-900/40 text-brand-300 border border-brand-700' : 'text-gray-500 hover:text-gray-300'
-              )}
+              className="px-3 py-1 rounded-lg text-sm transition-all"
+              style={
+                limit === n 
+                  ? { backgroundColor: 'var(--accent-glow)', color: 'var(--accent-primary)', border: '1px solid var(--border-accent)' }
+                  : { color: 'var(--text-muted)' }
+              }
             >
               {n}
             </button>
@@ -132,8 +135,8 @@ export default function SearchPage() {
       {/* Starter prompts */}
       {!searched && (
         <div className="mb-8">
-          <p className="text-xs text-gray-600 mb-3 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-brand-500" />
+          <p className="text-xs mb-3 flex items-center gap-1.5" style={{ color: 'var(--text-faint)' }}>
+            <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--accent-primary)' }} />
             Try searching for...
           </p>
           <div className="flex flex-wrap gap-2">
@@ -147,7 +150,12 @@ export default function SearchPage() {
               <button
                 key={prompt}
                 onClick={() => { setQuery(prompt); }}
-                className="px-3 py-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-gray-200 hover:bg-gray-700 text-sm transition-all border border-gray-700"
+                className="px-3 py-1.5 rounded-lg text-sm transition-all"
+                style={{ 
+                  backgroundColor: 'var(--bg-tertiary)',
+                  color: 'var(--text-muted)',
+                  border: '1px solid var(--border-primary)'
+                }}
               >
                 {prompt}
               </button>
@@ -158,48 +166,73 @@ export default function SearchPage() {
 
       {/* Results */}
       {loading ? (
-        <div className="space-y-3">
-          {[...Array(4)].map((_, i) => <div key={i} className="card h-28 animate-pulse" />)}
+        <div className="space-y-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="card p-5 space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="skeleton w-10 h-10 rounded-lg" />
+                <div className="flex-1 space-y-2">
+                  <div className="flex justify-between">
+                    <div className="skeleton-text w-1/2" />
+                    <div className="skeleton-text w-20" />
+                  </div>
+                  <div className="skeleton-text w-full" />
+                  <div className="skeleton-text w-4/5" />
+                  <div className="flex gap-2">
+                    <div className="skeleton-text w-16" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : searched && results.length === 0 ? (
         <div className="card p-12 text-center">
-          <Search className="w-12 h-12 text-gray-700 mx-auto mb-3" />
-          <p className="text-gray-500">No results found for "{query}"</p>
-          <p className="text-gray-600 text-sm mt-1">Try different search terms or add more content to your knowledge base</p>
+          <Search className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--text-faint)' }} />
+          <p style={{ color: 'var(--text-muted)' }}>No results found for "{query}"</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-faint)' }}>
+            Try different search terms or add more content to your knowledge base
+          </p>
         </div>
       ) : results.length > 0 ? (
         <div className="space-y-3">
-          <p className="text-sm text-gray-500">
-            Found <span className="text-white font-medium">{results.length}</span> results for
-            <span className="text-brand-400"> "{query}"</span>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+            Found <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{results.length}</span> results for
+            <span style={{ color: 'var(--accent-primary)' }}> "{query}"</span>
           </p>
           {results.map((result, idx) => (
             <div
               key={`${result.sourceType}-${result.sourceId}`}
-              className="card p-5 hover:border-gray-700 transition-all block animate-fadeIn group"
+              className="card p-5 transition-all block animate-fadeIn"
               style={{ animationDelay: `${idx * 50}ms` }}
             >
               <div className="flex items-start gap-3">
-                <div className={clsx(
-                  'w-8 h-8 rounded-lg flex items-center justify-center shrink-0',
-                  getSourceBg(result.sourceType)
-                )}>
+                <div 
+                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={getSourceBg(result.sourceType)}
+                >
                   {getSourceIcon(result.sourceType)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-medium text-white group-hover:text-brand-300 transition-colors truncate">
+                    <h3 className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                       {result.sourceType === 'note' ? 'Note' : 'Document'} - {result.sourceId.slice(0, 8)}
                     </h3>
-                    <span className={`text-xs font-medium shrink-0 ${scoreColor(result.similarity)}`}>
+                    <span 
+                      className="text-xs font-medium shrink-0" 
+                      style={scoreColor(result.similarity)}
+                    >
                       {scoreLabel(result.similarity)} match ({(result.similarity * 100).toFixed(0)}%)
                     </span>
                   </div>
-                  <p className="text-gray-500 text-sm line-clamp-3 mb-2">
+                  <p className="text-sm line-clamp-3 mb-2" style={{ color: 'var(--text-muted)' }}>
                     {result.content}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    <span className={`badge ${getSourceBadge(result.sourceType)} text-xs capitalize`}>
+                    <span 
+                      className="badge text-xs capitalize"
+                      style={getSourceBadge(result.sourceType)}
+                    >
                       {result.sourceType}
                     </span>
                   </div>
@@ -217,7 +250,7 @@ export default function SearchPage() {
               >
                 Previous
               </button>
-              <span className="flex items-center px-4 text-gray-500">
+              <span className="flex items-center px-4" style={{ color: 'var(--text-muted)' }}>
                 Page {page}
               </span>
               <button

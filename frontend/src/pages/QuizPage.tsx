@@ -11,7 +11,6 @@ import {
   Brain,
   FileText,
   Upload,
-  Hash,
   ChevronRight,
   Clock,
 } from "lucide-react";
@@ -75,9 +74,8 @@ function GenerateModal({
 }) {
   const [notes, setNotes] = useState<any[]>([]);
   const [docs, setDocs] = useState<any[]>([]);
-  const [mode, setMode] = useState<"topic" | "note" | "document">("topic");
+  const [mode, setMode] = useState<"note" | "document">("note");
   const [form, setForm] = useState({
-    topic: "",
     noteId: "",
     documentId: "",
     title: "",
@@ -94,21 +92,14 @@ function GenerateModal({
   const handleGenerate = async () => {
     setGenerating(true);
     try {
-      if (mode === "topic") {
-        await quizAPI.generateByTopic({
-          topic: form.topic,
-          questionCount: form.questionCount,
-        });
-      } else {
-        const sourceId = mode === "note" ? form.noteId : form.documentId;
-        await quizAPI.generate({
-          sourceType: mode as "note" | "document",
-          sourceId,
-          title: form.title || `${mode === "note" ? "Note" : "Document"} Quiz`,
-          questionCount: form.questionCount,
-          durationSeconds: form.durationSeconds,
-        });
-      }
+      const sourceId = mode === "note" ? form.noteId : form.documentId;
+      await quizAPI.generate({
+        sourceType: mode as "note" | "document",
+        sourceId,
+        title: form.title || `${mode === "note" ? "Note" : "Document"} Quiz`,
+        questionCount: form.questionCount,
+        durationSeconds: form.durationSeconds,
+      });
       toast.success("Quiz generated!");
       onGenerated();
       onClose();
@@ -119,39 +110,44 @@ function GenerateModal({
     }
   };
 
-  const isValid =
-    mode === "topic"
-      ? form.topic.trim()
-      : mode === "note"
-        ? form.noteId
-        : form.documentId;
+  const isValid = mode === "note" ? form.noteId : form.documentId;
 
   const quizModes = [
-    // { value: "topic", label: "Topic", icon: Hash },
     { value: "note", label: "Note", icon: FileText },
     { value: "document", label: "Document", icon: Upload },
   ];
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+    >
       <div className="card w-full max-w-lg p-6 animate-fadeIn">
-        <h2 className="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-          <Brain className="w-5 h-5 text-brand-400" /> Generate Quiz with AI
+        <h2 className="text-lg font-semibold mb-5 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <Brain className="w-5 h-5" style={{ color: 'var(--accent-primary)' }} /> Generate Quiz with AI
         </h2>
 
         <div className="space-y-4">
           <div>
-            <label className="text-sm text-gray-400 mb-2 block">Source</label>
+            <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>Source</label>
             <div className={`grid grid-cols-${quizModes.length} gap-2`}>
               {quizModes.map(({ value, label, icon: Icon }) => (
                 <button
                   key={value}
                   onClick={() => setMode(value as typeof mode)}
-                  className={clsx(
-                    "p-3 rounded-xl border text-sm flex flex-col items-center gap-1.5 transition-all",
+                  className="p-3 rounded-xl transition-all text-sm flex flex-col items-center gap-1.5"
+                  style={
                     mode === value
-                      ? "bg-brand-900/40 border-brand-600 text-brand-300"
-                      : "bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600",
-                  )}
+                      ? { 
+                          backgroundColor: 'var(--accent-glow)', 
+                          border: '1px solid var(--accent-primary)',
+                          color: 'var(--accent-primary)'
+                        }
+                      : { 
+                          backgroundColor: 'var(--bg-tertiary)',
+                          border: '1px solid var(--border-primary)',
+                          color: 'var(--text-muted)'
+                        }
+                  }
                 >
                   <Icon className="w-4 h-4" />
                   {label}
@@ -160,26 +156,10 @@ function GenerateModal({
             </div>
           </div>
 
-          {mode === "topic" && (
-            <div>
-              <label className="text-sm text-gray-400 mb-2 block">
-                Topic to quiz on
-              </label>
-              <input
-                value={form.topic}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, topic: e.target.value }))
-                }
-                className="input"
-                placeholder="e.g., machine learning, React hooks, history..."
-              />
-            </div>
-          )}
-
           {mode === "note" && (
             <>
               <div>
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                   Select Note
                 </label>
                 <select
@@ -198,7 +178,7 @@ function GenerateModal({
                 </select>
               </div>
               <div>
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                   Quiz Title
                 </label>
                 <input
@@ -216,7 +196,7 @@ function GenerateModal({
           {mode === "document" && (
             <>
               <div>
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                   Select Document
                 </label>
                 <select
@@ -235,7 +215,7 @@ function GenerateModal({
                 </select>
               </div>
               <div>
-                <label className="text-sm text-gray-400 mb-2 block">
+                <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                   Quiz Title
                 </label>
                 <input
@@ -252,7 +232,7 @@ function GenerateModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-gray-400 mb-2 block">
+              <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                 Questions
               </label>
               <input
@@ -270,7 +250,7 @@ function GenerateModal({
               />
             </div>
             <div>
-              <label className="text-sm text-gray-400 mb-2 block">
+              <label className="text-sm mb-2 block" style={{ color: 'var(--text-muted)' }}>
                 Duration (seconds)
               </label>
               <input
@@ -318,7 +298,6 @@ function GenerateModal({
 function QuizRunner({
   quizData,
   onFinish,
-  onClose,
 }: {
   quizData: QuizStartResponse;
   onFinish: (r: QuizSubmitResponse) => void;
@@ -424,34 +403,38 @@ function QuizRunner({
   const optionLabels = Object.keys(q.options || {});
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
+    >
       <div className="card w-full max-w-2xl p-6 animate-fadeIn max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
               {quizData.title}
             </h2>
             <div className="flex items-center gap-3 mt-1">
-              <span className="text-xs text-gray-500">
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                 Q {current + 1} / {quizData.questions.length}
               </span>
-              <div className="flex-1 h-1.5 bg-gray-800 rounded-full w-32">
+              <div className="flex-1 h-1.5 rounded-full w-32" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                 <div
-                  className="h-full bg-brand-600 rounded-full transition-all"
-                  style={{
+                  className="h-full rounded-full transition-all"
+                  style={{ 
                     width: `${((current + 1) / quizData.questions.length) * 100}%`,
+                    backgroundColor: 'var(--accent-primary)'
                   }}
                 />
               </div>
             </div>
           </div>
           <div
-            className={clsx(
-              "flex items-center gap-2 px-3 py-1.5 rounded-lg border",
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+            style={
               timeLeft < 60
-                ? "bg-red-900/30 border-red-700 text-red-400"
-                : "bg-gray-800 border-gray-700 text-gray-400",
-            )}
+                ? { backgroundColor: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: 'var(--error)' }
+                : { backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)', color: 'var(--text-muted)' }
+            }
           >
             <Clock className="w-4 h-4" />
             <span className="font-mono">{formatTime(timeLeft)}</span>
@@ -459,7 +442,7 @@ function QuizRunner({
         </div>
 
         <div className="mb-6">
-          <p className="text-base font-medium text-white leading-relaxed">
+          <p className="text-base font-medium leading-relaxed" style={{ color: 'var(--text-primary)' }}>
             {q.question}
           </p>
         </div>
@@ -470,20 +453,16 @@ function QuizRunner({
               key={label}
               onClick={() => selectAnswer(label)}
               disabled={submitted}
-              className={clsx(
-                "w-full text-left p-4 rounded-xl border transition-all flex items-center gap-3",
+              className="w-full text-left p-4 rounded-xl transition-all flex items-center gap-3"
+              style={
                 answers[q.id] === label
-                  ? "bg-brand-900/40 border-brand-600 text-brand-200"
-                  : "bg-gray-800/50 border-gray-700 text-gray-300 hover:border-gray-600 hover:bg-gray-800",
-              )}
+                  ? { backgroundColor: 'var(--accent-glow)', border: '1px solid var(--accent-primary)', color: 'var(--accent-primary)' }
+                  : { backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }
+              }
             >
               <span
-                className={clsx(
-                  "w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shrink-0",
-                  answers[q.id] === label
-                    ? "bg-brand-600 text-white"
-                    : "bg-gray-700 text-gray-400",
-                )}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shrink-0"
+                style={answers[q.id] === label ? { backgroundColor: 'var(--accent-primary)', color: 'white' } : { backgroundColor: 'var(--bg-secondary)', color: 'var(--text-muted)' }}
               >
                 {label}
               </span>
@@ -506,13 +485,11 @@ function QuizRunner({
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className={clsx("w-2 h-2 rounded-full transition-all", {
-                  "bg-brand-500": i === current,
-                  "bg-green-500":
-                    answers[quizData.questions[i].id] && i !== current,
-                  "bg-gray-700":
-                    !answers[quizData.questions[i].id] && i !== current,
-                })}
+                className="w-2 h-2 rounded-full transition-all"
+                style={{
+                  backgroundColor: i === current ? 'var(--accent-primary)' : 
+                    answers[quizData.questions[i].id] ? 'var(--success)' : 'var(--text-faint)'
+                }}
               />
             ))}
           </div>
@@ -528,7 +505,8 @@ function QuizRunner({
             <button
               onClick={handleSubmit}
               disabled={submitting || timeLeft === 0}
-              className="btn-primary bg-green-700 hover:bg-green-600"
+              className="btn-primary"
+              style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
             >
               {submitting ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -558,36 +536,46 @@ function ResultsPanel({
       : 0;
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
+    >
       <div className="card w-full max-w-md p-6 animate-fadeIn">
         <div className="text-center mb-6">
           {results.isTimeExpired && (
             <div className="mb-4">
-              <span className="badge bg-yellow-900/30 text-yellow-400 text-sm">
-                ⏱️ Time Expired - Auto Submitted
+              <span 
+                className="badge"
+                style={{ 
+                  backgroundColor: 'rgba(245, 158, 11, 0.15)', 
+                  color: 'var(--warning)',
+                  border: '1px solid rgba(245, 158, 11, 0.3)'
+                }}
+              >
+                Time Expired - Auto Submitted
               </span>
             </div>
           )}
           <div
-            className={clsx(
-              "w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-3 border-4",
+            className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-3 border-4"
+            style={
               pct >= 80
-                ? "bg-green-900/30 border-green-600 text-green-300"
+                ? { backgroundColor: 'rgba(34, 197, 94, 0.15)', borderColor: 'var(--success)', color: 'var(--success)' }
                 : pct >= 60
-                  ? "bg-yellow-900/30 border-yellow-600 text-yellow-300"
-                  : "bg-red-900/30 border-red-600 text-red-300",
-            )}
+                  ? { backgroundColor: 'rgba(245, 158, 11, 0.15)', borderColor: 'var(--warning)', color: 'var(--warning)' }
+                  : { backgroundColor: 'rgba(239, 68, 68, 0.15)', borderColor: 'var(--error)', color: 'var(--error)' }
+            }
           >
             {pct}%
           </div>
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {pct >= 80
               ? "Excellent!"
               : pct >= 60
                 ? "Good Job!"
                 : "Keep Studying!"}
           </h2>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
             {results.correctAnswers} / {results.totalQuestions} correct
           </p>
         </div>
@@ -644,8 +632,8 @@ export default function QuizPage() {
     <div className="p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">Quizzes</h1>
-          <p className="text-gray-500 text-sm">
+          <h1 className="heading-1">Quizzes</h1>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             Test your knowledge with AI-generated quizzes
           </p>
         </div>
@@ -680,45 +668,70 @@ export default function QuizPage() {
       )}
 
       {loading ? (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="card h-24 animate-pulse" />
+            <div key={i} className="card p-5 space-y-3">
+              <div className="flex justify-between items-start">
+                <div className="space-y-2 flex-1">
+                  <div className="skeleton-text w-2/3" />
+                  <div className="flex gap-2">
+                    <div className="skeleton-text w-20" />
+                    <div className="skeleton-text w-16" />
+                  </div>
+                </div>
+                <div className="skeleton w-24 h-8" />
+              </div>
+            </div>
           ))}
         </div>
       ) : (
         <>
           {quizSets.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-white mb-4">
+              <h2 className="heading-2 mb-4">
                 Available Quizzes
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {quizSets.map((quiz) => (
                   <div
                     key={quiz.id}
-                    className="card p-5 hover:border-gray-700 transition-all group"
+                    className="card p-5 transition-all group"
                   >
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-semibold text-white line-clamp-2 flex-1 group-hover:text-brand-300 transition-colors">
+                      <h3 className="font-semibold line-clamp-2 flex-1" style={{ color: 'var(--text-primary)' }}>
                         {quiz.title}
                       </h3>
                       <button
                         onClick={() => handleDelete(quiz.id)}
                         className="opacity-0 group-hover:opacity-100 transition-opacity ml-2"
                       >
-                        <Trash2 className="w-4 h-4 text-gray-600 hover:text-red-400" />
+                        <Trash2 className="w-4 h-4" style={{ color: 'var(--text-faint)' }} />
                       </button>
                     </div>
                     <div className="flex items-center gap-2 mb-4">
-                      <span className="badge bg-gray-800 text-gray-400">
+                      <span 
+                        className="badge"
+                        style={{ 
+                          backgroundColor: 'var(--bg-tertiary)',
+                          color: 'var(--text-muted)',
+                          border: '1px solid var(--border-primary)'
+                        }}
+                      >
                         {quiz.questionCount} questions
                       </span>
-                      <span className="badge bg-gray-800 text-gray-400 capitalize">
+                      <span 
+                        className="badge capitalize"
+                        style={{ 
+                          backgroundColor: 'var(--bg-tertiary)',
+                          color: 'var(--text-muted)',
+                          border: '1px solid var(--border-primary)'
+                        }}
+                      >
                         {quiz.sourceType}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-600">
+                      <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
                         {formatDistanceToNow(new Date(quiz.createdAt), {
                           addSuffix: true,
                         })}
@@ -738,22 +751,22 @@ export default function QuizPage() {
 
           {history.length > 0 && (
             <div>
-              <h2 className="text-lg font-semibold text-white mb-4">
+              <h2 className="heading-2 mb-4">
                 Quiz History
               </h2>
               <div className="space-y-3">
                 {history.map((item) => (
                   <div
                     key={item.id}
-                    className="card p-5 hover:border-gray-700 transition-all"
+                    className="card p-5 transition-all"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="font-semibold text-white">
+                        <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>
                           {item.quizTitle}
                         </h3>
                         <div className="flex items-center gap-3 mt-1">
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                             {item.completedAt
                               ? formatDistanceToNow(
                                   new Date(item.completedAt),
@@ -762,7 +775,14 @@ export default function QuizPage() {
                               : "In progress"}
                           </span>
                           {item.isTimeExpired && (
-                            <span className="badge bg-yellow-900/30 text-yellow-400 text-xs">
+                            <span 
+                              className="badge"
+                              style={{ 
+                                backgroundColor: 'rgba(245, 158, 11, 0.15)', 
+                                color: 'var(--warning)',
+                                border: '1px solid rgba(245, 158, 11, 0.3)'
+                              }}
+                            >
                               Time Expired
                             </span>
                           )}
@@ -771,14 +791,12 @@ export default function QuizPage() {
                       <div className="flex items-center gap-4">
                         <div className="text-right">
                           <div
-                            className={clsx(
-                              "text-lg font-bold",
-                              item.score === 0 ? "text-red-400" : "text-green-400"
-                            )}
+                            className="text-lg font-bold"
+                            style={{ color: item.score === 0 ? 'var(--error)' : 'var(--success)' }}
                           >
                             {item.score}/{item.totalQuestions}
                           </div>
-                          <div className="text-xs text-gray-500">score</div>
+                          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>score</div>
                         </div>
                       </div>
                     </div>
@@ -790,9 +808,9 @@ export default function QuizPage() {
 
           {quizSets.length === 0 && history.length === 0 && (
             <div className="card p-16 text-center">
-              <HelpCircle className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">No quizzes yet</p>
-              <p className="text-gray-600 text-sm mb-4">
+              <HelpCircle className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--text-faint)' }} />
+              <p className="text-lg" style={{ color: 'var(--text-muted)' }}>No quizzes yet</p>
+              <p className="text-sm mb-4" style={{ color: 'var(--text-faint)' }}>
                 Generate a quiz from your notes, documents, or a topic
               </p>
               <button

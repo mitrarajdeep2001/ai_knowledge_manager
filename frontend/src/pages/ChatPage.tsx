@@ -52,14 +52,14 @@ function MessageBubble({
       )}
     >
       <div
-        className={clsx(
-          "w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm font-bold",
-          isUser
-            ? "bg-gradient-to-br from-gray-600 to-gray-800 text-gray-200"
-            : "bg-gradient-to-br from-brand-600 to-purple-600",
-        )}
+        className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-sm font-bold text-white"
+        style={{ background: isUser ? 'var(--bg-tertiary)' : 'var(--gradient-primary)' }}
       >
-        {isUser ? "U" : <Brain className="w-4 h-4 text-white" />}
+        {isUser ? (
+          <span style={{ color: 'var(--text-secondary)' }}>U</span>
+        ) : (
+          <Brain className="w-4 h-4 text-white" />
+        )}
       </div>
 
       <div
@@ -69,12 +69,12 @@ function MessageBubble({
         )}
       >
         <div
-          className={clsx(
-            "rounded-2xl px-4 py-2",
+          className="rounded-2xl px-4 py-3"
+          style={
             isUser
-              ? "bg-brand-600 text-white rounded-br-none"
-              : "bg-gray-800 border border-gray-700 rounded-bl-none text-gray-100",
-          )}
+              ? { background: 'var(--gradient-primary)', color: 'white' }
+              : { backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-primary)' }
+          }
         >
           {isUser ? (
             <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -88,10 +88,10 @@ function MessageBubble({
                     {msg.content}
                   </ReactMarkdown>
                 ) : (
-                  isTyping && <div className="h-5" /> // Spacer for the cursor
+                  isTyping && <div className="h-5" />
                 )}
                 {isTyping && (
-                  <span className="cursor text-brand-400 font-bold ml-1">
+                  <span className="cursor" style={{ color: 'var(--accent-primary)' }}>
                     |
                   </span>
                 )}
@@ -105,22 +105,17 @@ function MessageBubble({
 }
 
 export default function ChatPage() {
-  // Session State
   const [sessions, setSessions] = useState<Session[]>([]);
   const [activeSession, setActiveSession] = useState<string | null>(null);
-
-  // Message State
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [loadingMsgs, setLoadingMsgs] = useState(false);
 
-  // Scope State
   const [scopeType, setScopeType] = useState<ScopeType>("all");
   const [selectedScopeId, setSelectedScopeId] = useState<string>("");
 
-  // Available items for scope selector
   const [availableNotes, setAvailableNotes] = useState<ScopeOption[]>([]);
   const [availableDocs, setAvailableDocs] = useState<ScopeOption[]>([]);
   const [loadingOptions, setLoadingOptions] = useState(true);
@@ -129,9 +124,7 @@ export default function ChatPage() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Fetch items for scope dropdowns and user sessions
   useEffect(() => {
-    // Fetch scope items
     Promise.all([notesAPI.list({ limit: 100 }), documentsAPI.list()])
       .then(([notesRes, docsRes]) => {
         const notesList = Array.isArray(notesRes.data)
@@ -151,7 +144,6 @@ export default function ChatPage() {
       .catch(console.error)
       .finally(() => setLoadingOptions(false));
 
-    // Fetch user sessions
     chatAPI
       .listSessions()
       .then((res) => setSessions(res.data))
@@ -184,7 +176,6 @@ export default function ChatPage() {
     const content = input.trim();
     if (!content) return;
 
-    // Validate scope
     if (scopeType !== "all" && !selectedScopeId) {
       toast.error(`Please select a ${scopeType} to chat with.`);
       return;
@@ -214,12 +205,10 @@ export default function ChatPage() {
       id: assistantMsgId,
       sessionId: activeSession || "",
       role: "assistant",
-      content: "", // Will be filled by streaming
+      content: "",
       createdAt: new Date().toISOString(),
     };
 
-    // Replace assistant response if we are canceling an in-progress generation?
-    // Not explicitly requested, standard append is fine.
     setMessages((prev) => [...prev, tempUserMsg, initialAssistantMsg]);
 
     const scopePayload =
@@ -314,8 +303,17 @@ export default function ChatPage() {
   return (
     <div className="flex h-full">
       {/* Sessions Sidebar */}
-      <div className="w-72 border-r border-gray-800 bg-gray-900/50 flex flex-col shrink-0">
-        <div className="p-4 border-b border-gray-800">
+      <div 
+        className="w-72 flex flex-col shrink-0"
+        style={{ 
+          backgroundColor: 'var(--bg-secondary)',
+          borderRight: '1px solid var(--border-primary)'
+        }}
+      >
+        <div 
+          className="p-4"
+          style={{ borderBottom: '1px solid var(--border-primary)' }}
+        >
           <button
             onClick={createNewSession}
             className="btn-primary w-full justify-center text-sm"
@@ -323,13 +321,22 @@ export default function ChatPage() {
             <Plus className="w-4 h-4 shrink-0" /> New Chat
           </button>
         </div>
-        <div className="p-4 border-b border-gray-800 space-y-3">
+        <div 
+          className="p-4 space-y-3"
+          style={{ borderBottom: '1px solid var(--border-primary)' }}
+        >
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-4 h-4 text-brand-400" />
-            <h3 className="text-sm font-medium text-gray-200">Chat Scope</h3>
+            <Sparkles className="w-4 h-4" style={{ color: 'var(--accent-primary)' }} />
+            <h3 className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Chat Scope</h3>
           </div>
 
-          <div className="flex rounded-lg overflow-hidden border border-gray-700 p-0.5 bg-gray-900/50">
+          <div 
+            className="flex rounded-xl overflow-hidden p-0.5"
+            style={{ 
+              backgroundColor: 'var(--bg-tertiary)',
+              border: '1px solid var(--border-primary)'
+            }}
+          >
             {(["all", "note", "document"] as const).map((type) => (
               <button
                 key={type}
@@ -338,11 +345,12 @@ export default function ChatPage() {
                   setSelectedScopeId("");
                 }}
                 className={clsx(
-                  "flex-1 text-xs py-1.5 px-2 rounded-md font-medium capitalize transition-all",
+                  "flex-1 text-xs py-2 px-3 rounded-lg font-medium capitalize transition-all",
                   scopeType === type
-                    ? "bg-brand-600 text-white shadow"
-                    : "text-gray-400 hover:text-gray-200",
+                    ? "text-white"
+                    : "",
                 )}
+                style={scopeType === type ? { background: 'var(--gradient-primary)' } : { color: 'var(--text-muted)' }}
               >
                 {type}
               </button>
@@ -351,7 +359,7 @@ export default function ChatPage() {
 
           {scopeType === "note" && (
             <div className="space-y-1">
-              <label className="text-xs text-gray-500">Select Note</label>
+              <label className="text-xs" style={{ color: 'var(--text-muted)' }}>Select Note</label>
               <div className="relative">
                 <select
                   className="input py-2 text-sm appearance-none cursor-pointer"
@@ -368,14 +376,14 @@ export default function ChatPage() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3 pointer-events-none" />
+                <ChevronDown className="w-4 h-4 absolute right-3 top-3 pointer-events-none" style={{ color: 'var(--text-muted)' }} />
               </div>
             </div>
           )}
 
           {scopeType === "document" && (
             <div className="space-y-1">
-              <label className="text-xs text-gray-500">Select Document</label>
+              <label className="text-xs" style={{ color: 'var(--text-muted)' }}>Select Document</label>
               <div className="relative">
                 <select
                   className="input py-2 text-sm appearance-none cursor-pointer"
@@ -392,18 +400,18 @@ export default function ChatPage() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3 pointer-events-none" />
+                <ChevronDown className="w-4 h-4 absolute right-3 top-3 pointer-events-none" style={{ color: 'var(--text-muted)' }} />
               </div>
             </div>
           )}
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider px-2 mb-2" style={{ color: 'var(--text-faint)' }}>
             Recent Sessions
           </h3>
           {sessions.length === 0 ? (
-            <p className="text-xs text-gray-600 px-2 italic">
+            <p className="text-xs px-2 italic" style={{ color: 'var(--text-faint)' }}>
               No local sessions
             </p>
           ) : (
@@ -411,12 +419,16 @@ export default function ChatPage() {
               <div
                 key={session.id}
                 onClick={() => loadSession(session.id)}
-                className={clsx(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer group transition-all",
+                className="flex items-center gap-3 px-3 py-3 rounded-xl cursor-pointer transition-all"
+                style={
                   activeSession === session.id
-                    ? "bg-brand-900/30 border border-brand-800/50 text-brand-300"
-                    : "hover:bg-gray-800 text-gray-400",
-                )}
+                    ? { 
+                        backgroundColor: 'var(--accent-glow)', 
+                        color: 'var(--accent-primary)',
+                        border: '1px solid var(--border-accent)'
+                      }
+                    : { color: 'var(--text-muted)' }
+                }
               >
                 <MessageSquare className="w-4 h-4 shrink-0 opacity-70" />
                 <span className="text-sm flex-1 truncate">{session.title}</span>
@@ -427,19 +439,35 @@ export default function ChatPage() {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-gray-950">
+      <div className="flex-1 flex flex-col" style={{ backgroundColor: 'var(--bg-primary)' }}>
         {/* Header */}
-        <div className="flex items-center gap-3 px-6 py-4 border-b border-gray-800 bg-gray-900/30 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center">
+        <div 
+          className="flex items-center gap-3 px-6 py-4 shrink-0"
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)',
+            borderBottom: '1px solid var(--border-primary)'
+          }}
+        >
+          <div 
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{ background: 'var(--gradient-primary)' }}
+          >
             <Brain className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h1 className="text-base font-semibold text-white">
+            <h1 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
               AI Knowledge Chat
             </h1>
-            <p className="text-xs text-gray-500 flex items-center gap-1.5">
+            <p className="text-xs flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
               <span>Scope:</span>
-              <span className="px-1.5 py-0.5 rounded bg-gray-800 text-brand-300 font-medium capitalize border border-brand-900/50">
+              <span 
+                className="px-2 py-0.5 rounded font-medium capitalize"
+                style={{ 
+                  backgroundColor: 'var(--accent-glow)',
+                  color: 'var(--accent-primary)',
+                  border: '1px solid var(--border-accent)'
+                }}
+              >
                 {scopeType === "all" ? "Entire Knowledge Base" : scopeType}
               </span>
             </p>
@@ -450,17 +478,23 @@ export default function ChatPage() {
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8 scroll-smooth">
           {loadingMsgs ? (
             <div className="flex justify-center h-full items-center">
-              <Loader2 className="w-6 h-6 animate-spin text-brand-400" />
+              <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--accent-primary)' }} />
             </div>
           ) : messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center animate-fadeIn max-w-2xl mx-auto">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-600/20 to-purple-600/20 border border-brand-800/30 flex items-center justify-center mb-6">
-                <Brain className="w-8 h-8 text-brand-400" />
+              <div 
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
+                style={{ 
+                  background: 'var(--accent-glow)',
+                  border: '1px solid var(--border-accent)'
+                }}
+              >
+                <Brain className="w-8 h-8" style={{ color: 'var(--accent-primary)' }} />
               </div>
-              <h2 className="text-2xl font-semibold text-white mb-3">
+              <h2 className="text-2xl font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                 Chat with your Knowledge
               </h2>
-              <p className="text-gray-400 text-base mb-8 leading-relaxed">
+              <p className="text-base mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 Ask anything about your notes and documents. The AI uses RAG to
                 find relevant context from your knowledge base and generates an
                 answer strictly based on your data.
@@ -474,7 +508,12 @@ export default function ChatPage() {
                       setInput(p);
                       inputRef.current?.focus();
                     }}
-                    className="text-left p-4 rounded-xl bg-gray-900 border border-gray-800 hover:border-brand-700/50 hover:bg-gray-800 text-sm text-gray-300 hover:text-white transition-all shadow-sm"
+                    className="text-left p-4 rounded-2xl transition-all shadow-sm"
+                    style={{ 
+                      backgroundColor: 'var(--bg-secondary)',
+                      border: '1px solid var(--border-primary)',
+                      color: 'var(--text-secondary)'
+                    }}
                   >
                     {p}
                   </button>
@@ -495,20 +534,20 @@ export default function ChatPage() {
                 />
               ))}
               {isTyping && (
-                <div className="flex items-center gap-2 text-gray-500 text-xs animate-pulse font-medium ml-11">
+                <div className="flex items-center gap-2 text-xs animate-pulse font-medium ml-11" style={{ color: 'var(--text-muted)' }}>
                   <div className="flex gap-1">
                     <span
-                      className="w-1 h-1 bg-gray-500 rounded-full animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    ></span>
+                      className="w-1 h-1 rounded-full animate-bounce"
+                      style={{ backgroundColor: 'var(--text-muted)', animationDelay: "0ms" }}
+                    />
                     <span
-                      className="w-1 h-1 bg-gray-500 rounded-full animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    ></span>
+                      className="w-1 h-1 rounded-full animate-bounce"
+                      style={{ backgroundColor: 'var(--text-muted)', animationDelay: "150ms" }}
+                    />
                     <span
-                      className="w-1 h-1 bg-gray-500 rounded-full animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    ></span>
+                      className="w-1 h-1 rounded-full animate-bounce"
+                      style={{ backgroundColor: 'var(--text-muted)', animationDelay: "300ms" }}
+                    />
                   </div>
                   AI is typing...
                 </div>
@@ -519,10 +558,25 @@ export default function ChatPage() {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-gray-900/30 border-t border-gray-800 shrink-0">
+        <div 
+          className="p-4 shrink-0"
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)',
+            borderTop: '1px solid var(--border-primary)'
+          }}
+        >
           <div className="max-w-4xl mx-auto relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-600/30 to-purple-600/30 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-500"></div>
-            <div className="relative flex items-end gap-3 bg-gray-900 border border-gray-700/80 rounded-2xl p-2 focus-within:border-brand-600 transition-all shadow-lg">
+            <div 
+              className="absolute -inset-0.5 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-500"
+              style={{ background: 'var(--gradient-primary)' }}
+            />
+            <div 
+              className="relative flex items-end gap-3 rounded-2xl p-2 transition-all shadow-lg"
+              style={{ 
+                backgroundColor: 'var(--bg-tertiary)',
+                border: '1px solid var(--border-primary)'
+              }}
+            >
               <textarea
                 ref={inputRef}
                 value={input}
@@ -534,8 +588,8 @@ export default function ChatPage() {
                     ? "Ask anything about your knowledge base..."
                     : `Ask about this ${scopeType}...`
                 }
-                className="flex-1 bg-transparent text-gray-100 placeholder-gray-500 resize-none outline-none text-base leading-relaxed max-h-48 py-2 px-3 pl-4"
-                style={{ height: "auto" }}
+                className="flex-1 bg-transparent resize-none outline-none text-base leading-relaxed max-h-48 py-2 px-4"
+                style={{ height: "auto", color: 'var(--text-primary)' }}
                 onInput={(e) => {
                   const el = e.currentTarget;
                   el.style.height = "auto";
@@ -546,7 +600,8 @@ export default function ChatPage() {
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || sending}
-                className="w-10 h-10 mb-1 mr-1 rounded-xl bg-gradient-to-br from-brand-600 to-purple-600 hover:from-brand-500 hover:to-purple-500 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-all shrink-0 shadow-md"
+                className="w-10 h-10 mb-1 mr-1 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-all shrink-0 shadow-md"
+                style={{ background: 'var(--gradient-primary)' }}
               >
                 {sending ? (
                   <Loader2 className="w-5 h-5 animate-spin text-white" />
@@ -556,7 +611,7 @@ export default function ChatPage() {
               </button>
             </div>
           </div>
-          <p className="text-xs text-gray-500 mt-3 text-center">
+          <p className="text-xs mt-3 text-center" style={{ color: 'var(--text-muted)' }}>
             AI can make mistakes. Check your original notes for accuracy.
           </p>
         </div>

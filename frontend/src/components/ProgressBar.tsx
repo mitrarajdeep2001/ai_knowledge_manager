@@ -11,20 +11,36 @@ interface ProgressBarProps {
 
 const clamp = (value: number) => Math.max(0, Math.min(100, value))
 
-const statusBadgeClass = (status: ProgressBarProps['status']) => {
+const statusBadgeStyle = (status: ProgressBarProps['status']): React.CSSProperties => {
   if (status === 'ready' || status === 'completed') {
-    return 'bg-green-900/40 text-green-300 border border-green-800/50'
+    return { 
+      backgroundColor: 'rgba(34, 197, 94, 0.15)', 
+      color: '#4ade80', 
+      border: '1px solid rgba(34, 197, 94, 0.3)' 
+    }
   }
 
   if (status === 'failed') {
-    return 'bg-red-900/40 text-red-300 border border-red-800/50'
+    return { 
+      backgroundColor: 'rgba(239, 68, 68, 0.15)', 
+      color: '#f87171', 
+      border: '1px solid rgba(239, 68, 68, 0.3)' 
+    }
   }
 
   if (status === 'queued' || status === 'uploaded') {
-    return 'bg-blue-900/40 text-blue-300 border border-blue-800/50'
+    return { 
+      backgroundColor: 'rgba(96, 165, 250, 0.15)', 
+      color: '#60a5fa', 
+      border: '1px solid rgba(96, 165, 250, 0.3)' 
+    }
   }
 
-  return 'bg-yellow-900/40 text-yellow-300 border border-yellow-800/50'
+  return { 
+    backgroundColor: 'rgba(250, 204, 21, 0.15)', 
+    color: '#facc15', 
+    border: '1px solid rgba(250, 204, 21, 0.3)' 
+  }
 }
 
 const statusLabelFor = (status: ProgressBarProps['status']) =>
@@ -77,19 +93,19 @@ export default function ProgressBar({
     }
   }, [progress])
 
-  const colorClass =
+  const barColor =
     status === 'ready' || status === 'completed'
-      ? 'bg-green-500'
+      ? '#4ade80'
       : status === 'failed'
-        ? 'bg-red-500'
-        : 'bg-brand-500'
+        ? '#ef4444'
+        : '#6366f1'
 
   const statusLabel = statusLabelFor(status)
 
   return (
     <div className={`space-y-1 ${className}`} title={`${statusLabel}: ${Math.round(displayProgress)}%`}>
       <div className="flex items-center justify-between text-xs">
-        <span className={`badge ${statusBadgeClass(status)}`}>
+        <span className="badge" style={statusBadgeStyle(status)}>
           {(status === 'ready' || status === 'completed') && <CheckCircle2 className="w-3 h-3 mr-1" />}
           {status === 'failed' && <AlertTriangle className="w-3 h-3 mr-1" />}
           {(status === 'queued' || status === 'uploaded' || status === 'processing') && (
@@ -97,16 +113,26 @@ export default function ProgressBar({
           )}
           {message || statusLabel}
         </span>
-        {showPercent && <span className="text-gray-500">{Math.round(displayProgress)}%</span>}
+        {showPercent && <span style={{ color: 'var(--text-muted)' }}>{Math.round(displayProgress)}%</span>}
       </div>
 
-      <div className="relative h-2 w-full rounded-full bg-gray-800 overflow-hidden border border-gray-700">
+      <div 
+        className="relative h-2 w-full rounded-full overflow-hidden" 
+        style={{ backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-primary)' }}
+      >
         <div
-          className={`h-full rounded-full transition-[width] duration-300 ease-out ${colorClass}`}
-          style={{ width: `${displayProgress}%` }}
+          className="h-full rounded-full transition-[width] duration-300 ease-out"
+          style={{ width: `${displayProgress}%`, backgroundColor: barColor }}
         />
         {(status === 'processing' || status === 'queued' || status === 'uploaded') && (
-          <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.6s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+              backgroundSize: '200% 100%',
+              animation: 'skeleton-shimmer 1.6s ease-in-out infinite'
+            }}
+          />
         )}
       </div>
     </div>
