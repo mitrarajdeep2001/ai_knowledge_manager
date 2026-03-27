@@ -1,9 +1,15 @@
 import "dotenv/config";
 import pg from "pg";
+import dns from "dns";
+dns.setDefaultResultOrder("ipv4first");
 
 const { Pool } = pg;
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL!,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  max: 1
 });
 
 async function run() {
