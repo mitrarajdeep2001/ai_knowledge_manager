@@ -12,12 +12,17 @@ const getAuthCookieOptions = () => {
     10,
   );
 
+  const isProd = process.env.NODE_ENV === "production";
+
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as const,
+    secure: isProd,
+    sameSite: (isProd ? "none" : "lax") as "none" | "lax", // ✅ FIX
     path: "/",
-    maxAge: Number.isFinite(maxAge) && maxAge > 0 ? maxAge : DEFAULT_COOKIE_MAX_AGE_SECONDS,
+    maxAge:
+      Number.isFinite(maxAge) && maxAge > 0
+        ? maxAge
+        : DEFAULT_COOKIE_MAX_AGE_SECONDS,
   };
 };
 
