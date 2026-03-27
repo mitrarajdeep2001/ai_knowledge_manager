@@ -6,18 +6,6 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:3000',
-    //     changeOrigin: true,
-    //     configure: (proxy) => {
-    //       proxy.on('error', (_err, _req, res) => {
-    //         res.writeHead(503, { 'Content-Type': 'application/json' })
-    //         res.end(JSON.stringify({ error: 'Backend not available in preview' }))
-    //       })
-    //     },
-    //   },
-    // },
   },
   build: {
     outDir: 'dist',

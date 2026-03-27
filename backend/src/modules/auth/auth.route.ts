@@ -15,7 +15,7 @@ const getAuthCookieOptions = () => {
   return {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax" as const,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" as const,
     path: "/",
     maxAge: Number.isFinite(maxAge) && maxAge > 0 ? maxAge : DEFAULT_COOKIE_MAX_AGE_SECONDS,
   };
