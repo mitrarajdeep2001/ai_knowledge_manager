@@ -47,23 +47,41 @@ export class SearchRepository {
         FROM knowledge_chunks
         WHERE user_id = ${userId}
         ORDER BY embedding <=> ${embeddingStr}::vector
-        LIMIT 50
+        LIMIT 100
+      ),
+      scored_candidates AS (
+        SELECT
+          source_type,
+          source_id,
+          content,
+          (
+            (vector_score * ${vectorWeight}) +
+            (
+              COALESCE(
+                ts_rank_cd(search_vector, plainto_tsquery('english', ${query})),
+                0
+              ) * ${keywordWeight}
+            )
+          ) AS similarity
+        FROM vector_candidates
+        WHERE vector_score > 0.75
+      ),
+      ranked_candidates AS (
+        SELECT
+          source_type AS "sourceType",
+          source_id AS "sourceId",
+          content,
+          similarity,
+          ROW_NUMBER() OVER (PARTITION BY source_id ORDER BY similarity DESC) as rn
+        FROM scored_candidates
       )
       SELECT
-        source_type AS "sourceType",
-        source_id AS "sourceId",
+        "sourceType",
+        "sourceId",
         content,
-        (
-          (vector_score * ${vectorWeight}) +
-          (
-            COALESCE(
-              ts_rank_cd(search_vector, plainto_tsquery('english', ${query})),
-              0
-            ) * ${keywordWeight}
-          )
-        ) AS similarity
-      FROM vector_candidates
-      WHERE vector_score > 0.75
+        similarity
+      FROM ranked_candidates
+      WHERE rn = 1
       ORDER BY similarity DESC
       LIMIT ${options.limit}
       OFFSET ${offset}
